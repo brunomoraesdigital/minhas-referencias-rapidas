@@ -1,0 +1,16 @@
+html, body {
+}
+aside {
+  display: none;
+}
+section:nth-child(even) {
+  background-color: #e0e0e0; 
+}
+section:nth-child(odd) {
+  background-color: lightgray;
+  border-left: 1px solid black;
+}
+section {
+  width: 100vw;
+  height: 50vh;
+}
