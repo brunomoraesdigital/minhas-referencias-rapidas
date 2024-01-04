@@ -14,3 +14,6 @@ section {
   width: 100vw;
   height: 50vh;
 }
+section.hero {
+  height: 100vh;
+}
