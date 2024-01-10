@@ -1,43 +1,21 @@
-html {
-}
-body {
-  
-}
+
 aside {
   display: none;
 }
-/*
+
 section:nth-child(even) {
-  background-color: #e0e0e0; 
+  border-bottom: 2px solid red;
 }
 section:nth-child(odd) {
-  background-color: lightgray;
-  border-left: 1px solid black;
+  
+  border-bottom: 2px solid blue;
 }
-*/
 section {
   height: 50vh;
 }
 .row, .columns {
   height: 100%;
   width: 100%;
-}
-section.hero {
-  height: 100vh;
-  background-image: url('../images/mesa-trabalho.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  /*background-attachment: fixed;*/
-  opacity: 0.7;
-}
-.hero .content {
-  background: linear-gradient(90deg, rgba(255, 100,0, 0.8) 40%, rgba(255, 0,0, 0.7));
-  color: #fff;
-  border: 1px solid #fff;
-}
-.hero .content hr {
-  border: 1px solid #fff;
 }
 .content {
   width: 100%;
@@ -47,30 +25,91 @@ section.hero {
   justify-content: center;
   align-items: center;
 }
-.content p,
-.content h1 {
-  width: 80%;
-  text-align: center;
-  padding: 1rem 2rem;
+
+.hero {
+  height: 100vh;
+  background-image: url('../images/mesa-trabalho.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  /*background-attachment: fixed;*/
+  opacity: 0.7;
+} 
+.hero .content {
+  background: linear-gradient(90deg, rgba(255, 100,0, 0.8) 40%, rgba(255, 0,0, 0.7));
+  color: #fff;
+  border: 1px solid #fff;
 }
+.hero .content hr {
+  border: 1px solid #fff;
+}
+
 .content hr {
   border: 1px solid #000;
   width: 6rem;
 }
-.content h1 {
+h1 {
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 2rem;
+  width: 80%;
+  text-align: center;
+  padding: 1rem 2rem;
 }
-.content p {
+h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  text-align: center;
+  padding: 1rem 2rem;#42445A
+}
+p {
   font-size: 1rem;
   margin-top: 2rem;
+  width: 80%;
+  text-align: center;
+  padding: 1rem 2rem;
 }
 
 button {
-  font-size: 3rem;
+  font-variant: small-caps;
+  width: 80%;
+  font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 2rem;
-  border: 6px solid #000;
-  padding: 2rem 6rem;
+  padding: 1.5rem 0;
+  border: 6px solid #fff;
+  /*
+  border: 1px solid #757575;
+  box-shadow: 0 0 0 4px white, 0 0 0 5px #333;
+  text-shadow:
+    -1px -1px 0 #757575,
+    1px -1px 0 #757575,
+    -1px 1px 0 #757575,
+    1px 1px 0 #757575;
+    */
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  box-shadow: 6px 6px #333;
+  text-shadow: 2px 2px #333;
+  
+  
+}
+.creativity {
+  background-image: url('../images/creativity.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.7;
+  color: red;
+}
+.help {
+  background-image: url('../images/sac.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.7;
+  color: red;
+}
+button {
+  opacity: l;
 }
