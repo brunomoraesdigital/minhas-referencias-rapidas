@@ -61,7 +61,7 @@ h2 {
   font-weight: 700;
   margin-bottom: 3rem;
   text-align: center;
-  padding: 1rem 2rem;#42445A
+  padding: 1rem 2rem;
 }
 p {
   font-size: 1rem;
@@ -110,6 +110,34 @@ button {
   opacity: 0.7;
   color: red;
 }
+.quote-now {
+  background-image: url('../images/reuniao.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.7;
+  color: red;
+}
 button {
   opacity: l;
+}
+
+video {
+  width: 92%;
+  height: auto;
+  opacity: 0.7;
+}
+.location {
+  background-image: url('../images/mapinha.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.6;
+  color: #fff;
+  text-shadow: 2px 2px #333;
+}
+.location hr {
+  border: 1px solid #fff;
+  box-shadow: 1px 1px #333;
+  width: 6rem;
 }
