@@ -11,8 +11,7 @@
   list-style: none;
   font-family: 'Roboto Condensed', sans-serif;
 }
-
-a:link {text-decoration: none;color: #000;}
+a:link {text-decoration: none;color: #fff;}
 a:visited {text-decoration: none; color: #000;}
 a:hover {text-decoration: none;color: #000;}
 a:active {text-decoration: none;color: #000;}
