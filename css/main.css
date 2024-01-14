@@ -190,7 +190,7 @@ p {
 /* Estilo para o rodapé */
 #footer {
   width: 100%;
-  padding: 3vh;
+  padding: 3rem 0;
   text-align: center;
   background-color: #333;
   font-weight: 500;
@@ -220,7 +220,7 @@ label:first-child {
   margin-top: 0;
 }
 
-input {
+input, textarea {
   text-indent: 1rem;
 }
 
