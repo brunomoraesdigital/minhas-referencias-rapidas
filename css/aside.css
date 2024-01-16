@@ -1,3 +1,50 @@
 .nav-conteiner {
-  display: none;
+  position: fixed;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
 }
+.navigation {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  flex-direction: row-reverse;
+}
+.nav-list {
+  background: #333;
+  width: 60%;
+  height: 100%;
+  padding: 2rem;
+}
+.nav-icon {
+  width: 40%;
+  padding: 2rem 0 0 1rem;
+  font-size: 2rem;
+}
+.nav-list li {
+  height: 3rem;
+  border-bottom: 1px solid white;
+  display: flex;
+  align-items: flex-end;
+  font-size: 1.5rem
+}
+li:hover {background-color: #fff;}
+li:active {background-color: p #fff;}
+
+
+
+
+
+
+
+/*
+.close {
+  background: greenyellow;
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+*/

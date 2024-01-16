@@ -1,0 +1,18 @@
+@media only screen and (min-device-width: 768px) /*and (max-device-width: 1024px)*/ and (orientation: landscape) {
+  section {
+    height: 100vh;
+  }
+  .button {
+    width: 40%;
+  }
+  p {
+    width: 55%;
+  }
+  .social .content p {
+    display: flex;
+    justify-content: inherit;
+  }
+.social .content a:nth-child(2) {
+    margin-left: 5rem;
+  }
+}
