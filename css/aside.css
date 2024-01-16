@@ -1,4 +1,8 @@
 .nav-conteiner {
+  display: none;
+}
+
+.nav-conteiner {
   position: fixed;
   z-index: 1;
   width: 100vw;

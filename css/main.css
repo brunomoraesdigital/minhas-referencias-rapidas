@@ -176,6 +176,10 @@ p {
 .social .content p:nth-of-type(2) {
   margin: 0;
   font-size: 1.7rem;
+  justify-content: inherit;
+}
+.social .content p:nth-of-type(2) a:nth-of-type(2) {
+  margin-left: 10vw;
 }
 
 /* Estilo para ocultar elementos com a classe hide */
@@ -184,7 +188,7 @@ p {
 }
 
 /* Estilo para o rodapé */
-#footer {
+.footer {
   width: 100%;
   padding: 3rem 0;
   text-align: center;
@@ -196,9 +200,7 @@ p {
 }
 
 /* Estilo para a seção de contato */
-.contact {
-  
-}
+/*.contact {}*/
 
 /* Estilo para o formulário de contato */
 .contact-form form {
@@ -206,7 +208,9 @@ p {
   flex-direction: column;
   overflow: hidden;
 }
-
+form {
+  width: 60%;
+}
 /* Estilo para as etiquetas nos campos do formulário */
 label {
   margin-top: 1rem;
