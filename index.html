@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/aside.css" />
   <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/language.css">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,21 +39,54 @@
         <!-- Main navigation links -->
         <div id="nav-list" class="nav-list open" role="navigation">
           <ul>
-            <a href="#hero"><li>Home</li></a>
-            <a href="#introduction"><li>Introduction</li></a>
-            <a href="#creativity"><li>Creativity</li></a>
-            <a href="#mission"><li>Mission</li></a>
-            <a href="#inovation"><li>Innovation</li></a>
-            <a href="#about"><li>About</li></a>
-            <a href="#video"><li>Video</li></a>
-            <a href="#professional"><li>Professional</li></a>
-            <a href="#collaborative"><li>Collaborative</li></a>
-            <a href="#contact"><li>Contact</li></a>
+            <a href="#hero"><li>
+              <span class="us-text show">Home</span>
+              <span class="br-text hide">Início</span>
+            </li></a>
+            <a href="#introduction"><li>
+              <span class="us-text show">Introduction</span>
+              <span class="br-text hide">Apresentação</span>
+            </li></a>
+            <a href="#creativity"><li>
+              <span class="us-text show">Creativity</span>
+              <span class="br-text hide">Criatividade</span>
+            </li></a>
+            <a href="#mission"><li>
+              <span class="us-text show">Mission</span>
+              <span class="br-text hide">Missão</span>
+            </li></a>
+            <a href="#inovation"><li>
+              <span class="us-text show">Innovation</span>
+              <span class="br-text hide">Inovação</span>
+            </li></a>
+            <a href="#about"><li>
+              <span class="us-text show">About</span>
+              <span class="br-text hide">Sobre</span>
+            </li></a>
+            <a href="#video"><li>
+              <span class="us-text show">Video</span>
+              <span class="br-text hide">Vídeo</span>
+            </li></a>
+            <a href="#professional"><li>
+              <span class="us-text show">Professional</span>
+              <span class="br-text hide">Profissional</span>
+            </li></a>
+            <a href="#collaborative"><li>
+              <span class="us-text show">Collaborative</span>
+              <span class="br-text hide">Colaborativo</span>
+            </li></a>
+            <a href="#contact"><li>
+              <span class="us-text show">Contact</span>
+              <span class="br-text hide">Contato</span>
+            </li></a>
           </ul>
         </div>
         <div id="nav-close" class="nav-close"></div>
+        <div class="lang">
+          <img id="br-flag" class="br-text hide" src="images/brasil.png" alt="">
+          <img id="us-flag" class="us-text show" src="images/estados-unidos.png" alt="">
+        </div>
       </nav>
-      
     </section>
     <!-- Hero Section -->
     <section id="hero" class="hero">
@@ -60,14 +94,17 @@
 
         <div class="content bg-gradient"></div>
         <div class="text-hero">
-          <h1>JOURNEY OF GROWTH</h1>
+          <h1>
+            <span class="us-text show">JOURNEY OF GROWTH</span>
+            <span class="br-text hide">JOURNEY OF GROWTH</span>
+          </h1>
           <hr>
           <p>
             <!-- Toggle text between show and hide -->
-            <span class="show">Explore my personal journey, where each challenge becomes a unique opportunity for
+            <span class="us-text show">Explore my personal journey, where each challenge becomes a unique opportunity for
               growth.
             </span>
-            <span class="hide">Explore meu trajeto pessoal, onde cada desafio se torna uma oportunidade única de
+            <span class="br-text hide">Explore meu trajeto pessoal, onde cada desafio se torna uma oportunidade única de
               crescimento.
             </span>
           </p>
@@ -82,16 +119,16 @@
         <div class="content">
           <h2>
             <!-- Toggle text between show and hide -->
-            <span class="show">INTRODUCTION</span>
-            <span class="hide">APRESENTAÇÃO</span>
+            <span class="us-text show">INTRODUCTION</span>
+            <span class="br-text hide">APRESENTAÇÃO</span>
           </h2>
           <hr>
           <p>
             <!-- Toggle text between show and hide -->
-            <span class="show">Welcome to my journey, which is constantly evolving, where each chapter represents an
+            <span class="us-text show">Welcome to my journey, which is constantly evolving, where each chapter represents an
               opportunity for growth and overcoming.
             </span>
-            <span class="hide">Boas-vindas, a minha trajetória, que está em constante evolução, onde cada capítulo
+            <span class="br-text hide">Boas-vindas, a minha trajetória, que está em constante evolução, onde cada capítulo
               representa uma oportunidade de crescimento e superação.
             </span>
           </p>
@@ -106,8 +143,8 @@
         <div class="content">
           <!-- Creativity button -->
           <div class="button">
-            <span class="show">Creativity</span>
-            <span class="hide">criatividade</span>
+            <span class="us-text show">Creativity</span>
+            <span class="br-text hide">Criatividade</span>
           </div>
         </div>
 
@@ -120,16 +157,16 @@
         <div class="content">
           <h2>
             <!-- Toggle text between show and hide -->
-            <span class="show">MISSION</span>
-            <span class="hide">MISSÃO</span>
+            <span class="us-text show">MISSION</span>
+            <span class="br-text hide">MISSÃO</span>
           </h2>
           <hr>
           <p>
             <!-- Toggle text between show and hide -->
-            <span class="show">Create open source solutions to improve people's lives, offer engaging and fun gaming
+            <span class="us-text show">Create open source solutions to improve people's lives, offer engaging and fun gaming
               experiences accessible to everyone, and share my knowledge.
             </span>
-            <span class="hide">Criar soluções de código aberto para melhorar a vida das pessoas, oferecer experiências
+            <span class="br-text hide">Criar soluções de código aberto para melhorar a vida das pessoas, oferecer experiências
               envolventes e divertidas com jogos acessíveis a todos, e compartilhar meu conhecimento.
             </span>
           </p>
@@ -144,8 +181,8 @@
         <div class="content">
           <!-- Innovation button -->
           <div class="button">
-            <span class="show">Innovation</span>
-            <span class="hide">Inovação</span>
+            <span class="us-text show">Innovation</span>
+            <span class="br-text hide">Inovação</span>
           </div>
         </div>
 
@@ -158,16 +195,16 @@
         <div class="content">
           <h2>
             <!-- Toggle text between show and hide -->
-            <span class="show">ABOUT ME</span>
-            <span class="hide">SOBRE MIM</span>
+            <span class="us-text show">ABOUT ME</span>
+            <span class="br-text hide">SOBRE MIM</span>
           </h2>
           <hr>
           <p>
             <!-- Toggle text between show and hide -->
-            <span class="show">My name is Bruno Moraes, I'm a digital professional, residing in Brasília, Brazil. What
+            <span class="us-text show">My name is Bruno Moraes, I'm a digital professional, residing in Brasília, Brazil. What
               best defines me is my agile, resilient mindset and ability to learn constantly.
             </span>
-            <span class="hide">Meu nome é Bruno Moraes, sou um profissional digital, resido em Brasília, Brasil. O que
+            <span class="br-text hide">Meu nome é Bruno Moraes, sou um profissional digital, resido em Brasília, Brasil. O que
               melhor me define é minha mentalidade ágil e resiliente e capacidade de aprender constantemente.
             </span>
           </p>
@@ -196,16 +233,16 @@
         <div class="content">
           <h2>
             <!-- Toggle text between show and hide -->
-            <span class="show">Digital Professional</span>
-            <span class="hide">Profissional Digital</span>
+            <span class="us-text show">Digital Professional</span>
+            <span class="br-text hide">Profissional Digital</span>
           </h2>
           <hr>
           <p>
             <!-- Toggle text between show and hide -->
-            <span class="show">I create, develop, program and maintain services related to technologies and digital
+            <span class="us-text show">I create, develop, program and maintain services related to technologies and digital
               designer
             </span>
-            <span class="hide">Crio, desenvolvo, programo e mantenho serviços relacionados a tecnologias e designer
+            <span class="br-text hide">Crio, desenvolvo, programo e mantenho serviços relacionados a tecnologias e designer
               digital.
             </span>
           </p>
@@ -220,8 +257,8 @@
         <div class="content">
           <!-- Collaborative button -->
           <div class="button">
-            <span class="show">Collaborative</span>
-            <span class="hide">Colaborativo</span>
+            <span class="us-text show">Collaborative</span>
+            <span class="br-text hide">Colaborativo</span>
           </div>
         </div>
 
@@ -234,15 +271,15 @@
         <div class="content">
           <h2>
             <!-- Toggle text between show and hide -->
-            <span class="show">GET IN TOUCH</span>
-            <span class="show"></span>
+            <span class="us-text show">GET IN TOUCH</span>
+            <span class="br-text hide">ENTRE EM CONTATO</span>
           </h2>
           <hr>
           <p>
             <!-- Toggle text between show and hide -->
-            <span class="show">If you have any questions, or just want to say hello, please feel free to contact me.
+            <span class="us-text show">If you have any questions, or just want to say hello, please feel free to contact me.
             </span>
-            <span class="hide">Se você tiver alguma dúvida ou apenas quiser dizer olá, não hesite em entrar em contato
+            <span class="br-text hide">Se você tiver alguma dúvida ou apenas quiser dizer olá, não hesite em entrar em contato
               comigo.
             </span>
           </p>
@@ -257,8 +294,8 @@
         <div class="content">
           <h2>
             <!-- Toggle text between show and hide -->
-            <span class="show">LOCATIONS </span>
-            <span class="hide">LOCAIS</span>
+            <span class="us-text show">LOCATIONS </span>
+            <span class="br-text hide">LOCAIS</span>
           </h2>
           <hr>
           <p><a href="https://bmfolio.web.app/">bmfolio.web.app</a></p>
@@ -278,11 +315,20 @@
         <div class="content">
           <!-- Contact form -->
           <form action="" method="get" accept-charset="utf-8">
-            <label for="nome">Nome</label>
+            <label for="nome">
+              <span class="us-text show">Name</span>
+              <span class="br-text hide">Nome</span>
+            </label>
             <input type="text" name="nome" id="nome">
-            <label for="email">E-mail</label>
+            <label for="email">
+              <span class="us-text show">E-mail</span>
+              <span class="br-text hide">E-mail</span>
+            </label>
             <input type="text" name="email" id="email">
-            <label for="texto">Message</label>
+            <label for="texto">
+              <span class="us-text show">Message</span>
+              <span class="br-text hide">Mensagem</span>
+            </label>
             <textarea name="texto" id="texto" cols="30" rows="5"></textarea>
           </form>
         </div>

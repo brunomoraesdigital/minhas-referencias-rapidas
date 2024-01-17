@@ -182,11 +182,6 @@ p {
   margin-left: 10vw;
 }
 
-/* Estilo para ocultar elementos com a classe hide */
-.hide {
-  display: none;
-}
-
 /* Estilo para o rodapé */
 .footer {
   width: 100%;
@@ -209,7 +204,7 @@ p {
   overflow: hidden;
 }
 form {
-  width: 60%;
+  width: 80%;
 }
 /* Estilo para as etiquetas nos campos do formulário */
 label {
@@ -234,3 +229,10 @@ textarea {
   height: 50%;
 }
 
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}

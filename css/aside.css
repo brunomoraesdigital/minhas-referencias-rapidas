@@ -69,3 +69,14 @@
   transform: scale(1.01);
   text-indent: 2.2rem;
 }
+
+.lang {
+  position: absolute;
+  top: 0.5rem;
+  right: 2rem;
+  cursor: pointer;
+  transform: scale(1.2);
+}
+.lang img:hover {
+  transform: scale(1.3);
+}
