@@ -3,6 +3,7 @@
   z-index: 1;
   width: 100vw;
   height: 100vh;
+  pointer-events: none;
 }
 .navigation {
   display: flex;
@@ -10,10 +11,13 @@
   color: white;
   padding: 1rem 0 1rem 2rem;
   font-size: 1.5rem;
+  pointer-events: auto;
 
 }
 .nav-icon {
   cursor: pointer;
+  text-shadow: 1px 1px 2px rgba(51, 51, 51, 0.5);
+  transition: margin-left 0.3s ease;
 }
 .nav-close {
   display: none;
@@ -29,6 +33,7 @@
   height: 100%;
   padding: 1rem 0 1rem 0rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: margin-left 0.3s ease;
 }
 .open .nav-list {
   margin-left: 0;
@@ -55,12 +60,12 @@
 .nav-list li {
   width: 100%;
   padding: 0.5rem 0;
+  transition: transform 0.3s ease;
 }
 .nav-list li:hover {
   background-color: #fff;
-  color: black;
-  cursor: pointer;
-}
-.nav-list li:hover a {
   color: #333;
+  cursor: pointer;
+  transform: scale(1.01);
+  text-indent: 2.2rem;
 }
