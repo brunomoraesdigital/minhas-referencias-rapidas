@@ -81,11 +81,16 @@ section {
 
 /* Estilo para o título h1 e h2 */
 h1, h2 {
-  font-size: 3rem;
   font-weight: 700;
   margin-bottom: 2rem;
   text-align: center;
   padding: 1rem 2rem;
+}
+h1 {
+  font-size: 3rem;
+}
+h2 {
+  font-size: 2rem;
 }
 
 /* Estilo para o parágrafo p */

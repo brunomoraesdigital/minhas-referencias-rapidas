@@ -19,6 +19,7 @@
   text-shadow: 1px 1px 2px rgba(51, 51, 51, 0.5);
   transition: margin-left 0.3s ease;
 }
+
 .nav-close {
   display: none;
 }
@@ -64,10 +65,12 @@
 }
 .nav-list li:hover {
   background-color: #fff;
-  color: #333;
   cursor: pointer;
   transform: scale(1.01);
   text-indent: 2.2rem;
+}
+.nav-list a:hover {
+  color: #333;
 }
 
 .lang {
@@ -80,3 +83,16 @@
 .lang img:hover {
   transform: scale(1.3);
 }
+
+/* Adicione esta seção para estilizar a classe 'active' */
+.nav-list li.active {
+  background-color: #fff;
+  cursor: default;
+  transform: scale(1.01);
+  text-indent: 2.2rem;
+}
+
+.nav-list li.active a {
+  color: #daa520;
+}
+
