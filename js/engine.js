@@ -1,8 +1,6 @@
 let navIcon = document.getElementById('nav-icon');
 let navClose = document.getElementById('nav-close');
 let navList = document.getElementById('nav-list');
-let langFlags = document.getElementById('lang-flags');
-let showElement = document.querySelector('.show');
 
 
 function toggleClassesNav () {
@@ -10,19 +8,18 @@ function toggleClassesNav () {
   navList.classList.toggle('move-nav-list');
   navClose.classList.toggle('move-nav-close');
 }
+
+
 function removeClassesNav () {
   navIcon.classList.remove('move-nav-icon');
   navList.classList.remove('move-nav-list');
   navClose.classList.remove('move-nav-close');
 }
 
-function showElements () {
-  showElement.classList.toggle('show');
-}
-
 
 navIcon.addEventListener('click', toggleClassesNav);
 navClose.addEventListener('click', removeClassesNav);
+
 
 /*
 document.addEventListener("DOMContentLoaded", function () {
@@ -146,3 +143,22 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });*/
+
+let brFlag = document.getElementById('br-flag');
+let usFlag = document.getElementById('us-flag');
+let brText = document.getElementsByClassName('br-text');
+let usText = document.getElementsByClassName('us-text'); 
+
+function switchToBr () {
+  brFlag.classList.remove('show');
+  brFlag.classList.add('hide');
+  usFlag.classList.add('show');
+}
+function switchToUs () {
+  usFlag.classList.remove('show');
+  usFlag.classList.add('hide');
+  brFlag.classList.add('show');
+}
+
+brFlag.addEventListener('click', switchToBr);
+usFlag.addEventListener('click', switchToUs);

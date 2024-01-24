@@ -2,10 +2,6 @@ body {
   overflow-y: scroll;
 }
 
-.hide {
-  display: none;
-}
-
 .content {
   display: flex;
   flex-direction: column;
@@ -133,3 +129,10 @@ position: absolute;
   margin-right: 0%;
 }
 
+.hide {
+  display: none;
+}
+.show {
+  display: block;
+  background-color: 
+}
