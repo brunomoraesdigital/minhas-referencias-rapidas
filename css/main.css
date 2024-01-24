@@ -1,21 +1,70 @@
-
+body {
+  overflow-y: scroll;
+}
+.hide {
+  display: none;
+}
 .content {
   display: flex;
   flex-direction: column;
   text-align: center;
-}
-.hero {
-  height: 100vh;
-  background-image: url(../images/mesa-trabalho.jpg)
-  
-}
-.footer {
-  background-color: #333;
-  padding: 2rem 0;
 }
 
 .sec {
   height: 50vh;
   border-bottom: 1px solid black;
   border: 1px solid black;
+}
+.hero {
+  height: 100vh;
+  background-image: url(../images/mesa-trabalho.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.footer {
+  background-color: #333;
+  padding: 2rem 0;
+}
+
+.hero, .sec {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+ color: #fff;
+ font-weight: 700;
+ font-size: 2rem;
+ width: 80vw;
+}
+h1 + hr {
+  border: 1px solid #fff;
+}
+h1 ~ p {
+  color: #fff;
+}
+h2 {
+  
+}
+p {
+  width: 75vw;
+  font-size: 1rem;
+}
+hr {
+  border: 1px solid #fff;
+  width: 6rem;
+  margin: 2rem 0;
+}
+.navigation {
+  position: fixed;
+}
+li {
+  color: black;
+}
+.active {
+  background-color: lightpink;
 }
