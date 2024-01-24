@@ -1,24 +1,62 @@
+// Selecionando elementos do DOM
 let navIcon = document.getElementById('nav-icon');
 let navClose = document.getElementById('nav-close');
 let navList = document.getElementById('nav-list');
+let brFlag = document.getElementById('br-flag');
+let usFlag = document.getElementById('us-flag');
+let brText = document.getElementsByClassName('br-text');
+let usText = document.getElementsByClassName('us-text');
 
-
-function toggleClassesNav () {
+// Função para alternar classes da barra de navegação
+function toggleClassesNav() {
   navIcon.classList.toggle('move-nav-icon');
   navList.classList.toggle('move-nav-list');
   navClose.classList.toggle('move-nav-close');
 }
 
-
-function removeClassesNav () {
+// Função para remover classes da barra de navegação
+function removeClassesNav() {
   navIcon.classList.remove('move-nav-icon');
   navList.classList.remove('move-nav-list');
   navClose.classList.remove('move-nav-close');
 }
 
+// Função para alternar para o idioma brasileiro
+function switchToBr() {
+  brFlag.classList.remove('show');
+  usFlag.classList.remove('hide');
+  brFlag.classList.add('hide');
+  usFlag.classList.add('show');
+  for (let i = 0; i < usText.length; i++) {
+    // Oculta texto em inglês e exibe texto em português
+    usText[i].classList.add('hide');
+    usText[i].classList.remove('show');
+    brText[i].classList.add('show');
+    brText[i].classList.remove('hide');
+  }
+}
 
+// Função para alternar para o idioma inglês
+function switchToUs() {
+  usFlag.classList.remove('show');
+  brFlag.classList.remove('hide');
+  usFlag.classList.add('hide');
+  brFlag.classList.add('show');
+  for (let i = 0; i < usText.length; i++) {
+    // Oculta texto em português e exibe texto em inglês
+    usText[i].classList.add('show');
+    usText[i].classList.remove('hide');
+    brText[i].classList.add('hide');
+    brText[i].classList.remove('show');
+  }
+}
+
+// Adiciona listeners de eventos aos elementos do DOM
+brFlag.addEventListener('click', switchToBr);
+usFlag.addEventListener('click', switchToUs);
 navIcon.addEventListener('click', toggleClassesNav);
 navClose.addEventListener('click', removeClassesNav);
+
 
 
 /*
@@ -55,7 +93,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 */
 
-/*document.addEventListener("DOMContentLoaded", function () {
+/*
+document.addEventListener("DOMContentLoaded", function () {
   // Passo 1: Identificar as seções
   const sections = ["hero", "introduction", "mission", "professional",  "about", "contact"];
 
@@ -92,7 +131,8 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });*/
 
-/*document.addEventListener("DOMContentLoaded", function () {
+/*
+document.addEventListener("DOMContentLoaded", function () {
   // Passo 1: Identificar as seções
   const sections = ["hero", "introduction", "mission", "about", "professional", "contact"];
 
@@ -142,23 +182,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   });
-});*/
+});
+*/
 
-let brFlag = document.getElementById('br-flag');
-let usFlag = document.getElementById('us-flag');
-let brText = document.getElementsByClassName('br-text');
-let usText = document.getElementsByClassName('us-text'); 
 
-function switchToBr () {
-  brFlag.classList.remove('show');
-  brFlag.classList.add('hide');
-  usFlag.classList.add('show');
-}
-function switchToUs () {
-  usFlag.classList.remove('show');
-  usFlag.classList.add('hide');
-  brFlag.classList.add('show');
-}
-
-brFlag.addEventListener('click', switchToBr);
-usFlag.addEventListener('click', switchToUs);

@@ -50,7 +50,6 @@ h1~p {
   color: #fff;
 }
 
-h2 {}
 
 p {
   width: 75vw;
@@ -134,5 +133,4 @@ position: absolute;
 }
 .show {
   display: block;
-  background-color: 
 }
