@@ -1,6 +1,9 @@
 let navIcon = document.getElementById('nav-icon');
 let navClose = document.getElementById('nav-close');
 let navList = document.getElementById('nav-list');
+let langFlags = document.getElementById('lang-flags');
+let showElement = document.querySelector('.show');
+
 
 function toggleClassesNav () {
   navIcon.classList.toggle('move-nav-icon');
@@ -12,6 +15,11 @@ function removeClassesNav () {
   navList.classList.remove('move-nav-list');
   navClose.classList.remove('move-nav-close');
 }
+
+function showElements () {
+  showElement.classList.toggle('show');
+}
+
 
 navIcon.addEventListener('click', toggleClassesNav);
 navClose.addEventListener('click', removeClassesNav);
