@@ -1,9 +1,11 @@
 body {
   overflow-y: scroll;
 }
+
 .hide {
   display: none;
 }
+
 .content {
   display: flex;
   flex-direction: column;
@@ -15,6 +17,7 @@ body {
   border-bottom: 1px solid black;
   border: 1px solid black;
 }
+
 .hero {
   height: 100vh;
   background-image: url(../images/mesa-trabalho.jpg);
@@ -28,7 +31,8 @@ body {
   padding: 2rem 0;
 }
 
-.hero, .sec {
+.hero,
+.sec {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,35 +40,92 @@ body {
 }
 
 h1 {
- color: #fff;
- font-weight: 700;
- font-size: 2rem;
- width: 80vw;
+  color: #fff;
+  font-weight: 700;
+  font-size: 2rem;
+  width: 80vw;
 }
-h1 + hr {
+
+h1+hr {
   border: 1px solid #fff;
 }
-h1 ~ p {
+
+h1~p {
   color: #fff;
 }
-h2 {
-  
-}
+
+h2 {}
+
 p {
   width: 75vw;
   font-size: 1rem;
 }
+
 hr {
   border: 1px solid #fff;
   width: 6rem;
   margin: 2rem 0;
 }
+
+.active {
+  background-color: #fff;
+}
+.active a {
+  color: #333;
+}
+.selected a {
+  color: gold;
+}
+
 .navigation {
   position: fixed;
+  width: 100vw;
+  height: 100vh;
+  font-size: 2rem;
+  text-align: left;
 }
+
 li {
-  color: black;
+  padding: 10px 0 6px 20px;
 }
-.active {
-  background-color: lightpink;
+
+.lang-flags {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  display: flex;
+  width: 50px;
+  transform: scale(1.);
 }
+
+.nav-icon {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  color: #fff;
+}
+.move-nav-icon {
+  margin-left: 62%;
+}
+.nav-list {
+  position: absolute;
+  width: 60%;
+  height: 100%;
+  background-color: #333;
+  margin-left: -61%;
+}
+.move-nav-list {
+  margin-left: 0%;
+}
+.nav-close {
+position: absolute;
+  width: 40%;
+  height: 100%;
+  background-color: transparent;
+  right: 0;
+  margin-right: -41%;
+}
+.move-nav-close {
+  margin-right: 0%;
+}
+
