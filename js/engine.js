@@ -220,6 +220,10 @@ document.addEventListener("DOMContentLoaded", function () {
       const sectionId = item.querySelector("a").getAttribute("href").substring(1);
       item.classList.toggle("active", sectionId === currentSection);
     });
+    // Passo 5: Adicionar classe ao "nav-icon" quando a seção "hero" não estiver visível
+    const heroSection = document.getElementById("hero");
+    const heroRect = heroSection.getBoundingClientRect();
+    navIcon.classList.toggle("nav-icon-background", heroRect.bottom <= 0);
   });
 
   // Passo 5: Adicionar Event Listener de Clique para Atualizar Ativo ao Clicar nas Seções
