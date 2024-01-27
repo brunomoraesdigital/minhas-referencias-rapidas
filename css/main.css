@@ -2,37 +2,63 @@ body {
   overflow-y: scroll;
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-}
-
 .sec {
   height: 100vh;
   border-bottom: 1px solid black;
   border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.sec-a, .sec-b {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.sec-a {
+  height: 50%;
+  width: 100%;
 }
 
-.hero {
-  height: 100vh;
-  background-image: url(../images/mesa-trabalho.jpg);
-  background-repeat: no-repeat;
+.sec-b {
+  height: 50%;
+  width: 100%;
+  position: relative;
+  
+}
+.frame-text {
+  position: absolute;
+}
+.bg-sec {
   background-size: cover;
+  background-repeat: no-repeat;
   background-position: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  opacity: 0.5;
+}
+.hero {
+  background-image: url(../images/mesa-trabalho.jpg);
+}
+.creativity {
+  background-image: url("../images/creativity.jpeg");
+}
+.innovation {
+  background-image: url("../images/innovation.jpeg");
+}
+.collaborative {
+  background-image: url("../images/collaborative.jpeg")
+}
+.form-contact {
+  background-image: url("../../images/mapinha.jpeg")
 }
 
 .footer {
   background-color: #333;
   padding: 2rem 0;
-}
-
-.hero,
-.sec {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 h1 {
@@ -50,14 +76,13 @@ h1~p {
   color: #fff;
 }
 
-
 p {
   width: 75vw;
   font-size: 1rem;
 }
 
 hr {
-  border: 1px solid #fff;
+  border: 1px solid #333;
   width: 6rem;
   margin: 2rem 0;
 }
@@ -78,6 +103,7 @@ hr {
   height: 100vh;
   font-size: 2rem;
   text-align: left;
+  z-index: 3;
 }
 
 li {
@@ -94,6 +120,7 @@ li {
   width: 25px;
   height: 20px;
   background-color: #333;
+  
 }
 
 
@@ -107,6 +134,7 @@ li {
   display: flex;
   align-items: center;
   justify-content: center;
+  
 }
 .move-nav-icon {
   margin-left: 62%;
@@ -117,6 +145,7 @@ li {
   height: 100%;
   background-color: #333;
   margin-left: -61%;
+  
 }
 .move-nav-list {
   margin-left: 0%;
@@ -128,6 +157,7 @@ position: absolute;
   background-color: transparent;
   right: 0;
   margin-right: -41%;
+  
 }
 .move-nav-close {
   margin-right: 0%;
