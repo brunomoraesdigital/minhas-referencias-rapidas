@@ -1,5 +1,6 @@
 body {
   overflow-y: scroll;
+  font-family: 'Roboto', sans-serif;
 }
 
 .sec {
@@ -23,9 +24,10 @@ body {
 
 .sec-b {
   position: relative;
+  background-color: red;
 }
 
-.descriptive-text {
+.descriptive-text, .box-form-contact {
   position: absolute;
 }
 
@@ -52,13 +54,13 @@ body {
 .collaborative {
   background-image: url("../images/collaborative.jpeg")
 }
-.form-contact {
+.bg-form-contact {
   background-image: url("../../images/mapinha.jpeg")
 }
 .creativity::after, 
 .innovation::after,
 .collaborative::after, 
-.form-contact::after,
+.bg-form-contact::after,
 .hero::after {
   content: "";
   width: 100%;
@@ -71,10 +73,7 @@ body {
 .hero::after {
   background: linear-gradient(45deg, rgba(255, 255, 0, 0.5), rgba(255, 0, 0, 0.5));
 }
-.footer {
-  background-color: #333;
-  padding: 2rem 0;
-}
+
 
 h1 {
   color: #fff;
@@ -85,10 +84,16 @@ h1 {
 
 h1+hr {
   border: 1px solid #fff;
+  box-shadow:
+        -1px 1px 1px #a3a3a3,
+        1px 1px 1px #a3a3a3;
 }
 
 h1~p {
   color: #fff;
+  text-shadow:
+        -1px 1px 1px #a3a3a3,
+        1px 1px 1px #a3a3a3;
 }
 
 p {
@@ -102,6 +107,24 @@ hr {
   margin: 2rem auto;
 }
 
+h2 {
+  font-size: 2rem;
+}
+h3 {
+  font-size: 2rem;
+  color: #fff;
+  padding: 2rem 5rem;
+  border: 2px solid #fff;
+  /*border-radius: 5px;*/
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 1px 1px 1px #a3a3a3;
+  font-variant: small-caps;
+}
+h1, h3 {
+  text-shadow:
+        -1px 1px 1px #a3a3a3,
+        1px 1px 1px #a3a3a3;
+}
 .active {
   background-color: #fff;
 }
@@ -133,16 +156,15 @@ li {
 
 .lang-flags {
   position: absolute;
-  right: 15px;
-  top: 10px;
+  right: 35px;
+  top: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 25px;
   height: 20px;
-  background-color: #333;
+  /*background-color: rgba(51, 51, 51, 0.1);*/
   cursor: pointer;
-
 }
 
 
@@ -200,4 +222,40 @@ li {
 
 .nav-icon-background {
   background-color: rgba(51, 51, 51, 0.1);
+}
+.footer {
+  background-color: #333;
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.box-form-contact {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  padding: 1.5rem 1rem;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: initial;
+}
+.box-form-contact form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: initial;
+  text-indent: 1rem;
+}
+.box-form-contact label {
+  margin-bottom: 0.5rem;
+}
+.box-form-contact form input {
+  border-bottom: 1px solid #333;
+  background-color: transparent;
+  text-indent: 1rem;
+}
+.box-form-contact form textarea {
+  border-bottom: 1px solid #333;
+  background-color: transparent;
+  text-indent: 1rem;
 }

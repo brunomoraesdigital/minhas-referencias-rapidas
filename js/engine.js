@@ -1,3 +1,30 @@
+
+// footer
+
+const anoAtualElement = document.getElementById("ano-atual");
+const anoAtual = new Date().getFullYear();
+anoAtualElement.textContent = `Copyright ©
+${anoAtual} Bruno Moraes`;   
+var botoes = document.getElementsByClassName('botao');
+var exemploElemento = document.getElementById('example-element');
+function clique() {
+    var valorBackgroundAttachment = this.innerText.toLowerCase().trim();
+    for (var i = 0; i < botoes.length; i++) {
+        botoes[i].classList.remove('selecionado');
+    }
+    this.classList.add('selecionado');
+    exemploElemento.className = valorBackgroundAttachment
+        .replace('background-attachment: ', '')
+        .replace(/;/g, '')
+        .replace(/, /g, '-');
+}
+
+for (var i = 0; i < botoes.length; i++) {
+    botoes[i].addEventListener('click', clique);
+}
+
+
+
 // Selecionando elementos do DOM
 let navIcon = document.getElementById('nav-icon');
 let navClose = document.getElementById('nav-close');
