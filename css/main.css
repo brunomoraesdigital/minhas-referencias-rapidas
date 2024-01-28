@@ -4,44 +4,44 @@ body {
 
 .sec {
   height: 100vh;
-  border-bottom: 1px solid black;
-  border: 1px solid black;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
-.sec-a, .sec-b {
+
+.sec-a,
+.sec-b {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-.sec-a {
   height: 50%;
   width: 100%;
 }
 
 .sec-b {
-  height: 50%;
-  width: 100%;
   position: relative;
-  
 }
-.frame-text {
+
+.descriptive-text {
   position: absolute;
 }
+
 .bg-sec {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  background-attachment: fixed;
   width: 100%;
   height: 100%;
   position: absolute;
-  opacity: 0.5;
 }
+
 .hero {
-  background-image: url(../images/mesa-trabalho.jpg);
+  background-image: url('../images/mesa-trabalho.jpg');
+  opacity: 1;
 }
 .creativity {
   background-image: url("../images/creativity.jpeg");
@@ -55,7 +55,22 @@ body {
 .form-contact {
   background-image: url("../../images/mapinha.jpeg")
 }
-
+.creativity::after, 
+.innovation::after,
+.collaborative::after, 
+.form-contact::after,
+.hero::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.3), rgba(187, 187, 187, 0.3));
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.hero::after {
+  background: linear-gradient(45deg, rgba(255, 255, 0, 0.5), rgba(255, 0, 0, 0.5));
+}
 .footer {
   background-color: #333;
   padding: 2rem 0;
@@ -84,15 +99,17 @@ p {
 hr {
   border: 1px solid #333;
   width: 6rem;
-  margin: 2rem 0;
+  margin: 2rem auto;
 }
 
 .active {
   background-color: #fff;
 }
+
 .active a {
   color: #333;
 }
+
 .selected a {
   color: gold;
 }
@@ -104,6 +121,10 @@ hr {
   font-size: 2rem;
   text-align: left;
   z-index: 3;
+  pointer-events: none;
+}
+.navigation > * {
+  pointer-events: auto;
 }
 
 li {
@@ -120,7 +141,8 @@ li {
   width: 25px;
   height: 20px;
   background-color: #333;
-  
+  cursor: pointer;
+
 }
 
 
@@ -134,31 +156,36 @@ li {
   display: flex;
   align-items: center;
   justify-content: center;
-  
+  cursor: pointer;
+  z-index: 1;
 }
+
 .move-nav-icon {
   margin-left: 62%;
 }
+
 .nav-list {
   position: absolute;
   width: 60%;
   height: 100%;
   background-color: #333;
   margin-left: -61%;
-  
+
 }
+
 .move-nav-list {
   margin-left: 0%;
 }
+
 .nav-close {
-position: absolute;
+  position: absolute;
   width: 40%;
   height: 100%;
   background-color: transparent;
   right: 0;
   margin-right: -41%;
-  
 }
+
 .move-nav-close {
   margin-right: 0%;
 }
@@ -166,6 +193,7 @@ position: absolute;
 .hide {
   display: none;
 }
+
 .show {
   display: block;
 }
