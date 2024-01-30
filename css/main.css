@@ -24,11 +24,16 @@ body {
 
 .sec-b {
   position: relative;
-  background-color: red;
 }
 
-.descriptive-text, .box-form-contact {
+.descriptive-text {
   position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .bg-sec {
@@ -45,21 +50,26 @@ body {
   background-image: url('../images/mesa-trabalho.jpg');
   opacity: 1;
 }
+
 .creativity {
   background-image: url("../images/creativity.jpeg");
 }
+
 .innovation {
   background-image: url("../images/innovation.jpeg");
 }
+
 .collaborative {
   background-image: url("../images/collaborative.jpeg")
 }
+
 .bg-form-contact {
   background-image: url("../../images/mapinha.jpeg")
 }
-.creativity::after, 
+
+.creativity::after,
 .innovation::after,
-.collaborative::after, 
+.collaborative::after,
 .bg-form-contact::after,
 .hero::after {
   content: "";
@@ -70,6 +80,7 @@ body {
   top: 0;
   left: 0;
 }
+
 .hero::after {
   background: linear-gradient(45deg, rgba(255, 255, 0, 0.5), rgba(255, 0, 0, 0.5));
 }
@@ -85,15 +96,15 @@ h1 {
 h1+hr {
   border: 1px solid #fff;
   box-shadow:
-        -1px 1px 1px #a3a3a3,
-        1px 1px 1px #a3a3a3;
+    -1px 1px 1px #a3a3a3,
+    1px 1px 1px #a3a3a3;
 }
 
 h1~p {
   color: #fff;
   text-shadow:
-        -1px 1px 1px #a3a3a3,
-        1px 1px 1px #a3a3a3;
+    -1px 1px 1px #a3a3a3,
+    1px 1px 1px #a3a3a3;
 }
 
 p {
@@ -110,21 +121,29 @@ hr {
 h2 {
   font-size: 2rem;
 }
+
 h3 {
   font-size: 2rem;
   color: #fff;
-  padding: 2rem 5rem;
+  width: 17rem;
+  height: 4rem;
   border: 2px solid #fff;
   /*border-radius: 5px;*/
   background-color: rgba(255, 255, 255, 0.1);
   box-shadow: 1px 1px 1px #a3a3a3;
   font-variant: small-caps;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-h1, h3 {
+
+h1,
+h3 {
   text-shadow:
-        -1px 1px 1px #a3a3a3,
-        1px 1px 1px #a3a3a3;
+    -1px 1px 1px #a3a3a3,
+    1px 1px 1px #a3a3a3;
 }
+
 .active {
   background-color: #fff;
 }
@@ -146,7 +165,8 @@ h1, h3 {
   z-index: 3;
   pointer-events: none;
 }
-.navigation > * {
+
+.navigation>* {
   pointer-events: auto;
 }
 
@@ -224,6 +244,7 @@ li {
   border-radius: 5px;
   background-color: rgba(51, 51, 51, 0.1);
 }
+
 .footer {
   background-color: #333;
   padding: 1.5rem 0;
@@ -239,7 +260,9 @@ li {
   justify-content: center;
   align-items: center;
   text-align: initial;
+  position: absolute;
 }
+
 .box-form-contact form {
   width: 100%;
   display: flex;
@@ -247,14 +270,17 @@ li {
   text-align: initial;
   text-indent: 1rem;
 }
+
 .box-form-contact label {
   margin-bottom: 0.5rem;
 }
+
 .box-form-contact form input {
   border-bottom: 1px solid #333;
   background-color: transparent;
   text-indent: 1rem;
 }
+
 .box-form-contact form textarea {
   border-bottom: 1px solid #333;
   background-color: transparent;
