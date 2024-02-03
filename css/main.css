@@ -289,8 +289,10 @@ li {
   background-color: transparent;
   text-indent: 1rem;
 }
-
-
+.contact .sec-a,
+.contact .sec-b {
+  flex: 1;
+}
 
 .video-container {
   max-width: 100%;
