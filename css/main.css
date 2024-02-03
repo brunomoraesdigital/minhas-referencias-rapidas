@@ -23,6 +23,8 @@ body {
   align-items: center;
   height: 50%;
   width: 100%;
+  flex: 1;
+
 }
 
 .sec-b {
@@ -288,10 +290,6 @@ li {
   border-bottom: 1px solid #333;
   background-color: transparent;
   text-indent: 1rem;
-}
-.contact .sec-a,
-.contact .sec-b {
-  flex: 1;
 }
 
 .video-container {
