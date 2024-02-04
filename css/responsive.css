@@ -35,15 +35,20 @@
   
   /* ------------- */
   
-  .contact.sec {
+ /* .contact.sec {
     flex-wrap: wrap;
-  }
+  }*/
+  .contact.sec {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  grid-template-columns: 1fr 1fr;
+}
   .contact .sec-a,
   .contact .sec-b {
-  height: 90%;
+  width: 50vw;
   }
-  footer {
-    width: 100%;
+  .footer {
+    grid-column: span 2;
   }
   
     /* ------------- */
