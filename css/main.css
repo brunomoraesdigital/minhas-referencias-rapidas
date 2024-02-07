@@ -258,6 +258,9 @@ li {
   background-color: #333;
   padding: 1rem 0;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .box-form-contact {
