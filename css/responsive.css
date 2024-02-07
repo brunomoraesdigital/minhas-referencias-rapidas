@@ -43,7 +43,7 @@
   }*/
   .contact.sec {
     display: grid;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: 1fr 60px;
     grid-template-columns: 1fr 1fr;
   }
 
