@@ -191,6 +191,7 @@ li {
   height: 1.25rem /**20px**/;
   /*background-color: rgba(51, 51, 51, 0.1);*/
   cursor: pointer;
+  z-index: 2;
 }
 
 .nav-list,
@@ -213,7 +214,7 @@ li {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 1;
+  z-index: 2;
 }
 
 .move-nav-icon {
@@ -225,17 +226,19 @@ li {
   height: 100%;
   background-color: #333;
   margin-left: -61%;
+  z-index: 2;
 }
 .move-nav-list {
   margin-left: 0%;
 }
 .nav-close {
   position: absolute;
-  width: 40%;
+  width: 100%;
   height: 100%;
-  background-color: transparent;
+  background-color: rgba(255,165,0,0.1);
   right: 0;
-  margin-right: -41%;
+  margin-right: -100%;
+  z-index: 1;
 }
 .move-nav-close {
   margin-right: 0%;
