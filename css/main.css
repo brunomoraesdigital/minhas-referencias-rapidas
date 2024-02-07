@@ -5,6 +5,7 @@ html {
 body {
   scroll-snap-type: y mandatory;
   font-family: 'Roboto', sans-serif;
+  overflow-x: hidden;
 }
 
 .sec {
