@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="recursos/reset.css">
+    <link rel="stylesheet" href="recursos/principal.css">
+</head>
+<body>
+    <main id="principal" class="principal">
+      <header id="cabecalho" class="cabecalho">
+        <nav>
+          <label for="nomeIdPokemon">Digite o nome ou ID do Pokémon:</label>
+          <input type="text" id="nomeIdPokemon" placeholder="Ex: pikachu ou 25">
+          <button id="buscarPokemon" class="buscarPokemon">Buscar</button>
+        </nav>
+      </header>
+      <section id="pokedex" class="pokedex">
+        <div id="informacoesPokemon" class="informacoesPokemon">
+          <!-- Informações do Pokémon aparecerão aqui -->
+        </div>
+      </section>
+      <footer id="rodape" class="rodape"></footer>
+    </main>
+    <script src="recursos/pokeapi.js"></script>
+  </body>
+</html>
