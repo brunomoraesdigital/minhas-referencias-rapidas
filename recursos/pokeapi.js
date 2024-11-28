@@ -13,17 +13,20 @@ async function buscarDadosPokemon() {
 
   // Se o campo de entrada estiver vazio, mostramos uma mensagem para o usuário e paramos a execução da função.
   if (!nomeOuId) {
-    informacoesPokemon.innerHTML = '<p>Por favor, digite um nome ou ID válido.</p>';
+    informacoesPokemon.innerHTML = `<div class='idInvalido'><p>ID ou Nome inválido.</p></div>`;
     return; // Se o valor estiver vazio, a função é interrompida aqui.
   }
 
   try {
     // A palavra-chave `await` é usada para esperar a resposta da requisição à API.
     // Estamos fazendo uma requisição GET para a API do Pokémon utilizando o nome ou ID do Pokémon.
+    // fetch(): A função fetch faz uma requisição para a URL fornecida. A URL pode ser de uma API, um arquivo, ou qualquer outro recurso disponível via HTTP.
+    // await: Ao usar await, a execução do código será pausada até que a requisição feita pelo fetch seja concluída. O await espera a Promise retornada pelo fetch ser resolvida antes de continuar a execução do código.
     const resposta = await fetch(`https://pokeapi.co/api/v2/pokemon/${nomeOuId}`);
     
     // Se a resposta da requisição não for ok (status HTTP 200), jogamos um erro.
     if (!resposta.ok) {
+      //O throw é uma instrução em JavaScript usada para lançar (ou gerar) um erro manualmente. Quando você utiliza throw, está criando uma exceção que pode ser capturada por um bloco try...catch ou, caso não seja tratada, interromperá a execução do código.
       throw new Error('Pokémon não encontrado');
     }
 
@@ -37,7 +40,7 @@ async function buscarDadosPokemon() {
     exibirDadosPokemon(dados, fraquezasResistencias);
   } catch (erro) {
     // Se ocorrer qualquer erro (ex: Pokémon não encontrado ou erro na API), mostramos a mensagem de erro.
-    informacoesPokemon.innerHTML = `<p style="color: red;">Erro: ${erro.message}</p>`;
+    informacoesPokemon.innerHTML = `<div class='idInvalido'><p>Erro: ${erro.message}</p></div>`;
   }
 }
 
@@ -81,33 +84,48 @@ function exibirDadosPokemon(pokemon, fraquezasResistencias) {
 
   // Aqui estamos atualizando o conteúdo HTML da área onde vamos exibir as informações sobre o Pokémon.
   informacoesPokemon.innerHTML = `
-    <h2>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h2> 
-    <!-- Aqui capitalizamos a primeira letra do nome do Pokémon para exibi-la de forma mais bonita. -->
-    <img src="${pokemon.sprites.front_default}" alt="Imagem de ${pokemon.name}"> 
-    <!-- Exibimos a imagem do Pokémon. -->
-    <p><strong>ID:</strong> ${pokemon.id}</p>
-    <!-- Mostramos o ID do Pokémon. -->
-    <p><strong>Altura:</strong> ${(pokemon.height * 10)} cm</p>
-    <!-- Exibimos a altura em centímetros (a API retorna em metros, então multiplicamos por 10). -->
-    <p><strong>Peso:</strong> ${(pokemon.weight / 10).toFixed(1)} kg</p>
-    <!-- Exibimos o peso em kg (a API retorna em hectogramas, então dividimos por 10). -->
-    <p><strong>Tipos:</strong> ${pokemon.types.map(tipo => tipo.type.name).join(', ')}</p>
-    <!-- Exibimos os tipos do Pokémon, unindo-os com uma vírgula. -->
-    <p><strong>Fraquezas:</strong> ${
-      fraquezasResistencias.fraquezas.length
-        ? fraquezasResistencias.fraquezas.join(', ') // Se houver fraquezas, mostramos, separando-as por vírgulas.
-        : 'Nenhuma'
-    }</p>
-    <!-- Caso não haja fraquezas, mostramos 'Nenhuma'. -->
-    <p><strong>Resistências:</strong> ${
-      fraquezasResistencias.resistencias.length
-        ? fraquezasResistencias.resistencias.join(', ') // O mesmo para resistências.
-        : 'Nenhuma'
-    }</p>
-    <!-- Caso não haja resistências, mostramos 'Nenhuma'. -->
+    <div class="nomeDoPokemon">
+      <h2>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h2>
+      <!-- Aqui capitalizamos a primeira letra do nome do Pokémon para exibi-la de forma mais bonita. -->
+    </div>
+    <div class="idDoPokemon">
+      <p><strong>ID:</strong> ${pokemon.id}</p>
+      <!-- Mostramos o ID do Pokémon. -->
+    </div>
+    <div class="imagemDoPokemon">
+      <img src="${pokemon.sprites.front_default}" alt="Imagem de ${pokemon.name}">
+      <!-- Exibimos a imagem do Pokémon. -->
+    </div>
+    <div class="alturaDoPokemon">
+      <p><strong>Altura:</strong> ${(pokemon.height * 10)} cm</p>
+      <!-- Exibimos a altura em centímetros (a API retorna em metros, então multiplicamos por 10). -->
+    </div>
+    <div class="pesoDoPokemon">
+      <p><strong>Peso:</strong> ${(pokemon.weight / 10).toFixed(1)} kg</p>
+      <!-- Exibimos o peso em kg (a API retorna em hectogramas, então dividimos por 10). -->
+    </div>
+    <div class="elementoDoPokemon">
+      <p><strong>Elemento:</strong> ${pokemon.types.map(tipo => tipo.type.name).join(', ')}</p>
+      <!-- Exibimos os tipos do Pokémon, unindo-os com uma vírgula. -->
+    </div>
+    <div class="fraquezaDoPokemon">
+      <p><strong>Fraquezas:</strong> ${
+        fraquezasResistencias.fraquezas.length
+          ? fraquezasResistencias.fraquezas.join(', ') // Se houver fraquezas, mostramos, separando-as por vírgulas.
+          : 'Nenhuma'
+      }</p>
+      <!-- Caso não haja fraquezas, mostramos 'Nenhuma'. -->
+    </div>
+    <div class="resistenciaDoPokemon">
+      <p><strong>Resistências:</strong> ${
+        fraquezasResistencias.resistencias.length
+          ? fraquezasResistencias.resistencias.join(', ') // O mesmo para resistências.
+          : 'Nenhuma'
+      }</p>
+      <!-- Caso não haja resistências, mostramos 'Nenhuma'. -->
+    </div>
     <audio autoplay>
       <source src="${somPokemonUrl}" type="audio/mpeg"> 
-      <!-- Adicionamos o áudio do Pokémon. A tag 'autoplay' faz o som começar automaticamente quando a página carrega. -->
       Seu navegador não suporta o elemento de áudio.
     </audio>
   `;
