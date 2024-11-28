@@ -4,7 +4,6 @@ const botaoBuscarPokemon = document.getElementById('buscarPokemon'); // Aqui peg
 const entradaNomeIdPokemon = document.getElementById('nomeIdPokemon'); // Pegamos o campo de entrada (input) onde o usuário digita o nome ou ID do Pokémon.
 const informacoesPokemon = document.getElementById('informacoesPokemon'); // Pegamos a área onde vamos mostrar as informações do Pokémon.
 
-
 // Função para buscar dados do Pokémon
 // Esta função é responsável por pegar o nome ou ID do Pokémon digitado pelo usuário e fazer a requisição à API para buscar as informações.
 async function buscarDadosPokemon() {
@@ -18,7 +17,7 @@ async function buscarDadosPokemon() {
   }
 
   try {
-    // A palavra-chave `await` é usada para esperar a resposta da requisição à API.
+    // Fazemos a requisição à API para buscar os dados do Pokémon
     // Estamos fazendo uma requisição GET para a API do Pokémon utilizando o nome ou ID do Pokémon.
     // fetch(): A função fetch faz uma requisição para a URL fornecida. A URL pode ser de uma API, um arquivo, ou qualquer outro recurso disponível via HTTP.
     // await: Ao usar await, a execução do código será pausada até que a requisição feita pelo fetch seja concluída. O await espera a Promise retornada pelo fetch ser resolvida antes de continuar a execução do código.
@@ -29,15 +28,26 @@ async function buscarDadosPokemon() {
       //O throw é uma instrução em JavaScript usada para lançar (ou gerar) um erro manualmente. Quando você utiliza throw, está criando uma exceção que pode ser capturada por um bloco try...catch ou, caso não seja tratada, interromperá a execução do código.
       throw new Error('Pokémon não encontrado');
     }
-
+    // Pegamos os dados do Pokémon
     // Caso a resposta seja ok, usamos `.json()` para converter os dados recebidos em formato JSON.
     const dados = await resposta.json();
+    // Buscando as informações adicionais do Pokémon, como as descrições
+    const respostaComportamentoAmbiental = await fetch(dados.species.url);
+    const dadosComportamentoAmbiental = await respostaComportamentoAmbiental.json();
+    // Aqui obtemos a descrição da espécie do Pokémon
+    const especiePokemon = dadosComportamentoAmbiental.genera.find(g => g.language.name === 'en');
 
+    // Verifique se a propriedade "flavor_text_entries" existe e tem pelo menos uma descrição
+    if (!dadosComportamentoAmbiental.flavor_text_entries || dadosComportamentoAmbiental.flavor_text_entries.length === 0) {
+      throw new Error("Descrição do Pokémon não encontrada.");
+    }
+
+    // Buscando fraquezas e resistências do Pokémon baseado nos tipos
     // Agora que temos os dados do Pokémon, chamamos a função para buscar fraquezas e resistências.
     const fraquezasResistencias = await buscarFraquezasResistencias(dados.types);
 
     // Finalmente, chamamos a função que vai exibir os dados do Pokémon na página.
-    exibirDadosPokemon(dados, fraquezasResistencias);
+    exibirDadosPokemon(dados, fraquezasResistencias, dadosComportamentoAmbiental, especiePokemon);
   } catch (erro) {
     // Se ocorrer qualquer erro (ex: Pokémon não encontrado ou erro na API), mostramos a mensagem de erro.
     informacoesPokemon.innerHTML = `<div class='idInvalido'><p>Erro: ${erro.message}</p></div>`;
@@ -78,9 +88,15 @@ async function buscarFraquezasResistencias(tipos) {
 
 // Função para exibir informações do Pokémon no DOM
 // Esta função é chamada para exibir todas as informações que encontramos sobre o Pokémon, como nome, imagem, fraquezas, resistências e som.
-function exibirDadosPokemon(pokemon, fraquezasResistencias) {
+function exibirDadosPokemon(pokemon, fraquezasResistencias, comportamentoAmbiental, especie) {
   // Montamos a URL para o som do Pokémon, utilizando o nome do Pokémon. Este arquivo de som está hospedado em um servidor externo.
   const somPokemonUrl = `https://play.pokemonshowdown.com/audio/cries/${pokemon.name.toLowerCase()}.mp3`;
+  const descricaoDaEspecie = especie ? especie.genus : 'Descrição não disponível.';
+  // Verifica se comportamentoAmbiental existe e tem flavor_text_entries
+  //
+  const comportamentoNoAmbiente = comportamentoAmbiental && comportamentoAmbiental.flavor_text_entries
+    ? comportamentoAmbiental.flavor_text_entries.find(entry => entry.language.name === "en")
+    : null;
 
   // Aqui estamos atualizando o conteúdo HTML da área onde vamos exibir as informações sobre o Pokémon.
   informacoesPokemon.innerHTML = `
@@ -96,6 +112,11 @@ function exibirDadosPokemon(pokemon, fraquezasResistencias) {
       <img src="${pokemon.sprites.front_default}" alt="Imagem de ${pokemon.name}">
       <!-- Exibimos a imagem do Pokémon. -->
     </div>
+    
+    <div class="especieDoPokemon">
+      <p><strong>Espécie:</strong> ${descricaoDaEspecie}</p>
+    </div>
+
     <div class="alturaDoPokemon">
       <p><strong>Altura:</strong> ${(pokemon.height * 10)} cm</p>
       <!-- Exibimos a altura em centímetros (a API retorna em metros, então multiplicamos por 10). -->
@@ -123,6 +144,10 @@ function exibirDadosPokemon(pokemon, fraquezasResistencias) {
           : 'Nenhuma'
       }</p>
       <!-- Caso não haja resistências, mostramos 'Nenhuma'. -->
+    </div>
+    </div>
+    <div class="descricaoDoPokemon">
+      <p><strong>Descrição:</strong> ${comportamentoNoAmbiente ? comportamentoNoAmbiente.flavor_text.replace(/\n/g, ' ') : 'Descrição não disponível.'}</p>
     </div>
     <audio autoplay>
       <source src="${somPokemonUrl}" type="audio/mpeg"> 
