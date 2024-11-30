@@ -1,4 +1,6 @@
+/* ******** */
 /* contador */
+/* ******** */
 
 // Acessar os elementos HTML pelos seus IDs para poder manipulá-los no JavaScript
 
@@ -42,7 +44,9 @@ incrementaBotao.addEventListener('click', manipularNumero);
 // Quando o botão de decremento for clicado, a função 'diminuir' será chamada
 decrementaBotao.addEventListener('click', diminuir);
 
+/* ************** */
 /* Mudança de cor */
+/* ************** */
 
 // Seleciona o botão que tem o ID 'mudarCorFundo' da página HTML
 // A variável mudarCorFundoBotao guarda o elemento com o ID 'mudarCorFundo'
@@ -71,7 +75,9 @@ function mudarACor() {
 // Quando o botão for clicado, a função 'mudarACor' será executada, e a cor do fundo vai mudar
 mudarCorFundoBotao.addEventListener('click', mudarACor);
 
+/* ********************* */
 /* Formulário interativo */
+/* ********************* */
 
 // Seleciona o campo de input da pagina HTML onde o usuário vai digitar o nome
 // A variável nomeInputElement guarda o elemento com o ID 'nomeInput'
@@ -111,8 +117,9 @@ function criarSaudacao() {
 // 'addEventListener' vai escutar o clique do usuário no botão e chamar a função 'criarSaudacao' quando isso acontecer
 saudarBotao.addEventListener('click', criarSaudacao);
 
-
+/* ****************** */
 /* Galeria de Imagens */
+/* ****************** */
 
 // Seleciona o botão de "adicionar imagem" da página HTML
 // A variável adicionarImagemBotao guarda o elemento com o ID 'adicionarImagem'
@@ -141,3 +148,74 @@ function criarGaleria() {
 // Adiciona um evento de clique no botão "adicionarImagemBotao"
 // Quando o botão for clicado, a função 'criarGaleria' será executada e uma nova imagem será adicionada à galeria
 adicionarImagemBotao.addEventListener('click', criarGaleria);
+
+/* ********* */
+/* conômetro */
+/* ********* */
+
+const contadorConometroElemento = document.getElementById ('contadorConometro');
+const iniciarConometroBotao = document.getElementById ('iniciarConometro');
+const pausarConometroBotao = document.getElementById ('pausarConometro');
+const pararConometroBotao = document.getElementById ('pararConometro');
+const zerarConometroBotao = document.getElementById ('zerarConometro');
+
+let numeroContagem = 0;
+let numeroAtual = 0;
+
+// Função para formatar a contagem em hora, minuto e segundo
+function formatarTempo(segundos) {
+    const horas = Math.floor(segundos / 3600); // Calcula as horas
+    const minutos = Math.floor((segundos % 3600) / 60); // Calcula os minutos
+    const segundosRestantes = Math.floor(segundos % 60); // Calcula os segundos restantes
+
+    // Adiciona 0 à esquerda se for menor que 10
+    return `${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundosRestantes).padStart(2, '0')}`;
+}
+
+function pressionarBotao (botao) {
+    switch (botao) {
+        case 'iniciar': 
+            // Inicia a contagem, criando um intervalo de 1 segundo entre cada incremento
+            intervalo = setInterval(() => {
+                numeroContagem++; // Incrementa o contador
+                contadorConometroElemento.innerText = formatarTempo(numeroContagem); // Atualiza o display
+                numeroAtual = numeroContagem; // Salva o valor atual para poder pausar corretamente
+            }, 1000); // 1000 milissegundos = 1 segundo
+            break;
+        case 'pausar':
+            clearInterval(intervalo);
+            contadorConometroElemento.innerText = formatarTempo(numeroAtual);
+            break;
+        case 'parar':
+            clearInterval(intervalo);
+            numeroContagem = 0;
+            contadorConometroElemento.innerText = formatarTempo(numeroAtual);
+            break;
+        case 'zerar': 
+        clearInterval(intervalo);
+            numeroContagem = 0;
+            contadorConometroElemento.innerText = formatarTempo(numeroContagem); 
+            break;
+
+        default:
+            break;
+    }
+}
+
+function iniciarContagem () {
+    pressionarBotao('iniciar');
+}
+function pausarContagem () {
+    pressionarBotao('pausar');
+}
+function pararContagem () {
+    pressionarBotao('parar');
+}
+function zerarContagem () {
+    pressionarBotao('zerar');
+}
+
+iniciarConometroBotao.addEventListener ('click', iniciarContagem);
+pausarConometroBotao.addEventListener ('click', pausarContagem);
+pararConometroBotao.addEventListener ('click', pararContagem);
+zerarConometroBotao.addEventListener ('click', zerarContagem);
