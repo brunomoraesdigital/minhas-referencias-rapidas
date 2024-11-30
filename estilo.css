@@ -1,9 +1,16 @@
 /* Reset básico */
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+    text-decoration: none;
+    user-select: none;
+    outline: none;
+    list-style: none;
+  }
 
 body {
     font-family: Arial, sans-serif;
@@ -61,7 +68,7 @@ button:hover {
     background: #5149d8;
 }
 
-#counter {
+#contador {
     font-size: 2rem;
     margin: 1rem 0;
     text-align: center;
@@ -75,19 +82,21 @@ input {
     font-size: 1rem;
 }
 
-#gallery {
+#galeria {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
     margin-top: 1rem;
 }
 
-#gallery img {
+#galeria img {
     width: 100px;
     height: 100px;
     border-radius: 5px;
     object-fit: cover;
     border: 2px solid #ddd;
+    box-shadow: 1px 1px 2px gray;
+    
 }
 
 footer {
@@ -99,4 +108,8 @@ footer {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-size: 1rem;
+}
+
+.saudacao {
+    margin-top: 1rem;
 }
