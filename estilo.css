@@ -118,3 +118,31 @@ footer {
 .saudacao {
     margin-top: 1rem;
 }
+.conometro-secao {
+    position: relative;
+}
+
+.conometro-secao button {
+    width: 6rem;
+}
+.mostraVolta {
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.retomar {
+    background: #49d880;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.retomar:hover {
+    background: #43af7d;
+}

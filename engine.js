@@ -153,7 +153,7 @@ adicionarImagemBotao.addEventListener('click', criarGaleria);
 /* conômetro */
 /* ********* */
 
-const contadorConometroElemento = document.getElementById ('contadorConometro');
+const contadorConometroElemento = document.getElementById('contadorConometro');
 const iniciarConometroBotao = document.getElementById ('iniciarConometro');
 const pausarConometroBotao = document.getElementById ('pausarConometro');
 const pararConometroBotao = document.getElementById ('pararConometro');
@@ -161,61 +161,79 @@ const zerarConometroBotao = document.getElementById ('zerarConometro');
 
 let numeroContagem = 0;
 let numeroAtual = 0;
+let sePausado = null;
+let seLigado = false;
 
-// Função para formatar a contagem em hora, minuto e segundo
-function formatarTempo(segundos) {
-    const horas = Math.floor(segundos / 3600); // Calcula as horas
-    const minutos = Math.floor((segundos % 3600) / 60); // Calcula os minutos
-    const segundosRestantes = Math.floor(segundos % 60); // Calcula os segundos restantes
-
-    // Adiciona 0 à esquerda se for menor que 10
-    return `${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundosRestantes).padStart(2, '0')}`;
-}
-
-function pressionarBotao (botao) {
-    switch (botao) {
-        case 'iniciar': 
-            // Inicia a contagem, criando um intervalo de 1 segundo entre cada incremento
-            intervalo = setInterval(() => {
-                numeroContagem++; // Incrementa o contador
-                contadorConometroElemento.innerText = formatarTempo(numeroContagem); // Atualiza o display
-                numeroAtual = numeroContagem; // Salva o valor atual para poder pausar corretamente
-            }, 1000); // 1000 milissegundos = 1 segundo
+function pressionarBotao (botoes) {
+    switch (botoes) {
+        case 'iniciar':
+            iniciarContagem();
+            sePausado = false;
+            seLigado = true;
             break;
         case 'pausar':
-            clearInterval(intervalo);
-            contadorConometroElemento.innerText = formatarTempo(numeroAtual);
+            if (!sePausado && seLigado) {
+                clearTimeout(contador);
+                sePausado = true;
+                pausarConometroBotao.classList.add('retomar');
+                pausarConometroBotao.textContent = "Retomar";
+            } else if (sePausado && seLigado) {
+                sePausado = false;
+                iniciarContagem();
+                pausarConometroBotao.classList.remove('retomar');
+                pausarConometroBotao.textContent = "Pausar";
+            }
             break;
         case 'parar':
-            clearInterval(intervalo);
+            clearTimeout(contador);
             numeroContagem = 0;
-            contadorConometroElemento.innerText = formatarTempo(numeroAtual);
+            seLigado = false;
+            pausarConometroBotao.classList.remove('retomar');
+            pausarConometroBotao.textContent = "Pausar";
             break;
-        case 'zerar': 
-        clearInterval(intervalo);
+        case 'zerar':
+            clearTimeout(contador);
             numeroContagem = 0;
-            contadorConometroElemento.innerText = formatarTempo(numeroContagem); 
+            seLigado = false;
+            pausarConometroBotao.classList.remove('retomar');
+            pausarConometroBotao.textContent = "Pausar";
+            contadorConometroElemento.innerText = numeroContagem;
             break;
-
         default:
             break;
     }
 }
+function formatarTempo (formatarSegundos) {
+    const horas  = Math.floor(formatarSegundos / 3600);
+    const minutos = Math.floor((formatarSegundos % 3600) / 60);
+    const segundos = Math.floor(formatarSegundos % 60);
+
+    return `${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
+}
 
 function iniciarContagem () {
-    pressionarBotao('iniciar');
-}
-function pausarContagem () {
-    pressionarBotao('pausar');
-}
-function pararContagem () {
-    pressionarBotao('parar');
-}
-function zerarContagem () {
-    pressionarBotao('zerar');
+    numeroContagem++;
+    /*contadorConometroElemento.innerText = numeroContagem;*/
+    contadorConometroElemento.innerHTML = formatarTempo(numeroContagem)
+    numeroAtual = numeroContagem;
+
+    contador = setTimeout(iniciarContagem, 1000);
 }
 
-iniciarConometroBotao.addEventListener ('click', iniciarContagem);
-pausarConometroBotao.addEventListener ('click', pausarContagem);
-pararConometroBotao.addEventListener ('click', pararContagem);
-zerarConometroBotao.addEventListener ('click', zerarContagem);
+function iniciarContador () {
+    pressionarBotao('iniciar');
+}
+function pausarContador () {
+    pressionarBotao('pausar');
+}
+function pararContador () {
+    pressionarBotao('parar');
+}
+function zerarContador () {
+    pressionarBotao('zerar');   
+}
+
+iniciarConometroBotao.addEventListener('click', iniciarContador );
+pausarConometroBotao.addEventListener('click', pausarContador );
+pararConometroBotao.addEventListener('click', pararContador );
+zerarConometroBotao.addEventListener('click', zerarContador );
