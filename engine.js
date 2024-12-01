@@ -23,7 +23,7 @@ let numero = 0;
 // Define a função 'manipularNumero' que será executada quando o botão de incremento for clicado
 function manipularNumero() {
     numero++; // Aumenta o valor de 'numero' em 1 (equivalente a numero = numero + 1)
-    
+
     // Atualiza o conteúdo do elemento 'contadorElemento' para mostrar o valor de 'numero'
     contadorElemento.textContent = numero; // O número na tela vai mudar para o novo valor de 'numero'
 }
@@ -31,7 +31,7 @@ function manipularNumero() {
 // Função chamada 'diminuir' que será executada quando o botão de decremento for clicado
 function diminuir() {
     numero--; // Diminui o valor de 'numero' em 1 (equivalente a numero = numero - 1)
-    
+
     // Atualiza o conteúdo do elemento 'contadorElemento' para mostrar o valor de 'numero'
     contadorElemento.textContent = numero; // O número na tela vai mudar para o novo valor de 'numero'
 }
@@ -81,7 +81,7 @@ mudarCorFundoBotao.addEventListener('click', mudarACor);
 
 // Seleciona o campo de input da pagina HTML onde o usuário vai digitar o nome
 // A variável nomeInputElement guarda o elemento com o ID 'nomeInput'
-const nomeInputElement = document.getElementById('nomeInput'); 
+const nomeInputElement = document.getElementById('nomeInput');
 
 // Seleciona o botão de saudação da página HTML
 // A variável saudarBotao guarda o elemento com o ID 'saudar'
@@ -95,7 +95,7 @@ const saudacaoElento = document.getElementById('saudacao');
 function criarSaudacao() {
     // Pega o valor digitado no campo de input (nome) e remove espaços extras antes e depois
     // O método 'trim()' elimina qualquer espaço em branco do começo e do fim da string
-    const nome = nomeInput.value.trim(); 
+    const nome = nomeInput.value.trim();
 
     // Capitaliza a primeira letra do nome e converte o restante para minúsculas
     // 'charAt(0)' pega o primeiro caractere do nome e 'toUpperCase()' transforma ele em maiúsculo
@@ -134,12 +134,12 @@ function criarGaleria() {
     // Cria um novo elemento de imagem (<img>) na página
     // O método 'createElement' cria um novo elemento HTML especificado como argumento
     const tagImg = document.createElement('img');
-    
+
     // Define o atributo 'src' da imagem com um URL de uma imagem aleatória
     // A API 'https://picsum.photos' foi usada para gerar uma imagem aleatóriait 
     // 'Math.random()' gera um número aleatório, que é anexado à URL para garantir uma nova imagem a cada clique
     tagImg.src = `https://picsum.photos/100?random=${Math.random()}`;
-    
+
     // Adiciona a imagem criada ao final do elemento de galeria
     // 'appendChild' é usado para adicionar o novo elemento de imagem dentro do elemento 'galeria'
     galeriaElemento.appendChild(tagImg);
@@ -154,10 +154,10 @@ adicionarImagemBotao.addEventListener('click', criarGaleria);
 /* ********* */
 
 const contadorConometroElemento = document.getElementById('contadorConometro');
-const iniciarConometroBotao = document.getElementById ('iniciarConometro');
-const pausarConometroBotao = document.getElementById ('pausarConometro');
-const pararConometroBotao = document.getElementById ('pararConometro');
-const zerarConometroBotao = document.getElementById ('zerarConometro');
+const iniciarConometroBotao = document.getElementById('iniciarConometro');
+const pausarConometroBotao = document.getElementById('pausarConometro');
+const pararConometroBotao = document.getElementById('pararConometro');
+const zerarConometroBotao = document.getElementById('zerarConometro');
 const voltaConometroBotao = document.getElementById('voltaConometro');
 const mostrarVoltasElmento = document.getElementById('mostrarVoltas');
 
@@ -168,13 +168,15 @@ let seLigado = false;
 let guardarVoltas = [];
 let indiceDasVoltas = 0;
 
-function pressionarBotao (botoes) {
+function pressionarBotao(botoes) {
     switch (botoes) {
         case 'iniciar':
-            iniciarContagem();
-            resetarCronometro('zerar');
-            sePausado = false;
-            seLigado = true;
+            if (!sePausado && !seLigado) {
+                resetarCronometro('zerar');
+                iniciarContagem();
+                sePausado = false;
+                seLigado = true;
+            }
             break;
         case 'pausar':
             if (!sePausado && seLigado) {
@@ -194,6 +196,7 @@ function pressionarBotao (botoes) {
             resetarCronometro();
             numeroContagem = 0;
             seLigado = false;
+            sePausado = null;
             pausarConometroBotao.classList.remove('retomar');
             pausarConometroBotao.textContent = "Pausar";
             break;
@@ -202,12 +205,13 @@ function pressionarBotao (botoes) {
             resetarCronometro('zerar');
             numeroContagem = 0;
             seLigado = false;
+            sePausado = null;
             pausarConometroBotao.classList.remove('retomar');
             pausarConometroBotao.textContent = "Pausar";
-            contadorConometroElemento.innerText = numeroContagem;
+            contadorConometroElemento.innerText = formatarTempo(numeroContagem);
             break;
         case 'registrar':
-            criarRegistroDasVoltas (numeroAtual);
+            criarRegistroDasVoltas(numeroAtual);
             break;
         default:
             break;
@@ -220,48 +224,44 @@ function criarRegistroDasVoltas(RegistroDasVoltas) {
 
     if (!sePausado && seLigado) {
 
-    guardarVoltas.push(RegistroDasVoltas);
-    
-    let tempoFormatado = formatarTempo(guardarVoltas[indiceDasVoltas++]);
+        guardarVoltas.push(RegistroDasVoltas);
 
-    console.log(tempoFormatado);
+        let tempoFormatado = formatarTempo(guardarVoltas[indiceDasVoltas++]);
 
-    const tagP = document.createElement('p');
-    tagP.id = `volta-${indiceDasVoltas}`;
-    
-    // Coloca o tempo formatado dentro da tag <p>
-    tagP.textContent = `Volta ${indiceDasVoltas}: ${tempoFormatado}`;
+        console.log(tempoFormatado);
 
-    mostrarVoltas.appendChild(tagP);
+        const tagP = document.createElement('p');
+        tagP.id = `volta-${indiceDasVoltas}`;
+
+        // Coloca o tempo formatado dentro da tag <p>
+        tagP.textContent = `Volta ${indiceDasVoltas}: ${tempoFormatado}`;
+
+        mostrarVoltas.appendChild(tagP);
     }
 }
 function resetarCronometro(botoes) {
-    
-   
+
+
     if (botoes === 'zerar') {
         mostrarVoltas.innerHTML = '';  // Limpa as tags <p> quando zerar é pressionado
         console.log('entrou no if de zerar');
     }
-    
-    // Limpa o array de voltas
     guardarVoltas = [];  // Ou guardarVoltas.length = 0;
-    // Reseta o índice (garante que novas voltas comecem do zero)
     indiceDasVoltas = 0;
-    // Se houver outras variáveis associadas ao cronômetro, elas também devem ser resetadas.
     tempoAtual = 0;  // Exemplo, se houver um contador de tempo.
     console.log("Cronômetro resetado e pronto para novas voltas.");
 }
 
 
-function formatarTempo (formatarSegundos) {
-    const horas  = Math.floor(formatarSegundos / 3600);
+function formatarTempo(formatarSegundos) {
+    const horas = Math.floor(formatarSegundos / 3600);
     const minutos = Math.floor((formatarSegundos % 3600) / 60);
     const segundos = Math.floor(formatarSegundos % 60);
 
     return `${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
 }
 
-function iniciarContagem () {
+function iniciarContagem() {
     numeroContagem++;
     /*contadorConometroElemento.innerText = numeroContagem;*/
     contadorConometroElemento.innerHTML = formatarTempo(numeroContagem)
@@ -271,24 +271,24 @@ function iniciarContagem () {
 }
 
 
-function iniciarContador () {
+function iniciarContador() {
     pressionarBotao('iniciar');
 }
-function pausarContador () {
+function pausarContador() {
     pressionarBotao('pausar');
 }
-function pararContador () {
+function pararContador() {
     pressionarBotao('parar');
 }
-function zerarContador () {
-    pressionarBotao('zerar');   
+function zerarContador() {
+    pressionarBotao('zerar');
 }
-function registrarVolta () {
+function registrarVolta() {
     pressionarBotao('registrar');
 }
 
-iniciarConometroBotao.addEventListener('click', iniciarContador );
-pausarConometroBotao.addEventListener('click', pausarContador );
-pararConometroBotao.addEventListener('click', pararContador );
-zerarConometroBotao.addEventListener('click', zerarContador );
+iniciarConometroBotao.addEventListener('click', iniciarContador);
+pausarConometroBotao.addEventListener('click', pausarContador);
+pararConometroBotao.addEventListener('click', pararContador);
+zerarConometroBotao.addEventListener('click', zerarContador);
 voltaConometroBotao.addEventListener('click', registrarVolta);
