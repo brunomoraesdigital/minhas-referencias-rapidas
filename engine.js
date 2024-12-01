@@ -158,11 +158,15 @@ const iniciarConometroBotao = document.getElementById ('iniciarConometro');
 const pausarConometroBotao = document.getElementById ('pausarConometro');
 const pararConometroBotao = document.getElementById ('pararConometro');
 const zerarConometroBotao = document.getElementById ('zerarConometro');
+const voltaConometroBotao = document.getElementById('voltaConometro');
+const mostrarVoltasElmento = document.getElementById('mostrarVoltas');
 
 let numeroContagem = 0;
 let numeroAtual = 0;
 let sePausado = null;
 let seLigado = false;
+let guardarVoltas = [];
+let indiceDasVoltas = 0;
 
 function pressionarBotao (botoes) {
     switch (botoes) {
@@ -199,10 +203,38 @@ function pressionarBotao (botoes) {
             pausarConometroBotao.textContent = "Pausar";
             contadorConometroElemento.innerText = numeroContagem;
             break;
+        case 'registrar':
+            criarRegistroDasVoltas (numeroAtual);
+            break;
         default:
             break;
     }
 }
+
+
+
+function criarRegistroDasVoltas(RegistroDasVoltas) {
+
+    if (!sePausado && seLigado) {
+
+    guardarVoltas.push(RegistroDasVoltas);
+    
+    let tempoFormatado = formatarTempo(guardarVoltas[indiceDasVoltas++]);
+
+    console.log(tempoFormatado);
+
+    const tagP = document.createElement('p');
+    tagP.id = `volta-${indiceDasVoltas}`;
+    
+    // Coloca o tempo formatado dentro da tag <p>
+    tagP.textContent = `Volta ${indiceDasVoltas}: ${tempoFormatado}`;
+
+    mostrarVoltas.appendChild(tagP);
+    }
+}
+
+
+
 function formatarTempo (formatarSegundos) {
     const horas  = Math.floor(formatarSegundos / 3600);
     const minutos = Math.floor((formatarSegundos % 3600) / 60);
@@ -220,6 +252,7 @@ function iniciarContagem () {
     contador = setTimeout(iniciarContagem, 1000);
 }
 
+
 function iniciarContador () {
     pressionarBotao('iniciar');
 }
@@ -232,8 +265,12 @@ function pararContador () {
 function zerarContador () {
     pressionarBotao('zerar');   
 }
+function registrarVolta () {
+    pressionarBotao('registrar');
+}
 
 iniciarConometroBotao.addEventListener('click', iniciarContador );
 pausarConometroBotao.addEventListener('click', pausarContador );
 pararConometroBotao.addEventListener('click', pararContador );
 zerarConometroBotao.addEventListener('click', zerarContador );
+voltaConometroBotao.addEventListener('click', registrarVolta);
