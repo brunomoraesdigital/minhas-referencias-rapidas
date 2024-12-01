@@ -172,6 +172,7 @@ function pressionarBotao (botoes) {
     switch (botoes) {
         case 'iniciar':
             iniciarContagem();
+            resetarCronometro('zerar');
             sePausado = false;
             seLigado = true;
             break;
@@ -190,6 +191,7 @@ function pressionarBotao (botoes) {
             break;
         case 'parar':
             clearTimeout(contador);
+            resetarCronometro();
             numeroContagem = 0;
             seLigado = false;
             pausarConometroBotao.classList.remove('retomar');
@@ -197,6 +199,7 @@ function pressionarBotao (botoes) {
             break;
         case 'zerar':
             clearTimeout(contador);
+            resetarCronometro('zerar');
             numeroContagem = 0;
             seLigado = false;
             pausarConometroBotao.classList.remove('retomar');
@@ -232,7 +235,22 @@ function criarRegistroDasVoltas(RegistroDasVoltas) {
     mostrarVoltas.appendChild(tagP);
     }
 }
-
+function resetarCronometro(botoes) {
+    
+   
+    if (botoes === 'zerar') {
+        mostrarVoltas.innerHTML = '';  // Limpa as tags <p> quando zerar é pressionado
+        console.log('entrou no if de zerar');
+    }
+    
+    // Limpa o array de voltas
+    guardarVoltas = [];  // Ou guardarVoltas.length = 0;
+    // Reseta o índice (garante que novas voltas comecem do zero)
+    indiceDasVoltas = 0;
+    // Se houver outras variáveis associadas ao cronômetro, elas também devem ser resetadas.
+    tempoAtual = 0;  // Exemplo, se houver um contador de tempo.
+    console.log("Cronômetro resetado e pronto para novas voltas.");
+}
 
 
 function formatarTempo (formatarSegundos) {
