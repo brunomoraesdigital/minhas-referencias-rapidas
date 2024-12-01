@@ -7,7 +7,7 @@
     font: inherit;
     vertical-align: baseline;
     text-decoration: none;
-    /*user-select: none;*/
+    user-select: none;
     outline: none;
     list-style: none;
   }
@@ -133,12 +133,22 @@ footer {
     right: 20px;
 }
 
-/*.retomar {
-
+.retomar {
+    background: #399c46;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    animation: none; /* Inicialmente sem animação */
 }
+
 .retomar:hover {
-    
-}*/
+    background: #2f853a;
+    animation: blink 1s ease-in-out infinite; /* Inicia a animação de piscada */
+}
+
 
 .mostrarVoltas {
     width: 8rem;

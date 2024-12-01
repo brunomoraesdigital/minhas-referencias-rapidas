@@ -162,11 +162,12 @@ const voltaConometroBotao = document.getElementById('voltaConometro');
 const mostrarVoltasElmento = document.getElementById('mostrarVoltas');
 
 let numeroContagem = 0;
-let numeroAtual = 0;
 let sePausado = null;
 let seLigado = false;
 let guardarVoltas = [];
 let indiceDasVoltas = 0;
+let calculaVolta = 0;
+let tempoFormatado = 0;
 
 function pressionarBotao(botoes) {
     switch (botoes) {
@@ -211,31 +212,31 @@ function pressionarBotao(botoes) {
             contadorConometroElemento.innerText = formatarTempo(numeroContagem);
             break;
         case 'registrar':
-            criarRegistroDasVoltas(numeroAtual);
+            criarRegistroDasVoltas(numeroContagem);
             break;
         default:
             break;
     }
 }
 
-
-
 function criarRegistroDasVoltas(RegistroDasVoltas) {
 
+
     if (!sePausado && seLigado) {
-
         guardarVoltas.push(RegistroDasVoltas);
-
-        let tempoFormatado = formatarTempo(guardarVoltas[indiceDasVoltas++]);
-
-        console.log(tempoFormatado);
-
+        if (indiceDasVoltas >= 1) {
+            
+        calculaVolta = (guardarVoltas[indiceDasVoltas]) - (guardarVoltas[indiceDasVoltas-1]);
+        indiceDasVoltas++;
+        tempoFormatado = formatarTempo(calculaVolta);
+        } else {
+            
+        tempoFormatado = formatarTempo(guardarVoltas[indiceDasVoltas]);
+        indiceDasVoltas++;
+        }
         const tagP = document.createElement('p');
-        tagP.id = `volta-${indiceDasVoltas}`;
-
-        // Coloca o tempo formatado dentro da tag <p>
-        tagP.textContent = `Volta ${indiceDasVoltas}: ${tempoFormatado}`;
-
+        tagP.id = `volta-${indiceDasVoltas}`; 
+        tagP.textContent = `Volta ${indiceDasVoltas}: ${tempoFormatado}`; 
         mostrarVoltas.appendChild(tagP);
     }
 }
@@ -252,7 +253,6 @@ function resetarCronometro(botoes) {
     console.log("Cronômetro resetado e pronto para novas voltas.");
 }
 
-
 function formatarTempo(formatarSegundos) {
     const horas = Math.floor(formatarSegundos / 3600);
     const minutos = Math.floor((formatarSegundos % 3600) / 60);
@@ -265,7 +265,6 @@ function iniciarContagem() {
     numeroContagem++;
     /*contadorConometroElemento.innerText = numeroContagem;*/
     contadorConometroElemento.innerHTML = formatarTempo(numeroContagem)
-    numeroAtual = numeroContagem;
 
     contador = setTimeout(iniciarContagem, 1000);
 }
