@@ -1,64 +1,77 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Praticando JavaScript</title>
-    <link rel="stylesheet" href="estilo.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pong - Jogo de Atari</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
 </head>
+
 <body>
-    <header>
-        <h1>Praticando JavaScript</h1>
-        <p>Evoluindo a cada código</p>
+  <div class="container" id="container">
+    <div id="loader" class="loader">
+      <p><span id="loading-text" class="loading-text">Carregando idéias&nbsp;</span><span id="dots"></span></p>
+      <canvas id="canvasLoading" class="canvasLoading" width="250" height="65"></canvas> <!-- Aqui muda! -->
+      <!--<div class="spinner"></div>-->
+    </div>
+    <header class="cabecalho">
+      <h1>Pong</h1>
+      <h2>Minha versão desse clássico</h2>
     </header>
-    <main>
-        <!-- Contador -->
-        <section class="contador-secao">
-            <h2>Contador</h2>
-            <p id="contador">0</p>
-            <button id="incrementa">Incrementar</button>
-            <button id="decrementa">Decrementar</button>
-        </section>
+    <main id="areaDoJogo" class="areaDoJogo">
+      <div id="caixaDoJogo" class="caixaDoJogo">
 
-        <!-- Mudança de cor -->
-        <section class="corDoFundo-secao">
-            <h2>Trocar Cor de Fundo</h2>
-            <button id="mudarCorFundo">Mudar Cor</button>
-        </section>
-
-        <!-- Formulário -->
-        <section class="formulario-secao">
-            <h2>Formulário Interativo</h2>
-            <label for="nomeInput">Qual é o seu nome:</label>
-            <input type="text" id="nomeInput" placeholder="Seu nome">
-            <button id="saudar">Saudar</button>
-            <p id="saudacao" class="saudacao">&nbsp;</p>
-        </section>
-
-        <!-- Galeria de Imagens -->
-        <section class="galeria-secao">
-            <h2>Galeria</h2>
-            <button id="adicionarImagem">Adicionar Imagem</button>
-            <div id="galeria"></div>
-        </section>
-
-        <!-- conômetro -->
-         <section class="conometro-secao">
-            <h2>Conômetro</h2>
-            <p id="contadorConometro" class="contadorConometro">00:00:00</p>
-            <button id="iniciarConometro">Iniciar</button>
-            <button id="pausarConometro">Pausar</button>
-            <button id="pararConometro">Parar</button>
-            <button id="zerarConometro">Zerar</button>
-            <button id="voltaConometro" class="voltaConometro">Volta</button>
-            <div id="mostrarVoltas" class="mostrarVoltas"></div>
-         </section>
-
-        <!-- fim -->
+        <div id="interface" class="interface">
+          <div id="interfaceLadoEsq" class="interfaceLadoEsq">
+            <div class="nomePontos">
+              Pontos
+            </div>
+            <div id="contadorPontos" class="contadorPontos">
+              000000
+            </div>
+          </div>
+          <div id="interfaceCentro" class="interfaceCentro">
+            <div id="nomeRecorde" class="nomeRecorde">
+              RECORDE
+            </div>
+            <div id="contadorRecorde" class="contadorPontos">
+              000000
+            </div>
+          </div>
+          <div id="interfaceLadoDir" class="interfaceLadoDir">
+            <div id="nomeNivel" class="nomeNivel">
+              nivel-01
+            </div>
+            <div id="vidas" class="vidas">
+              <span>☻</span><span>☻</span><span>☻</span><span>☻</span><span>☻</span>
+            </div>
+          </div>
+        </div>
+        <div id="tabuleiro" class="tabuleiro">
+          <div id="raquete" class="raquete"></div>
+          <div id="bola" class="bola"></div>
+          <button class="botao" id="botao" onclick="iniciar_jogo()">iniciar</button>
+          <div id="temporizador" class="temporizador"></div>
+          <div id="mensagemFimDoJogo" class="mensagemFimDoJogo"></div>
+        </div>
+      </div>
     </main>
-    <footer>
-        <p>&copy; 2024 Bruno Moraes. Praticando e aprendendo JavaScript</p>
+    <footer class="rodape">
+      <p id="ano-atual">
+        &#169; 2025 Bruno Moraes | Evoluindo a cada código
+      </p>
     </footer>
-    <script src="engine.js"></script>
+    <div id="dica" class="dica">
+      <p>Pode ser controlado com o <span class="textoDica">dedo</span> ☝️ , <span class="textoDica">mouse</span> 🖱️ ou <span class="textoDica">teclas</span> <span class="tec">◄</span> <span class="tec">►</span></p>
+    </div>
+  </div>
+  <script src="engine.js"></script>
 </body>
+
 </html>
