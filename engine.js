@@ -227,3 +227,51 @@ window.addEventListener('resize', debounce(aoRedimensionar, 100));
 (function inicializar() {
     aoRedimensionar();
 })();
+
+
+//-------------------------------------------------------
+
+let areaJogo = document.getElementById("area-jogo");
+let espaco = canvasLoading.getContext("2d");
+
+let dimensaoDoPixel = 10;
+
+let desenhoNave = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+];
+
+let nave = {
+  normal: {
+    nome: "normal",
+    matriz: desenhoNave
+  }
+} 
+
+desenharNave: function (acaoNave, posNaveX, posNaveY) {
+  let acaoNaveEscolhida = this[acaoNave];
+    if (acaoNaveEscolhida) {
+      for (let i = 0; i < acaoNaveEscolhida.matriz.length; i++) {
+        for (let j = 0; j < acaoNaveEscolhida.matriz[i].length; j++) {
+          if (acaoNaveEscolhida.matriz[i][j] === 1) {  // Verifica se é parte da "imagem"
+            ctx.fillStyle = "white";  // Pode mudar a cor ou o estilo conforme necessário
+            ctx.fillRect((posX * 10) + j * tamanhoPixel, (posY * 10) + i * tamanhoPixel, tamanhoPixel, tamanhoPixel);
+          }
+        }
+      }
+    }
+
+}
