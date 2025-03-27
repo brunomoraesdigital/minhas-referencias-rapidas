@@ -231,12 +231,35 @@ window.addEventListener('resize', debounce(aoRedimensionar, 100));
 
 //-------------------------------------------------------
 
+// Obtém o elemento <canvas>
 let areaJogo = document.getElementById("area-jogo");
-let espaco = canvasLoading.getContext("2d");
+
+let espaco = areaJogo.getContext("2d");
 
 let dimensaoDoPixel = 10;
 
-let desenhoNave = [
+function ajustarCanvas() {
+  let dimensoes = obterDimensoesDaTela();
+  let altura = dimensoes.altura;
+  let largura = dimensoes.largura;
+
+  areaJogo.height = altura;
+  areaJogo.width = largura;
+  
+
+  console.log(altura + " " + largura); 
+}
+
+ajustarCanvas();
+
+
+
+// Matriz que representa o desenho da nave
+let desenhoDaNave = [
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -247,31 +270,42 @@ let desenhoNave = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
 ];
 
 let nave = {
   normal: {
     nome: "normal",
-    matriz: desenhoNave
+    matriz: desenhoDaNave
   }
-} 
+};
 
-desenharNave: function (acaoNave, posNaveX, posNaveY) {
-  let acaoNaveEscolhida = this[acaoNave];
-    if (acaoNaveEscolhida) {
-      for (let i = 0; i < acaoNaveEscolhida.matriz.length; i++) {
-        for (let j = 0; j < acaoNaveEscolhida.matriz[i].length; j++) {
-          if (acaoNaveEscolhida.matriz[i][j] === 1) {  // Verifica se é parte da "imagem"
-            ctx.fillStyle = "white";  // Pode mudar a cor ou o estilo conforme necessário
-            ctx.fillRect((posX * 10) + j * tamanhoPixel, (posY * 10) + i * tamanhoPixel, tamanhoPixel, tamanhoPixel);
-          }
+// Função para desenhar a nave no canvas
+function desenharNaveEmMovimento(acaoNave, posNaveX, posNaveY) {
+  let acaoNaveEscolhida = nave[acaoNave];
+
+  if (acaoNaveEscolhida) {
+    for (let i = 0; i < acaoNaveEscolhida.matriz.length; i++) {
+      for (let j = 0; j < acaoNaveEscolhida.matriz[i].length; j++) {
+        if (acaoNaveEscolhida.matriz[i][j] === 1) {  
+          espaco.fillStyle = "white";
+          espaco.fillRect(
+            (posNaveX * 10) + j * dimensaoDoPixel, 
+            (posNaveY * 10) + i * dimensaoDoPixel, 
+            dimensaoDoPixel, 
+            dimensaoDoPixel
+          );
         }
       }
     }
-
+  }
 }
+
+// Função para chamar o desenho da nave
+function desenharNave(acao, posicaoNave) {
+  let { x, y } = posicaoNave; 
+  desenharNaveEmMovimento(acao, x, y); 
+}
+
+// Chamada da função para desenhar a nave na tela
+desenharNave("normal", { x: 1, y: 1 });
