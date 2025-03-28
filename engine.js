@@ -209,85 +209,55 @@ function atualizarTamanhoDaFonte(alturaTela) {
   document.documentElement.style.setProperty('--tamanho-da-fonte', tamanhoDaFonte + 'px');
 }
 
-function aoRedimensionar() {
-  let dimensoes = obterDimensoesDaTela();
-  atualizarTamanhoDaFonte(dimensoes.altura);
-}
+/* ***************************
+ * AJUSTE DINÂMICO DO CANVAS *
+ *************************** */
 
-function debounce(funcao, tempo) {
-  let tempoEspera;
-  return function () {
-    clearTimeout(tempoEspera);
-    tempoEspera = setTimeout(funcao, tempo);
+let containerJogo = document.getElementById("container-jogo");
+
+function obterDimensoesDosElementos(elemento) {
+  let dimensoes = elemento.getBoundingClientRect();
+  return {
+    alturaEl: dimensoes.height,
+    larguraEl: dimensoes.width
   };
 }
 
-window.addEventListener('resize', debounce(aoRedimensionar, 100));
+function ajustarCanvas() {
 
-(function inicializar() {
-  aoRedimensionar();
-})();
+  let dimensoesContainerJogo = obterDimensoesDosElementos(containerJogo);
 
+  areaJogo.height = (dimensoesContainerJogo.alturaEl);
+  areaJogo.width = (dimensoesContainerJogo.larguraEl);
 
-//-------------------------------------------------------
+  console.log("alt " + dimensoesContainerJogo.alturaEl+ " x larg " + dimensoesContainerJogo.larguraEl)
 
-let cabecalho = document.getElementById("cabecalho");
-let areaDoJogo = document.getElementById("areaDoJogo");
-let rodape = document.getElementById("rodape");
-
-function obterDimensoeDosElementos(elemento) {
-  return {
-    alturaEl: elemento.getBoundingClientRect(),
-    larguraEl: elemento.getBoundingClientRect()
-  }
 }
 
+/* ****************************
+ * *
+ **************************** */
 let areaJogo = document.getElementById("area-jogo");
 let espaco = areaJogo.getContext("2d");
 
-let dimensaoDoPixel = 10;
+let dimensaoDoPixel = 5;
 
-function ajustarCanvas() {
-  let dimensoesDaTela = obterDimensoesDaTela();
-  let alturaTela = dimensoesDaTela.altura;
-  let larguraTela = dimensoesDaTela.largura;
-
-  let dimensoesCabecalho = obterDimensoeDosElementos(cabecalho);
-  let dimensoesAreaDoJogo = obterDimensoeDosElementos(areaDoJogo);
-  let dimensoesRodape = obterDimensoeDosElementos(rodape);
-
-
-/*
-  areaJogo.height = (altura * 60) / 100;
-  areaJogo.width = (largura * 70) / 100;
-*/
-
-  console.log(alturaTela + " " + larguraTela);
-  console.log()
-
-}
-
-ajustarCanvas();
-
-
-
-/*
 let desenhoDaNave = [
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  [0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 0, 0],
+  [0, 0, 1, 0, 0, 0, 1, 2, 1, 0, 0, 0, 1, 0, 0],
+  [0, 0, 1, 0, 0, 1, 1, 2, 1, 1, 0, 0, 1, 0, 0],
+  [0, 0, 1, 1, 0, 1, 2, 2, 2, 1, 0, 1, 1, 0, 0],
+  [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+  [0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0]
 ];
 
 let nave = {
@@ -303,8 +273,11 @@ function desenharNaveEmMovimento(acaoNave, posNaveX, posNaveY) {
   if (acaoNaveEscolhida) {
     for (let i = 0; i < acaoNaveEscolhida.matriz.length; i++) {
       for (let j = 0; j < acaoNaveEscolhida.matriz[i].length; j++) {
-        if (acaoNaveEscolhida.matriz[i][j] === 1) {  
+        if (acaoNaveEscolhida.matriz[i][j] !== 0) {  
           espaco.fillStyle = "white";
+          if (acaoNaveEscolhida.matriz[i][j] === 2) {
+            espaco.fillStyle = "skyblue";
+          }
           espaco.fillRect(
             (posNaveX * 10) + j * dimensaoDoPixel, 
             (posNaveY * 10) + i * dimensaoDoPixel, 
@@ -322,7 +295,77 @@ function desenharNave(acao, posicaoNave) {
   desenharNaveEmMovimento(acao, x, y); 
 }
 
-desenharNave("normal", { x: 1, y: 1 });
+/* *****************************
+ * DIMENSÕES DOS DESENHOS  *
+ ***************************** */
+function obterDimensoesDosDesenhos(matriz) {
+  var minLinha = matriz.length;
+  var maxLinha = -1;
+  var minColuna = matriz[0].length;
+  var maxColuna = -1;
+  
+  // Percorre cada linha e coluna da matriz
+  for (var i = 0; i < matriz.length; i++) {
+    for (var j = 0; j < matriz[i].length; j++) {
+      if (matriz[i][j] === 1) {
+        if (i < minLinha) {
+          minLinha = i;
+        }
+        if (i > maxLinha) {
+          maxLinha = i;
+        }
+        if (j < minColuna) {
+          minColuna = j;
+        }
+        if (j > maxColuna) {
+          maxColuna = j;
+        }
+      }
+    }
+  }
+  
+  // Se não encontrou nenhum pixel (nenhum 1)
+  if (maxLinha < minLinha) {
+    return { largura: 0, altura: 0 };
+  }
+  
+  // Calcula a largura e a altura em "células" da matriz
+  var altura = maxLinha - minLinha + 1;
+  var largura = maxColuna - minColuna + 1;
+  
+  return { largura: largura, altura: altura };
+}
+
+var dimensoes = obterDimensoesDosDesenhos(desenhoDaNave);
+console.log("Largura: " + dimensoes.largura);
+console.log("Altura: " + dimensoes.altura);
 
 
-*/
+
+/* ***********************************
+ * APLICAR AJUSTES AO REDIMENSIONAR  *
+ *********************************** */
+
+function aoRedimensionar() {
+  let dimensoes = obterDimensoesDaTela();
+  atualizarTamanhoDaFonte(dimensoes.altura);
+
+  
+  ajustarCanvas();
+  desenharNave("normal", { x: 1, y: 1 });
+}
+
+function debounce(funcao, tempo) {
+  let tempoEspera;
+  return function () {
+    clearTimeout(tempoEspera);
+    tempoEspera = setTimeout(funcao, tempo);
+  };
+}
+
+window.addEventListener('resize', debounce(aoRedimensionar, 100));
+
+(function inicializar() {
+  aoRedimensionar();
+})();
+
