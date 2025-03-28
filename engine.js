@@ -110,72 +110,72 @@ let velocidade = 2.5; // Quantidade de pixels que ele se move por frame
 let passo = 1; // Alterna entre os sprites
 
 function loop() {
-    ctx.clearRect(0, 0, canvasLoading.width, canvasLoading.height); // Limpa o canvas
+  ctx.clearRect(0, 0, canvasLoading.width, canvasLoading.height); // Limpa o canvas
 
-    // Desenha o mago na nova posição
-    if (passo === 1) {
-        desenharMago("andando1", { x: posX, y: posY });
-        passo = 2;
-    } else if (passo === 2) {
-        desenharMago("parado", { x: posX, y: posY });
-        passo = 3;
-    } else {
-        desenharMago("andando2", { x: posX, y: posY });
-        passo = 1;
-    }
+  // Desenha o mago na nova posição
+  if (passo === 1) {
+    desenharMago("andando1", { x: posX, y: posY });
+    passo = 2;
+  } else if (passo === 2) {
+    desenharMago("parado", { x: posX, y: posY });
+    passo = 3;
+  } else {
+    desenharMago("andando2", { x: posX, y: posY });
+    passo = 1;
+  }
 
-    // Move o mago para a direita
-    posX += velocidade;
+  // Move o mago para a direita
+  posX += velocidade;
 
-    if (posX * tamanhoPixel > 80) {
-        posX = -5; // Volta para o começo
-    }
+  if (posX * tamanhoPixel > 80) {
+    posX = -5; // Volta para o começo
+  }
 
-    setTimeout(() => {
-        requestAnimationFrame(loop);
-    }, 200);  // Altera o sprite a cada 200ms
+  setTimeout(() => {
+    requestAnimationFrame(loop);
+  }, 200);  // Altera o sprite a cada 200ms
 }
 
-(function() {
-    var loader = document.getElementById("loader");
-    if (loader) {
-      loader.style.display = "flex";
+(function () {
+  var loader = document.getElementById("loader");
+  if (loader) {
+    loader.style.display = "flex";
+  }
+
+  loop();
+
+  var dots = document.getElementById("dots");
+
+  function updateDots() {
+    if (dots.textContent.length >= 3) {
+      dots.textContent = "";
+    } else {
+      dots.textContent += ".";
+    }
+  }
+
+  var intervalId = setInterval(updateDots, 333);
+
+  // Registra o tempo de início
+  var startTime = new Date().getTime();
+  var minDuration = 3000; // 3 segundos
+
+  window.addEventListener("load", function () {
+    var elapsed = new Date().getTime() - startTime;
+    var remaining = minDuration - elapsed;
+    if (remaining < 0) {
+      remaining = 0;
     }
 
-    loop();
-  
-    var dots = document.getElementById("dots");
-  
-    function updateDots() {
-      if (dots.textContent.length >= 3) {
-        dots.textContent = "";
-      } else {
-        dots.textContent += ".";
+    setTimeout(function () {
+      clearInterval(intervalId);
+      if (loader) {
+        loader.style.display = "none";
       }
-    }
-    
-    var intervalId = setInterval(updateDots, 333);
-  
-    // Registra o tempo de início
-    var startTime = new Date().getTime();
-    var minDuration = 3000; // 3 segundos
-  
-    window.addEventListener("load", function() {
-      var elapsed = new Date().getTime() - startTime;
-      var remaining = minDuration - elapsed;
-      if (remaining < 0) {
-        remaining = 0;
-      }
-      
-      setTimeout(function() {
-        clearInterval(intervalId);
-        if (loader) {
-          loader.style.display = "none";
-        }
-      }, remaining);
-    });
-  })();
-  
+    }, remaining);
+  });
+})();
+
 /*************************
  * ATUALIZAÇÃO CADASTRAL *
  *************************/
@@ -195,66 +195,83 @@ anoAtualElement.innerHTML = `<a href="https://bmfolio.web.app/" target="_blank" 
  **************************** */
 
 function obterDimensoesDaTela() {
-    return {
-        largura: window.innerWidth,
-        altura: window.innerHeight
-    }
+  return {
+    largura: window.innerWidth,
+    altura: window.innerHeight
+  }
 }
 
 const ALTURA_REFERENCIA = 914;
 const FONTE_REFERENCIA = 16;
 
 function atualizarTamanhoDaFonte(alturaTela) {
-    let tamanhoDaFonte = Math.floor((FONTE_REFERENCIA * alturaTela) / ALTURA_REFERENCIA);
-    document.documentElement.style.setProperty('--tamanho-da-fonte', tamanhoDaFonte + 'px');
+  let tamanhoDaFonte = Math.floor((FONTE_REFERENCIA * alturaTela) / ALTURA_REFERENCIA);
+  document.documentElement.style.setProperty('--tamanho-da-fonte', tamanhoDaFonte + 'px');
 }
 
 function aoRedimensionar() {
-    let dimensoes = obterDimensoesDaTela();
-    atualizarTamanhoDaFonte(dimensoes.altura);
+  let dimensoes = obterDimensoesDaTela();
+  atualizarTamanhoDaFonte(dimensoes.altura);
 }
 
 function debounce(funcao, tempo) {
-    let tempoEspera;
-    return function () {
-        clearTimeout(tempoEspera);
-        tempoEspera = setTimeout(funcao, tempo);
-    };
+  let tempoEspera;
+  return function () {
+    clearTimeout(tempoEspera);
+    tempoEspera = setTimeout(funcao, tempo);
+  };
 }
 
 window.addEventListener('resize', debounce(aoRedimensionar, 100));
 
 (function inicializar() {
-    aoRedimensionar();
+  aoRedimensionar();
 })();
 
 
 //-------------------------------------------------------
 
-// Obtém o elemento <canvas>
-let areaJogo = document.getElementById("area-jogo");
+let cabecalho = document.getElementById("cabecalho");
+let areaDoJogo = document.getElementById("areaDoJogo");
+let rodape = document.getElementById("rodape");
 
+function obterDimensoeDosElementos(elemento) {
+  return {
+    alturaEl: elemento.getBoundingClientRect(),
+    larguraEl: elemento.getBoundingClientRect()
+  }
+}
+
+let areaJogo = document.getElementById("area-jogo");
 let espaco = areaJogo.getContext("2d");
 
 let dimensaoDoPixel = 10;
 
 function ajustarCanvas() {
-  let dimensoes = obterDimensoesDaTela();
-  let altura = dimensoes.altura;
-  let largura = dimensoes.largura;
+  let dimensoesDaTela = obterDimensoesDaTela();
+  let alturaTela = dimensoesDaTela.altura;
+  let larguraTela = dimensoesDaTela.largura;
 
-  areaJogo.height = altura;
-  areaJogo.width = largura;
-  
+  let dimensoesCabecalho = obterDimensoeDosElementos(cabecalho);
+  let dimensoesAreaDoJogo = obterDimensoeDosElementos(areaDoJogo);
+  let dimensoesRodape = obterDimensoeDosElementos(rodape);
 
-  console.log(altura + " " + largura); 
+
+/*
+  areaJogo.height = (altura * 60) / 100;
+  areaJogo.width = (largura * 70) / 100;
+*/
+
+  console.log(alturaTela + " " + larguraTela);
+  console.log()
+
 }
 
 ajustarCanvas();
 
 
 
-// Matriz que representa o desenho da nave
+/*
 let desenhoDaNave = [
   [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -280,7 +297,6 @@ let nave = {
   }
 };
 
-// Função para desenhar a nave no canvas
 function desenharNaveEmMovimento(acaoNave, posNaveX, posNaveY) {
   let acaoNaveEscolhida = nave[acaoNave];
 
@@ -301,11 +317,12 @@ function desenharNaveEmMovimento(acaoNave, posNaveX, posNaveY) {
   }
 }
 
-// Função para chamar o desenho da nave
 function desenharNave(acao, posicaoNave) {
   let { x, y } = posicaoNave; 
   desenharNaveEmMovimento(acao, x, y); 
 }
 
-// Chamada da função para desenhar a nave na tela
 desenharNave("normal", { x: 1, y: 1 });
+
+
+*/

@@ -327,6 +327,6 @@
   .area-jogo {
     border: 0.0625rem solid #fff;
     background-color: #222222;
-    width: 100%;
-    height: 100%;
+    /*width: 100%;
+    height: 100%;*/
   }
