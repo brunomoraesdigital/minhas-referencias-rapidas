@@ -65,8 +65,9 @@ let coordMinX, coordMinY, coordMaxX, coordMaxY;
 
 const contexto = areaJogo.getContext('2d');
 
+const TAMANHO_DO_PIXEL = 5;
 
-let posicaoX, posicaoY; 
+let posicaoX, posicaoY;
 
 /********************
  * CONTROLE DO JOGO *
@@ -83,6 +84,7 @@ function iniciar_jogo() {
   definirPosicaoInicialDaNave();
 
   desenharObjetos(objetosDoJogo.objTorrenta);
+  
 }
 
 /********************************
@@ -93,8 +95,6 @@ function definirAreaJogo() {
   // Ajusta as dimensões internas do canvas
   areaJogo.height = resultado.alturaDoElemento;
   areaJogo.width = resultado.larguraDoElemento;
-
-  definirCoordAreaJogo();
 }
 
 function definirCoordAreaJogo() {
@@ -112,12 +112,15 @@ function definirCoordAreaJogo() {
  * DESENHOS USANDO MATRIZ *
  **************************/
 const TORRENTA = [
-  [0, 0, 1, 1, 0, 0],
-  [0, 0, 1, 1, 0, 0],
-  [0, 0, 1, 1, 0, 0],
-  [0, 0, 1, 1, 0, 0],
-  [0, 1, 1, 1, 1, 0],
-  [1, 1, 1, 1, 1, 1]
+  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],  
+  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],  
+  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],  
+  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],  
+  [1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1],  
+  [1, 0, 0, 1, 1, 2, 1, 1, 0, 0, 1],  
+  [1, 1, 0, 1, 2, 2, 2, 1, 0, 1, 1],  
+  [1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1],  
+  [1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1]  
 ];
 
 /*******************
@@ -133,19 +136,32 @@ const objetosDoJogo = {
 /***********************
  * DESENHAR OS OBJETOS *
  ***********************/
+
+
 function desenharObjetos(objeto) {
-  const tamanhoDoPixel = 10;
+  
 
   for (let linha = 0; linha < objeto.desenho.length; linha++) {
     for (let coluna = 0; coluna < objeto.desenho[linha].length; coluna++) {
       if (objeto.desenho[linha][coluna] !== 0) {
-        contexto.fillStyle = "green";
+        if (objeto.desenho[linha][coluna] === 1) {
+          contexto.fillStyle = "white";
+        } else if (objeto.desenho[linha][coluna] === 2) {
+          contexto.fillStyle = "skyblue";
+        } else if (objeto.desenho[linha][coluna] === 3) {
+          contexto.fillStyle = "PaleGreen";
+        } else if (objeto.desenho[linha][coluna] === 4) {
+          contexto.fillStyle = "Salmon";
+        } else if (objeto.desenho[linha][coluna] === 5) {
+          contexto.fillStyle = "Khaki";
+        }
+        
         contexto.fillRect(
-          (posicaoX + coluna) * tamanhoDoPixel,
-          (posicaoY + linha) * tamanhoDoPixel,
-          tamanhoDoPixel,
-          tamanhoDoPixel
-        ); // Desenha o retângulo com a posição centralizada
+          posicaoX + (coluna * TAMANHO_DO_PIXEL),
+          posicaoY + (linha * TAMANHO_DO_PIXEL),
+          TAMANHO_DO_PIXEL,
+          TAMANHO_DO_PIXEL
+        );
       }
     }
   }
@@ -160,12 +176,11 @@ function definirPosicaoInicialDaNave() {
   const alturaDaNave = objetosDoJogo.objTorrenta.desenho.length; // Número de linhas (altura da torrenta)
 
   // Posição X centralizada
-  posicaoX = (coordMaxX - larguraDaNave * 10) / 2;
+  posicaoX = (coordMaxX - (larguraDaNave * TAMANHO_DO_PIXEL)) / 2;
 
   // Posição Y na base (altura máxima do canvas - altura da torrenta)
-  posicaoY = coordMaxY - alturaDaNave * 10;
+  posicaoY = coordMaxY - (alturaDaNave * TAMANHO_DO_PIXEL);
 
-  console.log(`Posição Inicial X: ${posicaoX}, Posição Inicial Y: ${posicaoY}`);
 }
 
 /* ***********************************
@@ -178,6 +193,9 @@ function aoRedimensionar() {
 
   definirAreaJogo();
   definirCoordAreaJogo();
+  definirPosicaoInicialDaNave();
+  desenharObjetos(objetosDoJogo.objTorrenta);
+  
 }
 
 window.addEventListener('resize', debounce(aoRedimensionar, 100));
