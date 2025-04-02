@@ -92,7 +92,7 @@ function loopDoJogo() {
   if (!jogoEmExecucao) {
     return;
   }
-  // tem que chamar a funçao e er se funciona
+  // tem que chamar a funçao e er se funciona 
   // Continua o loop
   idFrameAnimacao = requestAnimationFrame(loopDoJogo);
 
