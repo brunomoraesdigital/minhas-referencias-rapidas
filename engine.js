@@ -67,7 +67,9 @@ const contexto = areaJogo.getContext('2d');
 
 const TAMANHO_DO_PIXEL = 5;
 
-let posicaoX, posicaoY;
+let velocidade = 2.5;
+
+let posicaoTorrentaX, posicaoTorrentaY;
 
 /********************
  * CONTROLE DO JOGO *
@@ -84,9 +86,18 @@ function iniciar_jogo() {
   definirPosicaoInicialDaNave();
 
   desenharObjetos(objetosDoJogo.objTorrenta);
-  
-}
 
+}
+function loopDoJogo() {
+  if (!jogoEmExecucao) {
+    return;
+  }
+  // tem que chamar a funçao e er se funciona
+  // Continua o loop
+  idFrameAnimacao = requestAnimationFrame(loopDoJogo);
+
+  //parei aqui e 
+}
 /********************************
  * DEFININDO A AREADO DO CANVAS *
  ********************************/
@@ -112,15 +123,15 @@ function definirCoordAreaJogo() {
  * DESENHOS USANDO MATRIZ *
  **************************/
 const TORRENTA = [
-  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],  
-  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],  
-  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],  
-  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],  
-  [1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1],  
-  [1, 0, 0, 1, 1, 2, 1, 1, 0, 0, 1],  
-  [1, 1, 0, 1, 2, 2, 2, 1, 0, 1, 1],  
-  [1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1],  
-  [1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1]  
+  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1],
+  [1, 0, 0, 1, 1, 2, 1, 1, 0, 0, 1],
+  [1, 1, 0, 1, 2, 2, 2, 1, 0, 1, 1],
+  [1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1],
+  [1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1]
 ];
 
 /*******************
@@ -139,7 +150,7 @@ const objetosDoJogo = {
 
 
 function desenharObjetos(objeto) {
-  
+
 
   for (let linha = 0; linha < objeto.desenho.length; linha++) {
     for (let coluna = 0; coluna < objeto.desenho[linha].length; coluna++) {
@@ -155,10 +166,10 @@ function desenharObjetos(objeto) {
         } else if (objeto.desenho[linha][coluna] === 5) {
           contexto.fillStyle = "Khaki";
         }
-        
+
         contexto.fillRect(
-          posicaoX + (coluna * TAMANHO_DO_PIXEL),
-          posicaoY + (linha * TAMANHO_DO_PIXEL),
+          posicaoTorrentaX + (coluna * TAMANHO_DO_PIXEL),
+          posicaoTorrentaY + (linha * TAMANHO_DO_PIXEL),
           TAMANHO_DO_PIXEL,
           TAMANHO_DO_PIXEL
         );
@@ -176,12 +187,49 @@ function definirPosicaoInicialDaNave() {
   const alturaDaNave = objetosDoJogo.objTorrenta.desenho.length; // Número de linhas (altura da torrenta)
 
   // Posição X centralizada
-  posicaoX = (coordMaxX - (larguraDaNave * TAMANHO_DO_PIXEL)) / 2;
+  posicaoTorrentaX = (coordMaxX - (larguraDaNave * TAMANHO_DO_PIXEL)) / 2;
 
   // Posição Y na base (altura máxima do canvas - altura da torrenta)
-  posicaoY = coordMaxY - (alturaDaNave * TAMANHO_DO_PIXEL);
+  posicaoTorrentaY = coordMaxY - (alturaDaNave * TAMANHO_DO_PIXEL);
 
 }
+
+/***********************
+ * MOVIMENTAR A TORRENTA COM O TECLADO *
+ ***********************/
+const teclas = {
+  ArrowLeft: false,
+  ArrowRight: false
+};
+
+window.addEventListener('keydown', function (evento) {
+  if (['ArrowLeft', 'ArrowRight'].includes(evento.key)) {
+    evento.preventDefault();
+    teclas[evento.key] = true;
+    console.log('tec esq');
+  }
+}
+);
+
+window.addEventListener('keyup', function (evento) {
+  if (['ArrowLeft', 'ArrowRight'].includes(evento.key)) {
+    evento.preventDefault();
+    teclas[evento.key] = false;
+    console.log('tec dir');
+  }
+}
+);
+
+function movimentarTorrentaComTeclado() {
+  const velocidade = 7; // Aumente este valor para mais velocidade
+  if (teclas.ArrowLeft) {
+    posicaoTorrentaX = Math.max(0, posicaoTorrentaX - velocidade);
+  }
+  if (teclas.ArrowRight) {
+    posicaoTorrentaX = Math.min(coordMaxY - (alturaDaNave * TAMANHO_DO_PIXEL), posicaoTorrentaX + velocidade);
+  }
+}
+
 
 /* ***********************************
 * APLICAR AJUSTES AO REDIMENSIONAR  *
@@ -195,7 +243,7 @@ function aoRedimensionar() {
   definirCoordAreaJogo();
   definirPosicaoInicialDaNave();
   desenharObjetos(objetosDoJogo.objTorrenta);
-  
+
 }
 
 window.addEventListener('resize', debounce(aoRedimensionar, 100));
