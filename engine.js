@@ -78,7 +78,7 @@ function iniciar_jogo() {
   // Esconde elementos da interface
   dicaEl.style.display = 'none';
   botao.style.display = 'none';
-  
+
   // Define que o jogo está rodando
   jogoEmExecucao = true;
 
@@ -98,7 +98,7 @@ function loopDoJogo() {
 
   // Limpa o canvas antes de redesenhar
   contexto.clearRect(0, 0, areaJogo.width, areaJogo.height);
-  
+
   // Movimenta a nave se necessário
   movimentarTorrentaComTeclado();
 
@@ -204,6 +204,21 @@ function definirPosicaoInicialDaNave() {
   posicaoTorrentaY = coordMaxY - (alturaDaNave * TAMANHO_DO_PIXEL);
 
 }
+/**************************************
+ * MOVIMENTAÇÃO DA RAQUETE COM O DEDO *
+ **************************************/
+window.addEventListener('touchmove',
+  function (evento) {
+    //evento.preventDefault();
+    const toque = evento.touches[0];
+    console.log('tocou');
+    posicaoTorrentaX = Math.max(0, toque.clientX- (objetosDoJogo.objTorrenta.largura + 1));
+
+//parei aqui
+    
+  }
+)
+
 
 /***********************
  * MOVIMENTAR A TORRENTA COM O TECLADO *
@@ -213,12 +228,13 @@ const teclas = {
   ArrowRight: false
 };
 
-window.addEventListener('keydown', function (evento) {
-  if (['ArrowLeft', 'ArrowRight'].includes(evento.key)) {
-    evento.preventDefault();
-    teclas[evento.key] = true;
+window.addEventListener('keydown',
+  function (evento) {
+    if (['ArrowLeft', 'ArrowRight'].includes(evento.key)) {
+      evento.preventDefault();
+      teclas[evento.key] = true;
+    }
   }
-}
 );
 
 window.addEventListener('keyup', function (evento) {
@@ -229,8 +245,9 @@ window.addEventListener('keyup', function (evento) {
 }
 );
 
+
 function movimentarTorrentaComTeclado() {
-  const velocidade = 7; 
+  const velocidade = 7;
   if (teclas.ArrowLeft) {
     posicaoTorrentaX = Math.max(0, posicaoTorrentaX - velocidade);
     console.log(teclas);
