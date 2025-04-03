@@ -75,29 +75,40 @@ let posicaoTorrentaX, posicaoTorrentaY;
  * CONTROLE DO JOGO *
  ********************/
 function iniciar_jogo() {
-  // variáveis
-  // funções
-  // diversos
+  // Esconde elementos da interface
   dicaEl.style.display = 'none';
   botao.style.display = 'none';
+  
+  // Define que o jogo está rodando
   jogoEmExecucao = true;
 
-  // Calcular e definir a posição inicial da torrenta
+  // Posiciona a nave no início do jogo
   definirPosicaoInicialDaNave();
 
+  // Desenha a nave no canvas
   desenharObjetos(objetosDoJogo.objTorrenta);
 
-}
-function loopDoJogo() {
-  if (!jogoEmExecucao) {
-    return;
-  }
-  // tem que chamar a funçao e er se funciona 
-  // Continua o loop
+  // Inicia o loop de animação do jogo
   idFrameAnimacao = requestAnimationFrame(loopDoJogo);
-
-  //parei aqui e 
 }
+
+
+function loopDoJogo() {
+  if (!jogoEmExecucao) return;
+
+  // Limpa o canvas antes de redesenhar
+  contexto.clearRect(0, 0, areaJogo.width, areaJogo.height);
+  
+  // Movimenta a nave se necessário
+  movimentarTorrentaComTeclado();
+
+  // Redesenha a nave na nova posição
+  desenharObjetos(objetosDoJogo.objTorrenta);
+
+  // Continua o loop
+  requestAnimationFrame(loopDoJogo);
+}
+
 /********************************
  * DEFININDO A AREADO DO CANVAS *
  ********************************/
@@ -141,17 +152,18 @@ const objetosDoJogo = {
   objTorrenta: {
     nome: "Torrenta",
     desenho: TORRENTA,
+    largura: TORRENTA[0].length * TAMANHO_DO_PIXEL, // Número de colunas * tamanho de cada pixel
+    altura: TORRENTA.length * TAMANHO_DO_PIXEL
   }
 }
+// Exibir a largura e altura no console
+console.log(`Largura da Torrenta: ${objetosDoJogo.objTorrenta.largura}px`);
+console.log(`Altura da Torrenta: ${objetosDoJogo.objTorrenta.altura}px`);
 
 /***********************
  * DESENHAR OS OBJETOS *
  ***********************/
-
-
 function desenharObjetos(objeto) {
-
-
   for (let linha = 0; linha < objeto.desenho.length; linha++) {
     for (let coluna = 0; coluna < objeto.desenho[linha].length; coluna++) {
       if (objeto.desenho[linha][coluna] !== 0) {
@@ -166,7 +178,6 @@ function desenharObjetos(objeto) {
         } else if (objeto.desenho[linha][coluna] === 5) {
           contexto.fillStyle = "Khaki";
         }
-
         contexto.fillRect(
           posicaoTorrentaX + (coluna * TAMANHO_DO_PIXEL),
           posicaoTorrentaY + (linha * TAMANHO_DO_PIXEL),
@@ -206,7 +217,6 @@ window.addEventListener('keydown', function (evento) {
   if (['ArrowLeft', 'ArrowRight'].includes(evento.key)) {
     evento.preventDefault();
     teclas[evento.key] = true;
-    console.log('tec esq');
   }
 }
 );
@@ -215,18 +225,19 @@ window.addEventListener('keyup', function (evento) {
   if (['ArrowLeft', 'ArrowRight'].includes(evento.key)) {
     evento.preventDefault();
     teclas[evento.key] = false;
-    console.log('tec dir');
   }
 }
 );
 
 function movimentarTorrentaComTeclado() {
-  const velocidade = 7; // Aumente este valor para mais velocidade
+  const velocidade = 7; 
   if (teclas.ArrowLeft) {
     posicaoTorrentaX = Math.max(0, posicaoTorrentaX - velocidade);
+    console.log(teclas);
   }
   if (teclas.ArrowRight) {
-    posicaoTorrentaX = Math.min(coordMaxY - (alturaDaNave * TAMANHO_DO_PIXEL), posicaoTorrentaX + velocidade);
+    posicaoTorrentaX = Math.min(coordMaxX - (objetosDoJogo.objTorrenta.largura + 1), posicaoTorrentaX + velocidade);
+    console.log(teclas);
   }
 }
 
