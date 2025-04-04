@@ -209,17 +209,40 @@ function definirPosicaoInicialDaNave() {
  **************************************/
 window.addEventListener('touchmove',
   function (evento) {
-    //evento.preventDefault();
+    evento.preventDefault();
     const toque = evento.touches[0];
     console.log('tocou');
-    posicaoTorrentaX = Math.max(0, toque.clientX- (objetosDoJogo.objTorrenta.largura + 1));
 
-//parei aqui
-    
+    posicaoTorrentaX = Math.max
+      (
+        0,
+        Math.min
+          (
+            toque.clientX - (objetosDoJogo.objTorrenta.largura + 1),
+            coordMaxX - objetosDoJogo.objTorrenta.largura
+          )
+      )
+    }, { passive: false }
+)
+/***************************************
+ * MOVIMENTAÇÃO DA RAQUETE COM O MOUSE * 
+ ***************************************/
+window.addEventListener('mousemove',
+  function (evento) {
+    evento.preventDefault();
+    const mouse = evento.clientX - (coordMaxX / 2);
+    posicaoTorrentaX = Math.max
+      (
+        0,
+        Math.min
+          (
+            mouse - ((objetosDoJogo.objTorrenta.largura + 1) / 2),
+            coordMaxX - objetosDoJogo.objTorrenta.largura
+          )
+      )
+      console.log(posicaoTorrentaX);
   }
 )
-
-
 /***********************
  * MOVIMENTAR A TORRENTA COM O TECLADO *
  ***********************/
