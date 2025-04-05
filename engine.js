@@ -3,23 +3,22 @@
  **********/
 (function rodape() {
   const anoAtualElement = document.getElementById("ano-atual");
-
   const anoAtual = new Date().getFullYear();
 
-  anoAtualElement.innerHTML = `<a href="https://bmfolio.web.app/" target="_blank" rel="noopener noreferrer">
-    © ${anoAtual} Bruno Moraes - Evoluindo a cada código
-</a> | Licença AGPL v3`;
+  anoAtualElement.innerHTML = '<a href="https://bmfolio.web.app/" target="_blank" rel="noopener noreferrer">' +
+    '© ' + anoAtual + ' Bruno Moraes - Evoluindo a cada código' +
+    '</a> | Licença AGPL v3';
 })();
 
 /* ****************************
  * AJUSTE DINÂMICO DE FONTES  *
- **************************** */
+ ****************************/
 
 function obterDimensoesDaTela() {
   return {
     larguraDaTela: window.innerWidth,
     alturaDaTela: window.innerHeight
-  }
+  };
 }
 const ALTURA_REFERENCIA = 914;
 const FONTE_REFERENCIA = 16;
@@ -30,24 +29,29 @@ function atualizarTamanhoDaFonte(alturaTela) {
 
 /************************************************** */
 
+
 /*************************
- * funções reutilizaveis *
+ * funções reutilizáveis *
  *************************/
 
+/* FUNÇÃO PARA OBTER DIMENSÕES E POSIÇÃO */
+function obterDimensoesEPosicaoDoElemento(elemento) {
+  let retangulo = elemento.getBoundingClientRect();
+  return {
+    altura: retangulo.height,
+    largura: retangulo.width,
+    esquerda: retangulo.left,
+    topo: retangulo.top
+  };
+}
+
+/* FUNÇÃO PARA OBTER DIMENSÕES E POSIÇÃO */
 function debounce(funcao, tempo) {
   let tempoEspera;
   return function () {
     clearTimeout(tempoEspera);
     tempoEspera = setTimeout(funcao, tempo);
   };
-}
-
-function obterDimensoesDosElementos(elemento) {
-  let dimensoesDoElemento = elemento.getBoundingClientRect();
-  let alturaDoElemento = dimensoesDoElemento.height;
-  let larguraDoElemento = dimensoesDoElemento.width;
-
-  return { alturaDoElemento, larguraDoElemento };
 }
 
 /*************************************
@@ -62,13 +66,9 @@ const dicaEl = document.getElementById('dica');
  * Variáveis *
  *************/
 let coordMinX, coordMinY, coordMaxX, coordMaxY;
-
 const contexto = areaJogo.getContext('2d');
-
 const TAMANHO_DO_PIXEL = 5;
-
 let velocidade = 2.5;
-
 let posicaoTorrentaX, posicaoTorrentaY;
 
 /********************
@@ -92,17 +92,16 @@ function iniciar_jogo() {
   idFrameAnimacao = requestAnimationFrame(loopDoJogo);
 }
 
-
 function loopDoJogo() {
   if (!jogoEmExecucao) return;
 
   // Limpa o canvas antes de redesenhar
   contexto.clearRect(0, 0, areaJogo.width, areaJogo.height);
 
-  // Movimenta a nave se necessário
+  // Movimenta a torrenta se necessário (teclado, por exemplo)
   movimentarTorrentaComTeclado();
 
-  // Redesenha a nave na nova posição
+  // Redesenha a torrenta na nova posição
   desenharObjetos(objetosDoJogo.objTorrenta);
 
   // Continua o loop
@@ -110,24 +109,23 @@ function loopDoJogo() {
 }
 
 /********************************
- * DEFININDO A AREADO DO CANVAS *
+ * DEFININDO A ÁREA DO CANVAS *
  ********************************/
 function definirAreaJogo() {
-  let resultado = obterDimensoesDosElementos(containerJogo);
+  let resultado = obterDimensoesEPosicaoDoElemento(containerJogo);
   // Ajusta as dimensões internas do canvas
-  areaJogo.height = resultado.alturaDoElemento;
-  areaJogo.width = resultado.larguraDoElemento;
+  areaJogo.height = resultado.altura;
+  areaJogo.width = resultado.largura;
 }
 
 function definirCoordAreaJogo() {
   coordMinX = 0;
   coordMinY = 0;
-
   coordMaxX = areaJogo.width;
   coordMaxY = areaJogo.height;
 
-  console.log(`Mínimo X: ${coordMinX}, Máximo X: ${coordMaxX}`);
-  console.log(`Mínimo Y: ${coordMinY}, Máximo Y: ${coordMaxY}`);
+  console.log('Mínimo X: ' + coordMinX + ', Máximo X: ' + coordMaxX);
+  console.log('Mínimo Y: ' + coordMinY + ', Máximo Y: ' + coordMaxY);
 }
 
 /**************************
@@ -155,10 +153,9 @@ const objetosDoJogo = {
     largura: TORRENTA[0].length * TAMANHO_DO_PIXEL, // Número de colunas * tamanho de cada pixel
     altura: TORRENTA.length * TAMANHO_DO_PIXEL
   }
-}
-// Exibir a largura e altura no console
-console.log(`Largura da Torrenta: ${objetosDoJogo.objTorrenta.largura}px`);
-console.log(`Altura da Torrenta: ${objetosDoJogo.objTorrenta.altura}px`);
+};
+console.log('Largura da Torrenta: ' + objetosDoJogo.objTorrenta.largura + 'px');
+console.log('Altura da Torrenta: ' + objetosDoJogo.objTorrenta.altura + 'px');
 
 /***********************
  * DESENHAR OS OBJETOS *
@@ -190,59 +187,61 @@ function desenharObjetos(objeto) {
 }
 
 /***********************
- * CALCULAR A POSIÇÃO INICIAL DA TORRENTA *
+ * POSIÇÃO INICIAL DA TORRENTA *
  ***********************/
 function definirPosicaoInicialDaNave() {
   // Calcula o meio da tela
-  const larguraDaNave = objetosDoJogo.objTorrenta.desenho[0].length; // Número de colunas (largura da torrenta)
-  const alturaDaNave = objetosDoJogo.objTorrenta.desenho.length; // Número de linhas (altura da torrenta)
+  const larguraDaNave = objetosDoJogo.objTorrenta.desenho[0].length;
+  const alturaDaNave = objetosDoJogo.objTorrenta.desenho.length;
 
   // Posição X centralizada
   posicaoTorrentaX = (coordMaxX - (larguraDaNave * TAMANHO_DO_PIXEL)) / 2;
-
-  // Posição Y na base (altura máxima do canvas - altura da torrenta)
+  // Posição Y na base (não se move no eixo Y)
   posicaoTorrentaY = coordMaxY - (alturaDaNave * TAMANHO_DO_PIXEL);
-
 }
+
 /**************************************
  * MOVIMENTAÇÃO DA RAQUETE COM O DEDO *
  **************************************/
-window.addEventListener('touchmove',
-  function (evento) {
-    evento.preventDefault();
-    const toque = evento.touches[0];
-    console.log('tocou');
+window.addEventListener('touchmove', function(evento) {
+  evento.preventDefault();
+  let toque = evento.touches[0];
+  // Obtém as dimensões e a posição do canvas
+  let dimensoesEPosicao = obterDimensoesEPosicaoDoElemento(areaJogo);
 
-    posicaoTorrentaX = Math.max
-      (
-        0,
-        Math.min
-          (
-            toque.clientX - (objetosDoJogo.objTorrenta.largura + 1),
-            coordMaxX - objetosDoJogo.objTorrenta.largura
-          )
-      )
-    }, { passive: false }
-)
+  // Converte a coordenada X do toque para a posição relativa no canvas
+  let posicaoXNoCanvas = toque.clientX - dimensoesEPosicao.esquerda;
+
+  // Atualiza a posição X centralizada da torrenta
+  posicaoTorrentaX = Math.max(
+    0,
+    Math.min(
+      posicaoXNoCanvas - (objetosDoJogo.objTorrenta.largura / 2),
+      coordMaxX - objetosDoJogo.objTorrenta.largura
+    )
+  );
+}, { passive: false });
+
 /***************************************
  * MOVIMENTAÇÃO DA RAQUETE COM O MOUSE * 
  ***************************************/
-window.addEventListener('mousemove',
-  function (evento) {
-    evento.preventDefault();
-    const mouse = evento.clientX - (coordMaxX / 2);
-    posicaoTorrentaX = Math.max
-      (
-        0,
-        Math.min
-          (
-            mouse - ((objetosDoJogo.objTorrenta.largura + 1) / 2),
-            coordMaxX - objetosDoJogo.objTorrenta.largura
-          )
-      )
-      console.log(posicaoTorrentaX);
-  }
-)
+window.addEventListener('mousemove', function(evento) {
+  evento.preventDefault();
+  // Obtém as dimensões e a posição do canvas
+  let dimensoesEPosicao = obterDimensoesEPosicaoDoElemento(areaJogo);
+  // Converte a coordenada X do mouse para o sistema do canvas
+  let posicaoXNoCanvas = evento.clientX - dimensoesEPosicao.esquerda;
+
+  posicaoTorrentaX = Math.max(
+    0,
+    Math.min(
+      posicaoXNoCanvas - (objetosDoJogo.objTorrenta.largura / 2),
+      coordMaxX - objetosDoJogo.objTorrenta.largura
+    )
+  );
+  console.log(posicaoTorrentaX);
+});
+
 /***********************
  * MOVIMENTAR A TORRENTA COM O TECLADO *
  ***********************/
@@ -251,23 +250,19 @@ const teclas = {
   ArrowRight: false
 };
 
-window.addEventListener('keydown',
-  function (evento) {
-    if (['ArrowLeft', 'ArrowRight'].includes(evento.key)) {
-      evento.preventDefault();
-      teclas[evento.key] = true;
-    }
+window.addEventListener('keydown', function(evento) {
+  if (['ArrowLeft', 'ArrowRight'].indexOf(evento.key) !== -1) {
+    evento.preventDefault();
+    teclas[evento.key] = true;
   }
-);
+});
 
-window.addEventListener('keyup', function (evento) {
-  if (['ArrowLeft', 'ArrowRight'].includes(evento.key)) {
+window.addEventListener('keyup', function(evento) {
+  if (['ArrowLeft', 'ArrowRight'].indexOf(evento.key) !== -1) {
     evento.preventDefault();
     teclas[evento.key] = false;
   }
-}
-);
-
+});
 
 function movimentarTorrentaComTeclado() {
   const velocidade = 7;
@@ -276,16 +271,17 @@ function movimentarTorrentaComTeclado() {
     console.log(teclas);
   }
   if (teclas.ArrowRight) {
-    posicaoTorrentaX = Math.min(coordMaxX - (objetosDoJogo.objTorrenta.largura + 1), posicaoTorrentaX + velocidade);
+    posicaoTorrentaX = Math.min(
+      coordMaxX - objetosDoJogo.objTorrenta.largura,
+      posicaoTorrentaX + velocidade
+    );
     console.log(teclas);
   }
 }
 
-
 /* ***********************************
-* APLICAR AJUSTES AO REDIMENSIONAR  *
-*********************************** */
-
+ * APLICAR AJUSTES AO REDIMENSIONAR  *
+ *********************************** */
 function aoRedimensionar() {
   let dimensoes = obterDimensoesDaTela();
   atualizarTamanhoDaFonte(dimensoes.alturaDaTela);
@@ -294,7 +290,6 @@ function aoRedimensionar() {
   definirCoordAreaJogo();
   definirPosicaoInicialDaNave();
   desenharObjetos(objetosDoJogo.objTorrenta);
-
 }
 
 window.addEventListener('resize', debounce(aoRedimensionar, 100));
