@@ -62,35 +62,25 @@ let idFrameAnimacao;
  * CONTROLE DO JOGO *
  ********************/
 function iniciar_jogo() {
-  // Esconde elementos da interface
   dicaEl.style.display = 'none';
   botao.style.display = 'none';
 
-  // Define que o jogo está rodando
   jogoEmExecucao = true;
 
-  // Posiciona a Torrenta no início do jogo
-  posicionarObjeto(objetosDoJogo.objTorrenta);
-  // Desenha a Torrenta no canvas
-  desenharObjetos(objetosDoJogo.objTorrenta);
+  posicionarObjeto(objetosDoJogo.personagens.torrenta);
+  desenharObjetos(objetosDoJogo.personagens.torrenta);
 
-  // Inicia o loop de animação do jogo
   idFrameAnimacao = requestAnimationFrame(loopDoJogo);
 }
 
 function loopDoJogo() {
   if (!jogoEmExecucao) return;
 
-  // Limpa o canvas antes de redesenhar
   contexto.clearRect(0, 0, areaJogo.width, areaJogo.height);
 
-  // Movimenta a Torrenta se necessário (por exemplo, via teclado)
   movimentarTorrentaComTeclado();
+  desenharObjetos(objetosDoJogo.personagens.torrenta);
 
-  // Redesenha a Torrenta na nova posição
-  desenharObjetos(objetosDoJogo.objTorrenta);
-
-  // Continua o loop
   requestAnimationFrame(loopDoJogo);
 }
 
@@ -99,7 +89,6 @@ function loopDoJogo() {
  ********************************/
 function definirAreaJogo() {
   let resultado = obterDimensoesEPosicaoDoElemento(containerJogo);
-  // Ajusta as dimensões internas do canvas
   areaJogo.height = resultado.altura;
   areaJogo.width = resultado.largura;
 }
@@ -128,6 +117,10 @@ const TORRENTA = [
   [1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1],
   [1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1]
 ];
+const CARANGUEIJO = [];
+const LULA = [];
+const POLVO = [];
+const OVNI = [];
 
 const TIRO_DA_TORRENTA = [
   [2],
@@ -136,34 +129,121 @@ const TIRO_DA_TORRENTA = [
   [2],
   [2]
 ];
+const TIRO_CARANGUEIJO = [];
+const TIRO_LULA = [];
+const TIRO_POLVO = [];
+const TIRO_OVNI = [];
 
 /*******************
  * OBJETOS DO JOGO *
  *******************/
 const objetosDoJogo = {
-  objTorrenta: {
-    nome: "Torrenta",
-    desenho: TORRENTA,
-    largura: TORRENTA[0].length * TAMANHO_DO_PIXEL, // Número de colunas * tamanho de cada pixel
-    altura: TORRENTA.length * TAMANHO_DO_PIXEL,
-    posicaoX: 0,
-    posicaoY: 0,
-    velocidade: 7
+  personagens: {
+    torrenta: {
+      nome: "Torrenta",
+      desenho: TORRENTA,
+      largura: TORRENTA[0].length * TAMANHO_DO_PIXEL,
+      altura: TORRENTA.length * TAMANHO_DO_PIXEL,
+      posicaoX: 0,
+      posicaoY: 0,
+      velocidade: 7,
+      direcao: null
+    },
+    carangueijo: {
+      nome: "Carangueijo",
+      desenho: CARANGUEIJO,
+      largura: 0,
+      altura: 0,
+      posicaoX: 0,
+      posicaoY: 0,
+      velocidade: 3,
+      direcao: null
+    },
+    lula: {
+      nome: "Lula",
+      desenho: LULA,
+      largura: 0,
+      altura: 0,
+      posicaoX: 0,
+      posicaoY: 0,
+      velocidade: 2.5,
+      direcao: null
+    },
+    polvo: {
+      nome: "Polvo",
+      desenho: POLVO,
+      largura: 0,
+      altura: 0,
+      posicaoX: 0,
+      posicaoY: 0,
+      velocidade: 2,
+      direcao: null
+    },
+    ovni: {
+      nome: "OVNI",
+      desenho: OVNI,
+      largura: 0,
+      altura: 0,
+      posicaoX: 0,
+      posicaoY: 0,
+      velocidade: 4,
+      direcao: null
+    }
   },
-  objTiroDaTorrenta: {
-    nome: "Tiro da Torrenta",
-    desenho: TIRO_DA_TORRENTA,
-    largura: TIRO_DA_TORRENTA[0].length * TAMANHO_DO_PIXEL,
-    altura: TIRO_DA_TORRENTA.length * TAMANHO_DO_PIXEL,
-    posicaoX: 0,
-    posicaoY: 0,
-    velocidade: 2.5
+
+  moldesDosProjeteis: {
+    torrenta: {
+      nome: "Tiro da Torrenta",
+      desenho: TIRO_DA_TORRENTA,
+      largura: TIRO_DA_TORRENTA[0].length * TAMANHO_DO_PIXEL,
+      altura: TIRO_DA_TORRENTA.length * TAMANHO_DO_PIXEL,
+      velocidade: 3,
+      direcao: -1
+    },
+    carangueijo: {
+      nome: "Tiro do Carangueijo",
+      desenho: TIRO_CARANGUEIJO,
+      largura: 0,
+      altura: 0,
+      velocidade: 2,
+      direcao: -1
+    },
+    lula: {
+      nome: "Tiro da Lula",
+      desenho: TIRO_LULA,
+      largura: 0,
+      altura: 0,
+      velocidade: 2.2,
+      direcao: -1
+    },
+    polvo: {
+      nome: "Tiro do Polvo",
+      desenho: TIRO_POLVO,
+      largura: 0,
+      altura: 0,
+      velocidade: 1.8,
+      direcao: -1
+    },
+    ovni: {
+      nome: "Tiro do OVNI",
+      desenho: TIRO_OVNI,
+      largura: 0,
+      altura: 0,
+      velocidade: 3.5,
+      direcao: -1
+    }
+  },
+
+  projeteisEmCena: {
+    torrenta: [],
+    carangueijo: [],
+    lula: [],
+    polvo: [],
+    ovni: []
   }
 };
 
-/********************************************
- * OBTER DIMENSÕES E POSIÇÃO - REUTILIZAVEL *
- ********************************************/
+/********************************************/
 function obterDimensoesEPosicaoDoElemento(elemento) {
   let retangulo = elemento.getBoundingClientRect();
   return {
@@ -173,24 +253,18 @@ function obterDimensoesEPosicaoDoElemento(elemento) {
     topo: retangulo.top
   };
 }
-/**************************************
- * DESENHAR OS OBJETOS - REUTILIZAVEL *
- **************************************/
+
+/**************************************/
 function desenharObjetos(objeto) {
   for (let linha = 0; linha < objeto.desenho.length; linha++) {
     for (let coluna = 0; coluna < objeto.desenho[linha].length; coluna++) {
       if (objeto.desenho[linha][coluna] !== 0) {
-        if (objeto.desenho[linha][coluna] === 1) {
-          contexto.fillStyle = "white";
-        } else if (objeto.desenho[linha][coluna] === 2) {
-          contexto.fillStyle = "skyblue";
-        } else if (objeto.desenho[linha][coluna] === 3) {
-          contexto.fillStyle = "PaleGreen";
-        } else if (objeto.desenho[linha][coluna] === 4) {
-          contexto.fillStyle = "Salmon";
-        } else if (objeto.desenho[linha][coluna] === 5) {
-          contexto.fillStyle = "Khaki";
-        }
+        if (objeto.desenho[linha][coluna] === 1) contexto.fillStyle = "white";
+        else if (objeto.desenho[linha][coluna] === 2) contexto.fillStyle = "skyblue";
+        else if (objeto.desenho[linha][coluna] === 3) contexto.fillStyle = "PaleGreen";
+        else if (objeto.desenho[linha][coluna] === 4) contexto.fillStyle = "Salmon";
+        else if (objeto.desenho[linha][coluna] === 5) contexto.fillStyle = "Khaki";
+
         contexto.fillRect(
           objeto.posicaoX + (coluna * TAMANHO_DO_PIXEL),
           objeto.posicaoY + (linha * TAMANHO_DO_PIXEL),
@@ -202,60 +276,45 @@ function desenharObjetos(objeto) {
   }
 }
 
-/***********************
- * POSIÇÃO INICIAL DA TORRENTA *
- ***********************/
 function posicionarObjeto(objeto, objetoReferencia = null) {
   if (objetoReferencia) {
-    // Centralizado horizontalmente em relação ao objeto de referência
     objeto.posicaoX = objetoReferencia.posicaoX + (objetoReferencia.largura / 2) - (objeto.largura / 2);
-    // Acima do objeto de referência
     objeto.posicaoY = objetoReferencia.posicaoY - objeto.altura;
   } else {
-    // Posicionamento padrão (centro inferior da tela)
     objeto.posicaoX = (coordMaxX - objeto.largura) / 2;
     objeto.posicaoY = coordMaxY - objeto.altura;
   }
 }
 
-/**************************************
- * MOVIMENTAÇÃO DA RAQUETE COM O DEDO *
- **************************************/
 window.addEventListener('touchmove', function (evento) {
   evento.preventDefault();
   let toque = evento.touches[0];
   let dimensoesEPosicao = obterDimensoesEPosicaoDoElemento(areaJogo);
   let posicaoXNoCanvas = toque.clientX - dimensoesEPosicao.esquerda;
 
-  objetosDoJogo.objTorrenta.posicaoX = Math.max(
+  objetosDoJogo.personagens.torrenta.posicaoX = Math.max(
     0,
     Math.min(
-      posicaoXNoCanvas - (objetosDoJogo.objTorrenta.largura / 2),
-      coordMaxX - objetosDoJogo.objTorrenta.largura
+      posicaoXNoCanvas - (objetosDoJogo.personagens.torrenta.largura / 2),
+      coordMaxX - objetosDoJogo.personagens.torrenta.largura
     )
   );
 }, { passive: false });
 
-/***************************************
- * MOVIMENTAÇÃO DA RAQUETE COM O MOUSE *
- ***************************************/
 window.addEventListener('mousemove', function (evento) {
   evento.preventDefault();
   let dimensoesEPosicao = obterDimensoesEPosicaoDoElemento(areaJogo);
   let posicaoXNoCanvas = evento.clientX - dimensoesEPosicao.esquerda;
 
-  objetosDoJogo.objTorrenta.posicaoX = Math.max(
+  objetosDoJogo.personagens.torrenta.posicaoX = Math.max(
     0,
     Math.min(
-      posicaoXNoCanvas - (objetosDoJogo.objTorrenta.largura / 2),
-      coordMaxX - objetosDoJogo.objTorrenta.largura
+      posicaoXNoCanvas - (objetosDoJogo.personagens.torrenta.largura / 2),
+      coordMaxX - objetosDoJogo.personagens.torrenta.largura
     )
   );
 }, { passive: false });
 
-/***********************
- * MOVIMENTAR A TORRENTA COM O TECLADO *
- ***********************/
 let teclas = {
   ArrowLeft: false,
   ArrowRight: false
@@ -276,54 +335,37 @@ window.addEventListener('keyup', function (evento) {
 }, { passive: false });
 
 function movimentarTorrentaComTeclado() {
-  let velocidade = objetosDoJogo.objTorrenta.velocidade;
+  let velocidade = objetosDoJogo.personagens.torrenta.velocidade;
   if (teclas.ArrowLeft) {
-    objetosDoJogo.objTorrenta.posicaoX = Math.max(0, objetosDoJogo.objTorrenta.posicaoX - velocidade);
+    objetosDoJogo.personagens.torrenta.posicaoX = Math.max(
+      0,
+      objetosDoJogo.personagens.torrenta.posicaoX - velocidade
+    );
   }
   if (teclas.ArrowRight) {
-    objetosDoJogo.objTorrenta.posicaoX = Math.min(
-      coordMaxX - objetosDoJogo.objTorrenta.largura,
-      objetosDoJogo.objTorrenta.posicaoX + velocidade
+    objetosDoJogo.personagens.torrenta.posicaoX = Math.min(
+      coordMaxX - objetosDoJogo.personagens.torrenta.largura,
+      objetosDoJogo.personagens.torrenta.posicaoX + velocidade
     );
   }
 }
 
-function trajetoriaDoProjetil(objeto, objetoReferencia = null) {
-/*  let dimensoesEPosicao = obterDimensoesEPosicaoDoElemento(areaJogo);
-
-
-  objeto.posicaoX = (coordMaxX - objeto.largura) / 2;
-  objeto.posicaoY = objeto.velocidade;*/
+function dispararProjetil(objetoProjetil, objetoReferencia = null) {
+  objetoProjetil.posicaoX = objetoReferencia.largura / 2;
+  objetoProjetil.posicaoY += (objetoProjetil.velocidade * objetoProjetil.direcao);
 
   console.log('disparou');
+  setTimeout(dispararProjetil, 500);
 }
 
-
-/*
-function parar_jogo() {
-  jogoEmExecucao = false;
-  clearInterval(intervaloTiros);
-  cancelAnimationFrame(idFrameAnimacao);
-}
-*/
-
-
-/* ************************************************* */
-
-/* ***********************************
- * APLICAR AJUSTES AO REDIMENSIONAR  *
- *********************************** */
 function aoRedimensionar() {
-  // Supondo que obterDimensoesDaTela() e atualizarTamanhoDaFonte() estejam definidos
   let dimensoes = obterDimensoesDaTela();
   atualizarTamanhoDaFonte(dimensoes.alturaDaTela);
 
   definirAreaJogo();
   definirCoordAreaJogo();
-  posicionarObjeto(objetosDoJogo.objTorrenta);
-  posicionarObjeto(objetosDoJogo.objTiroDaTorrenta, objetosDoJogo.objTorrenta);
-  desenharObjetos(objetosDoJogo.objTorrenta);
-  desenharObjetos(objetosDoJogo.objTiroDaTorrenta);
+  posicionarObjeto(objetosDoJogo.personagens.torrenta);
+  desenharObjetos(objetosDoJogo.personagens.torrenta);
 }
 
 window.addEventListener('resize', debounce(aoRedimensionar, 100), false);
