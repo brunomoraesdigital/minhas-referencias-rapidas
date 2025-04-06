@@ -35,7 +35,7 @@ function atualizarTamanhoDaFonte(alturaTela) {
 ***********************************/
 function debounce(funcao, tempo) {
   let tempoEspera;
-  return function() {
+  return function () {
     clearTimeout(tempoEspera);
     tempoEspera = setTimeout(funcao, tempo);
   };
@@ -55,8 +55,6 @@ const dicaEl = document.getElementById('dica');
 let coordMinX, coordMinY, coordMaxX, coordMaxY;
 const contexto = areaJogo.getContext('2d');
 const TAMANHO_DO_PIXEL = 5;
-let velocidade = 2.5;
-let posicaoTiroDaNaveX, posicaoTiroDaNaveY;
 let jogoEmExecucao;
 let idFrameAnimacao;
 
@@ -72,8 +70,7 @@ function iniciar_jogo() {
   jogoEmExecucao = true;
 
   // Posiciona a Torrenta no início do jogo
-  definirPosicaoInicialDaTorrenta();
-
+  posicionarObjeto(objetosDoJogo.objTorrenta);
   // Desenha a Torrenta no canvas
   desenharObjetos(objetosDoJogo.objTorrenta);
 
@@ -132,12 +129,12 @@ const TORRENTA = [
   [1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1]
 ];
 
-const TIRO_DA_NAVE = [
-  [1],
-  [1],
-  [1],
-  [1],
-  [1]
+const TIRO_DA_TORRENTA = [
+  [2],
+  [2],
+  [2],
+  [2],
+  [2]
 ];
 
 /*******************
@@ -150,21 +147,23 @@ const objetosDoJogo = {
     largura: TORRENTA[0].length * TAMANHO_DO_PIXEL, // Número de colunas * tamanho de cada pixel
     altura: TORRENTA.length * TAMANHO_DO_PIXEL,
     posicaoX: 0,
-    posicaoY: 0
+    posicaoY: 0,
+    velocidade: 7
   },
-  objTiroDaNave: {
-    nome: "Tiro da Nave",
-    desenho: TIRO_DA_NAVE,
-    largura: TIRO_DA_NAVE[0].length * TAMANHO_DO_PIXEL,
-    altura: TIRO_DA_NAVE.length * TAMANHO_DO_PIXEL,
+  objTiroDaTorrenta: {
+    nome: "Tiro da Torrenta",
+    desenho: TIRO_DA_TORRENTA,
+    largura: TIRO_DA_TORRENTA[0].length * TAMANHO_DO_PIXEL,
+    altura: TIRO_DA_TORRENTA.length * TAMANHO_DO_PIXEL,
     posicaoX: 0,
-    posicaoY: 0
+    posicaoY: 0,
+    velocidade: 2.5
   }
 };
 
-/******************************************
- * OBTER DIMENSÕES E POSIÇÃO REUTILIZAVEL *
- ******************************************/
+/********************************************
+ * OBTER DIMENSÕES E POSIÇÃO - REUTILIZAVEL *
+ ********************************************/
 function obterDimensoesEPosicaoDoElemento(elemento) {
   let retangulo = elemento.getBoundingClientRect();
   return {
@@ -206,18 +205,23 @@ function desenharObjetos(objeto) {
 /***********************
  * POSIÇÃO INICIAL DA TORRENTA *
  ***********************/
-function definirPosicaoInicialDaTorrenta() {
-  let larguraDaTorrenta = objetosDoJogo.objTorrenta.desenho[0].length;
-  let alturaDaTorrenta = objetosDoJogo.objTorrenta.desenho.length;
-
-  objetosDoJogo.objTorrenta.posicaoX = (coordMaxX - (larguraDaTorrenta * TAMANHO_DO_PIXEL)) / 2;
-  objetosDoJogo.objTorrenta.posicaoY = coordMaxY - (alturaDaTorrenta * TAMANHO_DO_PIXEL);
+function posicionarObjeto(objeto, objetoReferencia = null) {
+  if (objetoReferencia) {
+    // Centralizado horizontalmente em relação ao objeto de referência
+    objeto.posicaoX = objetoReferencia.posicaoX + (objetoReferencia.largura / 2) - (objeto.largura / 2);
+    // Acima do objeto de referência
+    objeto.posicaoY = objetoReferencia.posicaoY - objeto.altura;
+  } else {
+    // Posicionamento padrão (centro inferior da tela)
+    objeto.posicaoX = (coordMaxX - objeto.largura) / 2;
+    objeto.posicaoY = coordMaxY - objeto.altura;
+  }
 }
 
 /**************************************
  * MOVIMENTAÇÃO DA RAQUETE COM O DEDO *
  **************************************/
-window.addEventListener('touchmove', function(evento) {
+window.addEventListener('touchmove', function (evento) {
   evento.preventDefault();
   let toque = evento.touches[0];
   let dimensoesEPosicao = obterDimensoesEPosicaoDoElemento(areaJogo);
@@ -235,7 +239,7 @@ window.addEventListener('touchmove', function(evento) {
 /***************************************
  * MOVIMENTAÇÃO DA RAQUETE COM O MOUSE *
  ***************************************/
-window.addEventListener('mousemove', function(evento) {
+window.addEventListener('mousemove', function (evento) {
   evento.preventDefault();
   let dimensoesEPosicao = obterDimensoesEPosicaoDoElemento(areaJogo);
   let posicaoXNoCanvas = evento.clientX - dimensoesEPosicao.esquerda;
@@ -247,7 +251,6 @@ window.addEventListener('mousemove', function(evento) {
       coordMaxX - objetosDoJogo.objTorrenta.largura
     )
   );
-  console.log(objetosDoJogo.objTorrenta.posicaoX);
 }, { passive: false });
 
 /***********************
@@ -258,34 +261,54 @@ let teclas = {
   ArrowRight: false
 };
 
-window.addEventListener('keydown', function(evento) {
+window.addEventListener('keydown', function (evento) {
   if (['ArrowLeft', 'ArrowRight'].indexOf(evento.key) !== -1) {
     evento.preventDefault();
     teclas[evento.key] = true;
   }
-}, false);
+}, { passive: false });
 
-window.addEventListener('keyup', function(evento) {
+window.addEventListener('keyup', function (evento) {
   if (['ArrowLeft', 'ArrowRight'].indexOf(evento.key) !== -1) {
     evento.preventDefault();
     teclas[evento.key] = false;
   }
-}, false);
+}, { passive: false });
 
 function movimentarTorrentaComTeclado() {
-  let velocidade = 7;
+  let velocidade = objetosDoJogo.objTorrenta.velocidade;
   if (teclas.ArrowLeft) {
     objetosDoJogo.objTorrenta.posicaoX = Math.max(0, objetosDoJogo.objTorrenta.posicaoX - velocidade);
-    console.log(teclas);
   }
   if (teclas.ArrowRight) {
     objetosDoJogo.objTorrenta.posicaoX = Math.min(
       coordMaxX - objetosDoJogo.objTorrenta.largura,
       objetosDoJogo.objTorrenta.posicaoX + velocidade
     );
-    console.log(teclas);
   }
 }
+
+function trajetoriaDoProjetil(objeto, objetoReferencia = null) {
+/*  let dimensoesEPosicao = obterDimensoesEPosicaoDoElemento(areaJogo);
+
+
+  objeto.posicaoX = (coordMaxX - objeto.largura) / 2;
+  objeto.posicaoY = objeto.velocidade;*/
+
+  console.log('disparou');
+}
+
+
+/*
+function parar_jogo() {
+  jogoEmExecucao = false;
+  clearInterval(intervaloTiros);
+  cancelAnimationFrame(idFrameAnimacao);
+}
+*/
+
+
+/* ************************************************* */
 
 /* ***********************************
  * APLICAR AJUSTES AO REDIMENSIONAR  *
@@ -297,9 +320,10 @@ function aoRedimensionar() {
 
   definirAreaJogo();
   definirCoordAreaJogo();
-  definirPosicaoInicialDaTorrenta();
+  posicionarObjeto(objetosDoJogo.objTorrenta);
+  posicionarObjeto(objetosDoJogo.objTiroDaTorrenta, objetosDoJogo.objTorrenta);
   desenharObjetos(objetosDoJogo.objTorrenta);
-  desenharObjetos(objetosDoJogo.objTiroDaNave);
+  desenharObjetos(objetosDoJogo.objTiroDaTorrenta);
 }
 
 window.addEventListener('resize', debounce(aoRedimensionar, 100), false);
