@@ -58,6 +58,14 @@ const TAMANHO_DO_PIXEL = 5;
 let jogoEmExecucao;
 let idFrameAnimacao;
 
+let projeteisEmCena = {
+  torrenta: [],
+  carangueijo: [],
+  lula: [],
+  polvo: [],
+  ovni: []
+};
+
 /********************
  * CONTROLE DO JOGO *
  ********************/
@@ -138,6 +146,7 @@ const TIRO_OVNI = [];
  * OBJETOS DO JOGO *
  *******************/
 const objetosDoJogo = {
+  
   personagens: {
     torrenta: {
       nome: "Torrenta",
@@ -233,14 +242,6 @@ const objetosDoJogo = {
       direcao: -1
     }
   },
-
-  projeteisEmCena: {
-    torrenta: [],
-    carangueijo: [],
-    lula: [],
-    polvo: [],
-    ovni: []
-  }
 };
 
 /********************************************/
