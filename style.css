@@ -322,3 +322,6 @@
     border: 0.0625rem solid #fff;
     background-color: #222222;
   }
+  #area-jogo {
+    touch-action: none;
+  }

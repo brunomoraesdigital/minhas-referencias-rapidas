@@ -66,7 +66,11 @@ let projeteisEmCena = {
   ovni: []
 };
 
-/********************
+let disparoLiberado = true;
+const COOLDOWN_TORRENTA = 1500; // em milissegundos
+let intervaloDisparoTouch = null;
+
+/********************    
  * CONTROLE DO JOGO *
  ********************/
 function iniciar_jogo() {
@@ -389,43 +393,57 @@ function atualizarProjeteis() {
 }
 /* chamei atualizarProjeteis dentro do loop */
 
-let disparoLiberado = true;
-const TEMPO_COOLDOWN = 1500; // em milissegundos
+
 
 document.addEventListener('keydown', function(evento) {
+  evento.preventDefault();
   if (evento.code === 'Space' && disparoLiberado) { //No evento keydown, usamos evento.code porque ele retorna uma string identificando a tecla (como "Space").
     disparoLiberado = false;
     let tiro = { ...objetosDoJogo.moldesDosProjeteis.torrenta };
     dispararProjetil(tiro, objetosDoJogo.personagens.torrenta);
     setTimeout(function() {
       disparoLiberado = true;
-    }, TEMPO_COOLDOWN);
+    }, COOLDOWN_TORRENTA);
   }
 });
 
  
 
  document.addEventListener('mousedown', function(evento) {
+  evento.preventDefault();
   if (evento.button === 0 && disparoLiberado) { //no evento.button retorna um número indicando qual botão do mouse foi clicado, nesse caso o 0 (botão esquerdo)
     disparoLiberado = false;
     let tiro = { ...objetosDoJogo.moldesDosProjeteis.torrenta };
     dispararProjetil(tiro, objetosDoJogo.personagens.torrenta);
     setTimeout(function() {
       disparoLiberado = true;
-    }, TEMPO_COOLDOWN);
+    }, COOLDOWN_TORRENTA);
   }
 });
 
-document.addEventListener('mousedown', function(evento) {
-  if (evento.button === 0 && disparoLiberado) { //no evento.button retorna um número indicando qual botão do mouse foi clicado, nesse caso o 0 (botão esquerdo)
+document.addEventListener('touchstart', function(evento) {
+  evento.preventDefault();
+  if (intervaloDisparoTouch === null) {
+    disparar(); // dispara imediatamente como o mouse faz
+    intervaloDisparoTouch = setInterval(disparar, COOLDOWN_TORRENTA);
+  }
+});
+
+document.addEventListener('touchend', function() {
+  clearInterval(intervaloDisparoTouch);
+  intervaloDisparoTouch = null;
+});
+
+function disparar() {
+  if (disparoLiberado) {
     disparoLiberado = false;
     let tiro = { ...objetosDoJogo.moldesDosProjeteis.torrenta };
     dispararProjetil(tiro, objetosDoJogo.personagens.torrenta);
     setTimeout(function() {
       disparoLiberado = true;
-    }, TEMPO_COOLDOWN);
+    }, COOLDOWN_TORRENTA);
   }
-});
+}
 
 
 
