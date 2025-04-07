@@ -393,7 +393,7 @@ let disparoLiberado = true;
 const TEMPO_COOLDOWN = 1500; // em milissegundos
 
 document.addEventListener('keydown', function(evento) {
-  if (evento.code === 'Space' && disparoLiberado) {
+  if (evento.code === 'Space' && disparoLiberado) { //No evento keydown, usamos evento.code porque ele retorna uma string identificando a tecla (como "Space").
     disparoLiberado = false;
     let tiro = { ...objetosDoJogo.moldesDosProjeteis.torrenta };
     dispararProjetil(tiro, objetosDoJogo.personagens.torrenta);
@@ -402,6 +402,32 @@ document.addEventListener('keydown', function(evento) {
     }, TEMPO_COOLDOWN);
   }
 });
+
+ 
+
+ document.addEventListener('mousedown', function(evento) {
+  if (evento.button === 0 && disparoLiberado) { //no evento.button retorna um número indicando qual botão do mouse foi clicado, nesse caso o 0 (botão esquerdo)
+    disparoLiberado = false;
+    let tiro = { ...objetosDoJogo.moldesDosProjeteis.torrenta };
+    dispararProjetil(tiro, objetosDoJogo.personagens.torrenta);
+    setTimeout(function() {
+      disparoLiberado = true;
+    }, TEMPO_COOLDOWN);
+  }
+});
+
+document.addEventListener('mousedown', function(evento) {
+  if (evento.button === 0 && disparoLiberado) { //no evento.button retorna um número indicando qual botão do mouse foi clicado, nesse caso o 0 (botão esquerdo)
+    disparoLiberado = false;
+    let tiro = { ...objetosDoJogo.moldesDosProjeteis.torrenta };
+    dispararProjetil(tiro, objetosDoJogo.personagens.torrenta);
+    setTimeout(function() {
+      disparoLiberado = true;
+    }, TEMPO_COOLDOWN);
+  }
+});
+
+
 
 function aoRedimensionar() {
   let dimensoes = obterDimensoesDaTela();
