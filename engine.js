@@ -73,6 +73,15 @@ function iniciar_jogo() {
   dicaEl.style.display = 'none';
   botao.style.display = 'none';
 
+  // Limpa projéteis antigos
+  projeteisEmCena = {
+    torrenta: [],
+    carangueijo: [],
+    lula: [],
+    polvo: [],
+    ovni: []
+  };
+
   jogoEmExecucao = true;
 
   posicionarObjeto(objetosDoJogo.personagens.torrenta);
@@ -83,12 +92,15 @@ function iniciar_jogo() {
 
 function loopDoJogo() {
   if (!jogoEmExecucao) return;
-
+  
   contexto.clearRect(0, 0, areaJogo.width, areaJogo.height);
-
+  
   movimentarTorrentaComTeclado();
   desenharObjetos(objetosDoJogo.personagens.torrenta);
-
+  
+  // Atualiza e desenha os projéteis
+  atualizarProjeteis();
+  
   requestAnimationFrame(loopDoJogo);
 }
 
@@ -125,10 +137,10 @@ const TORRENTA = [
   [1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1],
   [1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1]
 ];
-const CARANGUEIJO = [];
-const LULA = [];
-const POLVO = [];
-const OVNI = [];
+const CARANGUEIJO = [[2]];
+const LULA = [[3]];
+const POLVO = [[4]];
+const OVNI = [[5]];
 
 const TIRO_DA_TORRENTA = [
   [2],
@@ -137,10 +149,10 @@ const TIRO_DA_TORRENTA = [
   [2],
   [2]
 ];
-const TIRO_CARANGUEIJO = [];
-const TIRO_LULA = [];
-const TIRO_POLVO = [];
-const TIRO_OVNI = [];
+const TIRO_CARANGUEIJO = [1];
+const TIRO_LULA = [3];
+const TIRO_POLVO = [4];
+const TIRO_OVNI = [5];
 
 /*******************
  * OBJETOS DO JOGO *
@@ -351,13 +363,45 @@ function movimentarTorrentaComTeclado() {
   }
 }
 
-function dispararProjetil(objetoProjetil, objetoReferencia = null) {
-  objetoProjetil.posicaoX = objetoReferencia.largura / 2;
-  objetoProjetil.posicaoY += (objetoProjetil.velocidade * objetoProjetil.direcao);
+function dispararProjetil(objetoProjetil, objetoReferencia, tempo) {
+  // Posiciona o projétil na posição inicial (centralizado no objeto que dispara)
+  objetoProjetil.posicaoX = objetoReferencia.posicaoX + (objetoReferencia.largura / 2) - (objetoProjetil.largura / 2);
+  objetoProjetil.posicaoY = objetoReferencia.posicaoY - objetoProjetil.altura;
 
-  console.log('disparou');
-  setTimeout(dispararProjetil, 500);
+  // Adiciona o projétil ao array de projéteis em cena
+  projeteisEmCena.torrenta.push(objetoProjetil);
 }
+
+function atualizarProjeteis() {
+  var i;
+  for (i = 0; i < projeteisEmCena.torrenta.length; i++) {
+    var proj = projeteisEmCena.torrenta[i];
+    proj.posicaoY += (proj.velocidade * proj.direcao);
+    
+    // Se o projétil sair da área do jogo, remova-o do array
+    if (proj.posicaoY < 0 || proj.posicaoY > coordMaxY) {
+      projeteisEmCena.torrenta.splice(i, 1);
+      i--; // Ajuste o índice após a remoção
+    } else {
+      desenharObjetos(proj);
+    }
+  }
+}
+/* chamei atualizarProjeteis dentro do loop */
+
+let disparoLiberado = true;
+const TEMPO_COOLDOWN = 1500; // em milissegundos
+
+document.addEventListener('keydown', function(evento) {
+  if (evento.code === 'Space' && disparoLiberado) {
+    disparoLiberado = false;
+    let tiro = { ...objetosDoJogo.moldesDosProjeteis.torrenta };
+    dispararProjetil(tiro, objetosDoJogo.personagens.torrenta);
+    setTimeout(function() {
+      disparoLiberado = true;
+    }, TEMPO_COOLDOWN);
+  }
+});
 
 function aoRedimensionar() {
   let dimensoes = obterDimensoesDaTela();
