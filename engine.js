@@ -55,7 +55,7 @@ const dicaEl = document.getElementById('dica');
 let coordMinX, coordMinY, coordMaxX, coordMaxY;
 const contexto = areaJogo.getContext('2d');
 const TAMANHO_DO_PIXEL = 5;
-let jogoEmExecucao;
+let jogoEmExecucao = false;
 let idFrameAnimacao;
 
 let projeteisEmCena = {
@@ -68,7 +68,7 @@ let projeteisEmCena = {
 
 let disparoLiberado = true;
 const COOLDOWN_TORRENTA = 1500; // em milissegundos
-let intervaloDisparoTouch = null;
+let ultimoDisparo = 0;
 
 /********************    
  * CONTROLE DO JOGO *
@@ -78,15 +78,11 @@ function iniciar_jogo() {
   botao.style.display = 'none';
 
   // Limpa projéteis antigos
-  projeteisEmCena = {
-    torrenta: [],
-    carangueijo: [],
-    lula: [],
-    polvo: [],
-    ovni: []
-  };
+  projeteisEmCena = { torrenta: [], carangueijo: [], lula: [], polvo: [], ovni: [] };
 
   jogoEmExecucao = true;
+
+  ultimoDisparo = performance.now();
 
   posicionarObjeto(objetosDoJogo.personagens.torrenta);
   desenharObjetos(objetosDoJogo.personagens.torrenta);
@@ -105,7 +101,7 @@ function loopDoJogo() {
   // Atualiza e desenha os projéteis
   atualizarProjeteis();
   
-  requestAnimationFrame(loopDoJogo);
+  idFrameAnimacao = requestAnimationFrame(loopDoJogo);
 }
 
 /********************************
@@ -392,47 +388,6 @@ function atualizarProjeteis() {
   }
 }
 /* chamei atualizarProjeteis dentro do loop */
-
-
-
-document.addEventListener('keydown', function(evento) {
-  evento.preventDefault();
-  if (evento.code === 'Space' && disparoLiberado) { //No evento keydown, usamos evento.code porque ele retorna uma string identificando a tecla (como "Space").
-    disparoLiberado = false;
-    let tiro = { ...objetosDoJogo.moldesDosProjeteis.torrenta };
-    dispararProjetil(tiro, objetosDoJogo.personagens.torrenta);
-    setTimeout(function() {
-      disparoLiberado = true;
-    }, COOLDOWN_TORRENTA);
-  }
-});
-
- 
-
- document.addEventListener('mousedown', function(evento) {
-  evento.preventDefault();
-  if (evento.button === 0 && disparoLiberado) { //no evento.button retorna um número indicando qual botão do mouse foi clicado, nesse caso o 0 (botão esquerdo)
-    disparoLiberado = false;
-    let tiro = { ...objetosDoJogo.moldesDosProjeteis.torrenta };
-    dispararProjetil(tiro, objetosDoJogo.personagens.torrenta);
-    setTimeout(function() {
-      disparoLiberado = true;
-    }, COOLDOWN_TORRENTA);
-  }
-});
-
-document.addEventListener('touchstart', function(evento) {
-  evento.preventDefault();
-  if (intervaloDisparoTouch === null) {
-    disparar(); // dispara imediatamente como o mouse faz
-    intervaloDisparoTouch = setInterval(disparar, COOLDOWN_TORRENTA);
-  }
-});
-
-document.addEventListener('touchend', function() {
-  clearInterval(intervaloDisparoTouch);
-  intervaloDisparoTouch = null;
-});
 
 function disparar() {
   if (disparoLiberado) {
