@@ -1,353 +1,265 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-<link rel="stylesheet" href="style.css" type="text/css" />
-
-<!-- Título da aba -->
-<title>Referência Rápida JavaScript para Web</title>
-
-<!-- Meta charset -->
-<meta charset="UTF-8">
-
-<!-- Responsividade -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- Descrição curta para buscadores -->
-<meta name="description" content="Guia de referência rápida de JavaScript para Web: seletores DOM, manipulação de conteúdo, estilos, eventos e criação de elementos.">
-
-<!-- Palavras-chave -->
-<meta name="keywords" content="JavaScript, DOM, CSS, eventos, programação web, guia rápido, referência JS">
-
-<!-- Autor -->
-<meta name="author" content="Bruno Moraes">
-
-<!-- Open Graph (para redes sociais como Facebook) -->
-<meta property="og:title" content="Referência Rápida JavaScript para Web">
-<meta property="og:description" content="Guia rápido de JavaScript para Web: seletores DOM, manipulação de conteúdo, estilos e eventos.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://bmfolio.web.app/">
-<meta property="og:image" content="URL_da_sua_imagem_de_preview.png">
-
-<!-- x Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Referência Rápida JavaScript para Web">
-<meta name="twitter:description" content="Guia rápido de JavaScript para Web: seletores DOM, manipulação de conteúdo, estilos e eventos.">
-<meta name="twitter:image" content="URL_da_sua_imagem_de_preview.png">
-  <style>
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Guias de Referência</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .guides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .guide-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .guide-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-header {
+            padding: 20px;
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+        }
+        
+        .card-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #667eea;
+            text-align: center;
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            text-align: center;
+        }
+        
+        .card-desc {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+        
+        .card-btn {
+            display: block;
+            text-align: center;
+            padding: 12px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        
+        .card-btn:hover {
+            background: #5a67d8;
+        }
+        
+        .coming-soon {
+            background: #a0aec0;
+        }
+        
+        .coming-soon:hover {
+            background: #909bab;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: white;
+            margin-top: 40px;
+        }
+        
+        .copyright {
+            margin-bottom: 10px;
+        }
+        
+        .copyright a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .copyright a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .guides-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>GUIA DE REFERÊNCIA RÁPIDA </h1>
-      <p>JavaScript - DOM</p>
+    <div class="container">
+        <header>
+            <h1>Guias de Referência Rápida</h1>
+            <p class="subtitle">Acesso rápido aos materiais de consulta para desenvolvimento</p>
+        </header>
+        
+        <div class="guides-grid">
+            <div class="guide-card">
+                <div class="card-header">
+                    <h2>Git</h2>
+                </div>
+                <div class="card-body">
+                    <div class="card-icon">
+                        <i class="fab fa-git-alt"></i>
+                    </div>
+                    <h3 class="card-title">Comandos Essenciais</h3>
+                    <p class="card-desc">Guia completo com os principais comandos Git, fluxos de trabalho e boas práticas para controle de versão.</p>
+                    <a href="git.html" class="card-btn">Acessar Guia</a>
+                </div>
+            </div>
+            
+            <div class="guide-card">
+                <div class="card-header">
+                    <h2>HTML</h2>
+                </div>
+                <div class="card-body">
+                    <div class="card-icon">
+                        <i class="fab fa-html5"></i>
+                    </div>
+                    <h3 class="card-title">Estrutura e Tags</h3>
+                    <p class="card-desc">Referência das principais tags HTML, atributos comuns e melhores práticas para estruturação de páginas web.</p>
+                    <a href="#" class="card-btn coming-soon">Em Breve</a>
+                </div>
+            </div>
+            
+            <div class="guide-card">
+                <div class="card-header">
+                    <h2>CSS</h2>
+                </div>
+                <div class="card-body">
+                    <div class="card-icon">
+                        <i class="fab fa-css3-alt"></i>
+                    </div>
+                    <h3 class="card-title">Estilização e Layout</h3>
+                    <p class="card-desc">Guia de propriedades CSS, técnicas de layout com Flexbox e Grid, e dicas de design responsivo.</p>
+                    <a href="#" class="card-btn coming-soon">Em Breve</a>
+                </div>
+            </div>
+            
+            <div class="guide-card">
+                <div class="card-header">
+                    <h2>JavaScript</h2>
+                </div>
+                <div class="card-body">
+                    <div class="card-icon">
+                        <i class="fab fa-js"></i>
+                    </div>
+                    <h3 class="card-title">Fundamentos e APIs</h3>
+                    <p class="card-desc">Referência dos principais conceitos JavaScript, funções essenciais e APIs do navegador.</p>
+                    <a href="#" class="card-btn coming-soon">Em Breve</a>
+                </div>
+            </div>
+            
+            <div class="guide-card">
+                <div class="card-header">
+                    <h2>Linux</h2>
+                </div>
+                <div class="card-body">
+                    <div class="card-icon">
+                        <i class="fab fa-linux"></i>
+                    </div>
+                    <h3 class="card-title">Comandos Terminal</h3>
+                    <p class="card-desc">Guia com os comandos essenciais do Linux, administração de sistemas e ferramentas de linha de comando.</p>
+                    <a href="#" class="card-btn coming-soon">Em Breve</a>
+                </div>
+            </div>
+            
+            <div class="guide-card">
+                <div class="card-header">
+                    <h2>SQL</h2>
+                </div>
+                <div class="card-body">
+                    <div class="card-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="card-title">Consultas e Estruturas</h3>
+                    <p class="card-desc">Referência de comandos SQL, estruturação de bancos de dados e otimização de consultas.</p>
+                    <a href="#" class="card-btn coming-soon">Em Breve</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p class="copyright"><a href="https://bmfolio.web.app/">&#169; <span id="ano-atual"></span> Bruno Moraes</a>
+                | <a href="licenca-agplv3.html" title="Visualizar licença AGPLv3" target="_blank">Evoluindo a cada código</a>
+            </p>
+        </div>
     </div>
-    
-    <div class="section a">
-      <h2>SELEÇÃO BÁSICA DE ELEMENTOS</h2>
-      <table>
-        <tr>
-          <th class="col-metodo">Método</th>
-          <th class="col-descricao">Descrição</th>
-          <th class="col-exemplo">Exemplo</th>
-        </tr>
-        <tr>
-          <td><code>getElementById()</code></td>
-          <td>Seleciona elemento pelo ID</td>
-          <td><code>document.getElementById('header')</code></td>
-        </tr>
-        <tr>
-          <td><code>getElementsByClassName()</code></td>
-          <td>Seleciona elementos pela classe</td>
-          <td><code>document.getElementsByClassName('btn')</code></td>
-        </tr>
-        <tr>
-          <td><code>getElementsByTagName()</code></td>
-          <td>Seleciona elementos pela tag</td>
-          <td><code>document.getElementsByTagName('div')</code></td>
-        </tr>
-        <tr>
-          <td><code>getElementsByName()</code></td>
-          <td>Seleciona elementos pelo atributo name</td>
-          <td><code>document.getElementsByName('email')</code></td>
-        </tr>
-        <tr>
-          <td><code>querySelector()</code></td>
-          <td>Seleciona o primeiro elemento que corresponde ao seletor CSS</td>
-          <td><code>document.querySelector('.menu li')</code></td>
-        </tr>
-        <tr>
-          <td><code>querySelectorAll()</code></td>
-          <td>Seleciona todos os elementos que correspondem ao seletor CSS</td>
-          <td><code>document.querySelectorAll('div.box')</code></td>
-        </tr>
-      </table>
-    </div>
-    
-    <div class="section b">
-      <h2>PROPRIEDADES DE DIMENSÃO E POSIÇÃO</h2>
-      <table>
-        <tr>
-          <th class="col-metodo">Propriedade</th>
-          <th class="col-descricao">Descrição</th>
-          <th class="col-exemplo">Exemplo</th>
-        </tr>
-        <tr>
-          <td><code>offsetWidth</code></td>
-          <td>Largura total (conteúdo + padding + borda)</td>
-          <td><code>elemento.offsetWidth</code></td>
-        </tr>
-        <tr>
-          <td><code>offsetHeight</code></td>
-          <td>Altura total (conteúdo + padding + borda)</td>
-          <td><code>elemento.offsetHeight</code></td>
-        </tr>
-        <tr>
-          <td><code>clientWidth</code></td>
-          <td>Largura visível (conteúdo + padding)</td>
-          <td><code>elemento.clientWidth</code></td>
-        </tr>
-        <tr>
-          <td><code>clientHeight</code></td>
-          <td>Altura visível (conteúdo + padding)</td>
-          <td><code>elemento.clientHeight</code></td>
-        </tr>
-        <tr>
-          <td><code>scrollWidth</code></td>
-          <td>Largura total do conteúdo (incluindo área não visível)</td>
-          <td><code>elemento.scrollWidth</code></td>
-        </tr>
-        <tr>
-          <td><code>scrollHeight</code></td>
-          <td>Altura total do conteúdo (incluindo área não visível)</td>
-          <td><code>elemento.scrollHeight</code></td>
-        </tr>
-        <tr>
-          <td><code>offsetTop</code></td>
-          <td>Distância entre o elemento e o topo do offsetParent</td>
-          <td><code>elemento.offsetTop</code></td>
-        </tr>
-        <tr>
-          <td><code>offsetLeft</code></td>
-          <td>Distância entre o elemento e a esquerda do offsetParent</td>
-          <td><code>elemento.offsetLeft</code></td>
-        </tr>
-        <tr>
-          <td><code>getBoundingClientRect()</code></td>
-          <td>Retorna tamanho e posição relativa ao viewport</td>
-          <td><code>elemento.getBoundingClientRect()</code></td>
-        </tr>
-      </table>
-    </div>
-    
-    <div class="section c">
-      <h2>NAVEGAÇÃO ENTRE ELEMENTOS</h2>
-      <table>
-        <tr>
-          <th class="col-metodo">Propriedade</th>
-          <th class="col-descricao">Descrição</th>
-          <th class="col-exemplo">Exemplo</th>
-        </tr>
-        <tr>
-          <td><code>parentElement</code></td>
-          <td>Elemento pai direto</td>
-          <td><code>elemento.parentElement</code></td>
-        </tr>
-        <tr>
-          <td><code>children</code></td>
-          <td>Elementos filhos (apenas elementos)</td>
-          <td><code>elemento.children</code></td>
-        </tr>
-        <tr>
-          <td><code>firstElementChild</code></td>
-          <td>Primeiro elemento filho</td>
-          <td><code>elemento.firstElementChild</code></td>
-        </tr>
-        <tr>
-          <td><code>lastElementChild</code></td>
-          <td>Último elemento filho</td>
-          <td><code>elemento.lastElementChild</code></td>
-        </tr>
-        <tr>
-          <td><code>nextElementSibling</code></td>
-          <td>Próximo elemento irmão</td>
-          <td><code>elemento.nextElementSibling</code></td>
-        </tr>
-        <tr>
-          <td><code>previousElementSibling</code></td>
-          <td>Elemento irmão anterior</td>
-          <td><code>elemento.previousElementSibling</code></td>
-        </tr>
-      </table>
-    </div>
-    
-    <div class="section d">
-      <h2>MANIPULAÇÃO DE CONTEÚDO</h2>
-      <table>
-        <tr>
-          <th class="col-metodo">Método/Propriedade</th>
-          <th class="col-descricao">Descrição</th>
-          <th class="col-exemplo">Exemplo</th>
-        </tr>
-        <tr>
-          <td><code>textContent</code></td>
-          <td>Texto dentro do elemento (sem formatação)</td>
-          <td><code>elemento.textContent = 'Texto'</code></td>
-        </tr>
-        <tr>
-          <td><code>innerHTML</code></td>
-          <td>HTML dentro do elemento (com formatação)</td>
-          <td><code>elemento.innerHTML = '&lt;b&gt;Texto&lt;/b&gt;'</code></td>
-        </tr>
-        <tr>
-          <td><code>value</code></td>
-          <td>Valor de inputs, selects e textareas</td>
-          <td><code>input.value = 'Valor'</code></td>
-        </tr>
-        <tr>
-          <td><code>setAttribute()</code></td>
-          <td>Define um atributo</td>
-          <td><code>elemento.setAttribute('id', 'novoId')</code></td>
-        </tr>
-        <tr>
-          <td><code>getAttribute()</code></td>
-          <td>Obtém o valor de um atributo</td>
-          <td><code>elemento.getAttribute('class')</code></td>
-        </tr>
-        <tr>
-          <td><code>classList.add()</code></td>
-          <td>Adiciona uma classe</td>
-          <td><code>elemento.classList.add('ativo')</code></td>
-        </tr>
-        <tr>
-          <td><code>classList.remove()</code></td>
-          <td>Remove uma classe</td>
-          <td><code>elemento.classList.remove('inativo')</code></td>
-        </tr>
-        <tr>
-          <td><code>classList.toggle()</code></td>
-          <td>Alterna uma classe</td>
-          <td><code>elemento.classList.toggle('visivel')</code></td>
-        </tr>
-      </table>
-    </div>
-    
-    <div class="section e">
-      <h2>CRIAÇÃO E MANIPULAÇÃO DE ELEMENTOS</h2>
-      <table>
-        <tr>
-          <th class="col-metodo">Método</th>
-          <th class="col-descricao">Descrição</th>
-          <th class="col-exemplo">Exemplo</th>
-        </tr>
-        <tr>
-          <td><code>createElement()</code></td>
-          <td>Cria um novo elemento</td>
-          <td><code>document.createElement('div')</code></td>
-        </tr>
-        <tr>
-          <td><code>appendChild()</code></td>
-          <td>Adiciona um elemento filho</td>
-          <td><code>pai.appendChild(filho)</code></td>
-        </tr>
-        <tr>
-          <td><code>removeChild()</code></td>
-          <td>Remove um elemento filho</td>
-          <td><code>pai.removeChild(filho)</code></td>
-        </tr>
-        <tr>
-          <td><code>replaceChild()</code></td>
-          <td>Substitui um elemento filho</td>
-          <td><code>pai.replaceChild(novo, antigo)</code></td>
-        </tr>
-        <tr>
-          <td><code>cloneNode()</code></td>
-          <td>Clona um elemento</td>
-          <td><code>elemento.cloneNode(true)</code></td>
-        </tr>
-      </table>
-    </div>
-    
-    <div class="section f">
-      <h2>MANIPULAÇÃO DE ESTILOS</h2>
-      <table>
-        <tr>
-          <th class="col-metodo">Método/Propriedade</th>
-          <th class="col-descricao">Descrição</th>
-          <th class="col-exemplo">Exemplo</th>
-        </tr>
-        <tr>
-          <td><code>style</code></td>
-          <td>Acessa/modifica estilos inline</td>
-          <td><code>elemento.style.color = 'red'</code></td>
-        </tr>
-        <tr>
-          <td><code>getComputedStyle()</code></td>
-          <td>Obtém estilos computados (incluindo CSS)</td>
-          <td><code>getComputedStyle(elemento).fontSize</code></td>
-        </tr>
-        <tr>
-          <td><code>className</code></td>
-          <td>Obtém/define a classe do elemento</td>
-          <td><code>elemento.className = 'classe'</code></td>
-        </tr>
-      </table>
-    </div>
-    
-    <div class="section g">
-      <h2>EVENTOS COMUNS</h2>
-      <table>
-        <tr>
-          <th class="col-metodo">Evento</th>
-          <th class="col-descricao">Descrição</th>
-          <th class="col-exemplo">Exemplo</th>
-        </tr>
-        <tr>
-          <td><code>click</code></td>
-          <td>Clique do mouse</td>
-          <td><code>elemento.addEventListener('click', funcao)</code></td>
-        </tr>
-        <tr>
-          <td><code>mouseover</code></td>
-          <td>Mouse sobre o elemento</td>
-          <td><code>elemento.onmouseover = funcao</code></td>
-        </tr>
-        <tr>
-          <td><code>mouseout</code></td>
-          <td>Mouse sai do elemento</td>
-          <td><code>elemento.onmouseout = funcao</code></td>
-        </tr>
-        <tr>
-          <td><code>keydown</code></td>
-          <td>Tecla pressionada</td>
-          <td><code>elemento.onkeydown = funcao</code></td>
-        </tr>
-        <tr>
-          <td><code>submit</code></td>
-          <td>Formulário enviado</td>
-          <td><code>form.onsubmit = funcao</code></td>
-        </tr>
-        <tr>
-          <td><code>change</code></td>
-          <td>Valor alterado (input, select)</td>
-          <td><code>input.onchange = funcao</code></td>
-        </tr>
-      </table>
-    </div>
-    
-    <div class="footer">
-      <p class="copyright"><a href="https://bmfolio.web.app/">&#169; <span id="ano-atual"></span> Bruno Moraes</a>
-        | <a href="licenca-agplv3.html" title="Visualizar licença AGPLv3" target="_blank">Evoluindo a cada código</a>
-      </p>
-    </div>
-  </div>
-  <script src="engine.js" type="text/javascript" charset="utf-8"></script>
-</body>
 
+    <script>
+        const anoAtualElement = document.getElementById("ano-atual");
+        const anoAtual = new Date().getFullYear();
+        anoAtualElement.innerHTML = anoAtual;
+    </script>
+</body>
 </html>
