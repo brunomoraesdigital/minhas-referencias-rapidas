@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Referência Git - Comandos Essenciais</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            width: 100%;
+        }
+
+        body {
+            width: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #222;
+            background-color: #f9f9f9;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 10px 0 10px 0;
+            padding-bottom: 5px;
+            border-bottom: 3px solid #2c3e50;
+            color: #2c3e50;
+        }
+
+        h2 {
+            font-size: 0.8rem;
+            padding: 5px;
+            background-color: #e8f4f8;
+            border-left: 5px solid #3498db;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            color: #3498db;
+        }
+
+        p {
+            line-height: 1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+            border: 1px solid #2c3e50;
+            padding: 5px;
+            text-align: left;
+            font-size: 0.8rem;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 5px;
+            font-size: 0.8rem;
+            color: #444;
+        }
+
+        tr {
+            display: flex;
+            flex-direction: column;
+        }
+
+        tr:nth-child(1) {
+            display: flex;
+            flex-direction: row;
+        }
+
+        tr:nth-child(even) {
+            background-color: #E6F7FF;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #E8FFE8;
+        }
+
+        tr:hover {
+            background-color: #fff0f0;
+        }
+
+        .comando {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .col-comando {
+            width: 25%;
+        }
+
+        .col-descricao {
+            width: 45%;
+        }
+
+        .col-exemplo {
+            width: 30%;
+        }
+
+        .section {
+            margin-bottom: 10px;
+        }
+
+        .container {
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+            padding: 10px;
+
+            border-radius: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 5px;
+            padding-top: 5px;
+            border-top: 1px solid #ddd;
+            color: #7f8c8d;
+            font-size: 0.8rem;
+        }
+
+        .dica {
+            background-color: #e8f6f3;
+            border-left: 4px solid #2ecc71;
+            padding: 8px 10px;
+            margin: 10px 0;
+            font-size: 0.8rem;
+        }
+
+        .aviso {
+            background-color: #fdebd0;
+            border-left: 4px solid #e67e22;
+            padding: 8px 10px;
+            margin: 10px 0;
+            font-size: 0.8rem;
+        }
+
+        .perigo {
+            background-color: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 8px 10px;
+            margin: 10px 0;
+            font-size: 0.8rem;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .concept-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .concept-item h4 {
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        .concept-item p {
+            font-size: 0.85rem;
+            color: #555;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 8px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            background-color: #3498db;
+            color: white;
+        }
+
+        .js-badge {
+            background-color: #f7df1e;
+        }
+
+        .git-badge {
+            background-color: #3498db;
+        }
+
+        .tip-box {
+            background-color: #e8f6f3;
+            border-left: 4px solid #2ecc71;
+            padding: 12px 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .command-explanation {
+            margin-top: 8px;
+            padding: 8px 12px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            border-left: 3px solid #3498db;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.85rem;
+            color: #e74c3c;
+            background-color: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid #eee;
+            font-weight: 600;
+        }
+
+        td:nth-child(1) code {
+            color: #2c3e50;
+            background-color: #f3f7ff;
+        }
+
+        ol {
+            margin-left: 2rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        @media (orientation: landscape) {
+            tr {
+                flex-direction: row;
+            }
+
+            td:nth-child(1) {
+                flex: 1 0 26%;
+            }
+
+            td:nth-child(2) {
+                flex: 1 0 42%;
+            }
+
+            td:nth-child(3) {
+                flex: 1 0 32%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            td,
+            th {
+                padding: 8px 6px;
+            }
+
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>GUIA DE REFERÊNCIA RÁPIDA </h1>
+            <p class="badge git-badge">GIT</p>
+            <p>Comandos Essenciais para Controle de Versão</p>
+        </div>
+
+        <div class="section">
+            <h2>CONFIGURAÇÃO INICIAL</h2>
+            <table>
+                <tr>
+                    <th class="col-comando">Comando</th>
+                    <th class="col-descricao">Descrição</th>
+                    <th class="col-exemplo">Exemplo</th>
+                </tr>
+                <tr>
+                    <td><span class="comando">git config --global user.name</span></td>
+                    <td>Define seu nome de usuário</td>
+                    <td><span class="comando">git config --global user.name "Seu Nome"</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git config --global user.email</span></td>
+                    <td>Define seu email</td>
+                    <td><span class="comando">git config --global user.email "seu@email.com"</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git config --list</span></td>
+                    <td>Lista todas as configurações</td>
+                    <td><span class="comando">git config --list</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>INICIAR REPOSITÓRIO</h2>
+            <table>
+                <tr>
+                    <th class="col-comando">Comando</th>
+                    <th class="col-descricao">Descrição</th>
+                    <th class="col-exemplo">Exemplo</th>
+                </tr>
+                <tr>
+                    <td><span class="comando">git init</span></td>
+                    <td>Inicializa um repositório Git local</td>
+                    <td><span class="comando">git init</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git clone</span></td>
+                    <td>Clona um repositório remoto</td>
+                    <td><span class="comando">git clone https://github.com/usuario/repo.git</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>TRABALHANDO COM ALTERAÇÕES</h2>
+            <table>
+                <tr>
+                    <th class="col-comando">Comando</th>
+                    <th class="col-descricao">Descrição</th>
+                    <th class="col-exemplo">Exemplo</th>
+                </tr>
+                <tr>
+                    <td><span class="comando">git status</span></td>
+                    <td>Mostra o estado dos arquivos</td>
+                    <td><span class="comando">git status</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git add</span></td>
+                    <td>Adiciona arquivos à staging area</td>
+                    <td><span class="comando">git add .</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git commit</span></td>
+                    <td>Registra as alterações</td>
+                    <td><span class="comando">git commit -m "Mensagem"</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git commit -am</span></td>
+                    <td>Adiciona e commita arquivos rastreados</td>
+                    <td><span class="comando">git commit -am "Mensagem"</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>VER HISTÓRICO E DIFERENÇAS</h2>
+            <table>
+                <tr>
+                    <th class="col-comando">Comando</th>
+                    <th class="col-descricao">Descrição</th>
+                    <th class="col-exemplo">Exemplo</th>
+                </tr>
+                <tr>
+                    <td><span class="comando">git log</span></td>
+                    <td>Exibe o histórico de commits</td>
+                    <td><span class="comando">git log</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git log --oneline</span></td>
+                    <td>Histórico compacto</td>
+                    <td><span class="comando">git log --oneline</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git diff</span></td>
+                    <td>Mostra diferenças entre arquivos</td>
+                    <td><span class="comando">git diff</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git diff --staged</span></td>
+                    <td>Mostra diferenças na staging area</td>
+                    <td><span class="comando">git diff --staged</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>BRANCHES (RAMIFICAÇÕES)</h2>
+            <table>
+                <tr>
+                    <th class="col-comando">Comando</th>
+                    <th class="col-descricao">Descrição</th>
+                    <th class="col-exemplo">Exemplo</th>
+                </tr>
+                <tr>
+                    <td><span class="comando">git branch</span></td>
+                    <td>Lista todas as branches locales</td>
+                    <td><span class="comando">git branch</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git branch [nome]</span></td>
+                    <td>Cria uma nova branch</td>
+                    <td><span class="comando">git branch nova-feature</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git checkout [nome]</span></td>
+                    <td>Muda para uma branch existente</td>
+                    <td><span class="comando">git checkout main</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git checkout -b [nome]</span></td>
+                    <td>Cria e muda para uma nova branch</td>
+                    <td><span class="comando">git checkout -b nova-feature</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git merge [nome]</span></td>
+                    <td>Mescla uma branch à branch atual</td>
+                    <td><span class="comando">git merge nova-feature</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git branch -d [nome]</span></td>
+                    <td>Deleta uma branch local</td>
+                    <td><span class="comando">git branch -d branch-antiga</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>REPOSITÓRIO REMOTO (GITHUB)</h2>
+            <table>
+                <tr>
+                    <th class="col-comando">Comando</th>
+                    <th class="col-descricao">Descrição</th>
+                    <th class="col-exemplo">Exemplo</th>
+                </tr>
+                <tr>
+                    <td><span class="comando">git remote add origin</span></td>
+                    <td>Adiciona um repositório remoto</td>
+                    <td><span class="comando">git remote add origin [url]</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git push -u origin</span></td>
+                    <td>Envia commits para o remoto</td>
+                    <td><span class="comando">git push -u origin main</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git push</span></td>
+                    <td>Envia commits (após primeiro push)</td>
+                    <td><span class="comando">git push</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git pull</span></td>
+                    <td>Puxa alterações do remoto</td>
+                    <td><span class="comando">git pull</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git fetch</span></td>
+                    <td>Busca alterações sem merge</td>
+                    <td><span class="comando">git fetch</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>DESFAZENDO COISAS</h2>
+            <table>
+                <tr>
+                    <th class="col-comando">Comando</th>
+                    <th class="col-descricao">Descrição</th>
+                    <th class="col-exemplo">Exemplo</th>
+                </tr>
+                <tr>
+                    <td><span class="comando">git restore [arquivo]</span></td>
+                    <td>Descarta alterações não commitadas</td>
+                    <td><span class="comando">git restore arquivo.txt</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git reset --hard HEAD</span></td>
+                    <td>Remove todas as alterações não commitadas</td>
+                    <td><span class="comando">git reset --hard HEAD</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git reset --soft HEAD^</span></td>
+                    <td>Desfaz o último commit, mantendo alterações</td>
+                    <td><span class="comando">git reset --soft HEAD^</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git revert [hash]</span></td>
+                    <td>Cria novo commit desfazendo alterações</td>
+                    <td><span class="comando">git revert a1b2c3d</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>OUTROS COMANDOS ÚTEIS</h2>
+            <table>
+                <tr>
+                    <th class="col-comando">Comando</th>
+                    <th class="col-descricao">Descrição</th>
+                    <th class="col-exemplo">Exemplo</th>
+                </tr>
+                <tr>
+                    <td><span class="comando">git stash</span></td>
+                    <td>Armazena temporariamente alterações</td>
+                    <td><span class="comando">git stash</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git stash pop</span></td>
+                    <td>Recupera alterações armazenadas</td>
+                    <td><span class="comando">git stash pop</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git rm [arquivo]</span></td>
+                    <td>Remove arquivo do repositório</td>
+                    <td><span class="comando">git rm arquivo.txt</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git mv [antigo] [novo]</span></td>
+                    <td>Renomeia ou move arquivo</td>
+                    <td><span class="comando">git mv antigo.txt novo.txt</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git tag</span></td>
+                    <td>Gerencia tags para marcação de versões</td>
+                    <td><span class="comando">git tag -a v1.0 -m "Versão 1.0"</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">git rebase</span></td>
+                    <td>Reaplica commits em outra base (avançado)</td>
+                    <td><span class="comando">git rebase main</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>FLAGS MAIS USADAS</h2>
+            <table>
+                <tr>
+                    <th class="col-comando">Flag</th>
+                    <th class="col-descricao">Descrição</th>
+                    <th class="col-exemplo">Uso</th>
+                </tr>
+                <tr>
+                    <td><span class="comando">-m</span></td>
+                    <td>Adiciona mensagem ao commit</td>
+                    <td><span class="comando">git commit -m "Mensagem"</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">-a</span></td>
+                    <td>Adiciona automaticamente arquivos rastreados</td>
+                    <td><span class="comando">git commit -am "Mensagem"</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">-u</span></td>
+                    <td>Define upstream (conexão com remoto)</td>
+                    <td><span class="comando">git push -u origin main</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">-b</span></td>
+                    <td>Cria e muda para uma nova branch</td>
+                    <td><span class="comando">git checkout -b nova-branch</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">-d</span></td>
+                    <td>Deleta branch com segurança</td>
+                    <td><span class="comando">git branch -d branch-antiga</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">-D</span></td>
+                    <td>Força exclusão de branch</td>
+                    <td><span class="comando">git branch -D branch-perigosa</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">
+                <h2>FLUXOS DE TRABALHOS TÍPICOS</h2>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Configuração Global do Git:</strong> Define sua identidade para todos os repositórios
+            </div>
+            <ol>
+                <li><code>git config --global user.name "Seu Nome"</code> - Define seu nome para todos os commits
+                    <div class="command-explanation">
+                        Este nome aparecerá em todos os seus commits. Use seu nome real ou nickname profissional.
+                    </div>
+                </li>
+                <li><code>git config --global user.email "seu@email.com"</code> - Define seu email para todos os commits
+                    <div class="command-explanation">
+                        Use o mesmo email associado à sua conta do GitHub/GitLab. Isso conecta seus commits à sua conta.
+                    </div>
+                </li>
+                <li><code>git config --global --list</code> - Verifica todas as configurações globais
+                    <div class="command-explanation">
+                        Comando útil para confirmar que suas configurações foram salvas corretamente.
+                    </div>
+                </li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>git Clone:</strong> Copia um repositório remoto para sua máquina local
+            </div>
+            <ol>
+                <li><code>git clone [url]</code> - Clona um repositório existente</li>
+                <li><code>cd [nome-do-repositorio]</code> - Entra na pasta do repositório</li>
+                <li>Configure usuário e email (apenas se não tiver configurado globalmente ou se preferir configurar de
+                    forma diferente):
+                    <ul>
+                        <li><code>git config user.name "Seu Nome"</code></li>
+                        <li><code>git config user.email "seu@email.com"</code></li>
+                    </ul>
+                </li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>git Init:</strong> Inicializa um novo repositório Git local
+            </div>
+            <ol>
+                <li><code>mkdir [nome-do-projeto]</code> - Cria uma pasta para o projeto</li>
+                <li><code>cd [nome-do-projeto]</code> - Entra na pasta do projeto</li>
+                <li><code>git init</code> - Inicializa o repositório Git</li>
+                <li>Configure usuário e email (apenas se não tiver configurado globalmente ou se preferir configurar de
+                    forma diferente):
+                    <ul>
+                        <li><code>git config user.name "Seu Nome"</code></li>
+                        <li><code>git config user.email "seu@email.com"</code></li>
+                    </ul>
+                </li>
+                <li><code>git remote add origin [url]</code> - Conecta ao repositório remoto (opcional)</li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>Trabalhando na Branch Main:</strong> Desenvolvimento direto na branch principal
+            </div>
+            <ol>
+                <li><code>git status</code> - Verifica o estado do repositório</li>
+                <li><code>git add .</code> - Adiciona todas as alterações</li>
+                <li><code>git status</code> - Confirma as alterações adicionadas</li>
+                <li><code>git commit -m "Mensagem descritiva"</code> - Commita as alterações</li>
+                <li><code>git push -u origin main</code> - Envia para o repositório remoto</li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>Trabalhando em uma Branch:</strong> Desenvolvimento isolado em uma branch separada
+            </div>
+            <ol>
+                <li><code>git checkout -b [minha-branch]</code> - Cria e muda para uma nova branch</li>
+                <li><code>git status</code> - Verifica o estado do repositório</li>
+                <li><code>git add .</code> - Adiciona todas as alterações</li>
+                <li><code>git status</code> - Confirma as alterações adicionadas</li>
+                <li><code>git commit -m "Mensagem descritiva"</code> - Commita as alterações</li>
+                <li><code>git push -u origin [minha-branch]</code> - Envia para o repositório remoto</li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>Mesclando Branches:</strong> Integrando changes de uma branch para outra
+            </div>
+            <ol>
+                <li><code>git checkout main</code> - Muda para a branch main</li>
+                <li><code>git pull origin main</code> - Atualiza a branch main local</li>
+                <li><code>git merge [minha-branch]</code> - Mescla a branch na main
+                    <ul>
+                        <li>Se houver conflitos, resolva-os e depois faça <code>git add .</code> e
+                            <code>git commit</code>
+                        </li>
+                    </ul>
+                </li>
+                <li><code>git push origin main</code> - Envia as changes mescladas para o remoto</li>
+                <li><code>git branch -d [minha-branch]</code> - Deleta a branch local (opcional)</li>
+                <li><code>git push origin --delete [minha-branch]</code> - Deleta a branch remota (opcional)</li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>Atualizando uma Branch com Changes da Main:</strong> Mantendo sua branch atualizada
+            </div>
+            <ol>
+                <li><code>git checkout [minha-branch]</code> - Muda para sua branch</li>
+                <li><code>git fetch origin</code> - Busca as changes do repositório remoto</li>
+                <li><code>git merge origin/main</code> - Mescla as changes da main na sua branch
+                    <ul>
+                        <li>Alternativa: <code>git rebase origin/main</code> para reaplicar suas changes sobre a main
+                            atualizada</li>
+                    </ul>
+                </li>
+                <li>Resolva quaisquer conflitos se necessário</li>
+                <li><code>git push origin [minha-branch]</code> - Atualiza a branch remota</li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>Verificação de Configurações do Git:</strong> Comandos para verificar suas configurações atuais
+            </div>
+            <ol>
+                <li><code>git config user.name</code> - Mostra o nome de usuário configurado para este repositório
+                    <div class="command-explanation">
+                        Se retornar vazio, significa que não há configuração específica para este repositório e será
+                        usada a configuração global.
+                    </div>
+                </li>
+                <li><code>git config user.email</code> - Mostra o email configurado para este repositório
+                    <div class="command-explanation">
+                        Se retornar vazio, significa que não há configuração específica para este repositório e será
+                        usada a configuração global.
+                    </div>
+                </li>
+                <li><code>git config --list</code> - Mostra TODAS as configurações do Git
+                    <div class="command-explanation">
+                        Exibe todas as configurações, incluindo globais, do sistema e específicas do repositório atual.
+                    </div>
+                </li>
+                <li><code>git config --global --list</code> - Mostra apenas as configurações globais
+                    <div class="command-explanation">
+                        Útil para verificar quais configurações estão definidas globalmente em sua máquina.
+                    </div>
+                </li>
+                <li><code>git config --local --list</code> - Mostra apenas as configurações do repositório atual
+                    <div class="command-explanation">
+                        Exibe apenas as configurações específicas do repositório em que você está trabalhando.
+                    </div>
+                </li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>Hierarquia de Configuração:</strong> Entenda a ordem de prioridade das configurações
+            </div>
+            <ol>
+                <li><strong>Local (por repositório)</strong> - Maior prioridade: <code>.git/config</code></li>
+                <li><strong>Global (por usuário)</strong> - Segunda prioridade: <code>~/.gitconfig</code></li>
+                <li><strong>System (para todo o sistema)</strong> - Menor prioridade: <code>/etc/gitconfig</code></li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>Fluxo de Desfazer Alterações:</strong> Como reverter mudanças indesejadas
+            </div>
+            <ol>
+                <li><code>git checkout -- [arquivo]</code> - Descarta alterações não commitadas em um arquivo</li>
+                <li><code>git reset --hard HEAD</code> - Descarta TODAS as alterações não commitadas</li>
+                <li><code>git revert [hash-do-commit]</code> - Cria um novo commit que desfaz um commit anterior</li>
+                <li><code>git reset --soft HEAD~1</code> - Desfaz o último commit, mantendo as alterações</li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>Fluxo de Trabalho com Stash:</strong> Como guardar alterações temporariamente
+            </div>
+            <ol>
+                <li><code>git stash</code> - Guarda as alterações atuais em uma área temporária</li>
+                <li><code>git stash list</code> - Lista todos os stashes guardados</li>
+                <li><code>git stash apply</code> - Recupera as alterações do stash mais recente</li>
+                <li><code>git stash drop</code> - Remove o stash mais recente</li>
+                <li><code>git stash pop</code> - Aplica o stash mais recente e o remove da lista</li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>Fluxo de Visualização de Histórico:</strong> Como explorar o histórico do projeto
+            </div>
+            <ol>
+                <li><code>git log</code> - Mostra o histórico de commits</li>
+                <li><code>git log --oneline</code> - Mostra o histórico resumido em uma linha por commit</li>
+                <li><code>git log --graph</code> - Mostra o histórico com um gráfico de branches</li>
+                <li><code>git blame [arquivo]</code> - Mostra quem modificou cada linha de um arquivo</li>
+                <li><code>git diff</code> - Mostra as diferenças entre arquivos modificados e sua versão commitada</li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>Fluxo de Synchronização com Repositório Remoto:</strong> Como manter seu repositório atualizado
+            </div>
+            <ol>
+                <li><code>git fetch origin</code> - Baixa as alterações do remoto, mas não aplica no seu branch</li>
+                <li><code>git pull origin [branch]</code> - Baixa e mescla as alterações do branch remoto</li>
+                <li><code>git push origin [branch]</code> - Envia seus commits para o branch remoto</li>
+                <li><code>git remote -v</code> - Lista os repositórios remotos configurados</li>
+                <li><code>git remote show origin</code> - Mostra informações detalhadas sobre o remoto 'origin'</li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>Fluxo de Resolução de Conflitos:</strong> Como resolver conflitos de merge
+            </div>
+            <ol>
+                <li><code>git status</code> - Identifica arquivos com conflitos</li>
+                <li>Abra os arquivos com conflitos e resolva manualmente (procure por marcadores como
+                    <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>)</li>
+                <li><code>git add [arquivo]</code> - Marca os arquivos como resolvidos</li>
+                <li><code>git commit</code> - Finaliza o merge após resolver todos os conflitos</li>
+            </ol>
+
+            <!-- NOVOS FLUXOS ADICIONADOS AQUI -->
+
+            <div class="tip-box">
+                <strong>Fluxo de Trabalho com .gitignore:</strong> Como ignorar arquivos e pastas desnecessários
+            </div>
+            <ol>
+                <li>Crie um arquivo chamado <code>.gitignore</code> na raiz do seu repositório</li>
+                <li>Adicione os padrões de arquivos/pastas que deseja ignorar:
+                    <ul>
+                        <li><code># Ignorar arquivos de log</code></li>
+                        <li><code>*.log</code></li>
+                        <li><code># Ignorar pasta node_modules</code></li>
+                        <li><code>node_modules/</code></li>
+                        <li><code># Ignorar arquivos de ambiente mas manter exemplo</code></li>
+                        <li><code>.env</code></li>
+                        <li><code>!.env.example</code></li>
+                    </ul>
+                </li>
+                <li>Salve o arquivo <code>.gitignore</code></li>
+                <li><code>git add .gitignore</code> - Adiciona o arquivo de ignore ao repositório</li>
+                <li><code>git commit -m "Adiciona arquivo .gitignore"</code> - Commita as alterações</li>
+                <li>Os arquivos/pastas correspondentes aos padrões serão ignorados pelo Git</li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>Fluxo de Versionamento com Tags:</strong> Como marcar versões do seu projeto
+            </div>
+            <ol>
+                <li><code>git tag</code> - Lista todas as tags existentes</li>
+                <li><code>git tag -a v1.0.0 -m "Versão 1.0.0"</code> - Cria uma tag anotada para a versão
+                    <div class="command-explanation">
+                        Use versionamento semântico (MAJOR.MINOR.PATCH) para nomear suas tags.
+                    </div>
+                </li>
+                <li><code>git push origin v1.0.0</code> - Envia a tag para o repositório remoto
+                    <div class="command-explanation">
+                        Por padrão, o git push não envia tags. É necessário enviá-las explicitamente.
+                    </div>
+                </li>
+                <li><code>git tag -d v1.0.0</code> - Deleta uma tag local (se necessário)</li>
+                <li><code>git push --delete origin v1.0.0</code> - Deleta uma tag remota (se necessário)</li>
+                <li><code>git checkout v1.0.0</code> - Para visualizar o código em uma versão específica</li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>Fluxo de Rebase (Avançado):</strong> Como reorganizar o histórico de commits
+            </div>
+            <div class="perigo">
+                <strong>Atenção:</strong> O rebase altera o histórico. Não use em branches compartilhadas onde outras pessoas estão trabalhando!
+            </div>
+            <ol>
+                <li><code>git checkout minha-branch</code> - Mude para a branch que deseja reorganizar</li>
+                <li><code>git rebase main</code> - Reaplica os commits da sua branch sobre a main atualizada
+                    <div class="command-explanation">
+                        Isso coloca seus commits no topo da branch main, criando um histórico linear.
+                    </div>
+                </li>
+                <li>Se houver conflitos durante o rebase:
+                    <ul>
+                        <li>Resolva os conflitos nos arquivos</li>
+                        <li><code>git add .</code> - Marca os conflitos como resolvidos</li>
+                        <li><code>git rebase --continue</code> - Continua o processo de rebase</li>
+                    </ul>
+                </li>
+                <li><code>git push --force-with-lease origin minha-branch</code> - Atualiza a branch remota
+                    <div class="command-explanation">
+                        O --force-with-lease é mais seguro que --force, pois verifica se há alterações remotas que você não possui localmente.
+                    </div>
+                </li>
+                <li>Se quiser cancelar um rebase em andamento: <code>git rebase --abort</code></li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>Boas Práticas com Git:</strong> Diretrizes para um uso eficiente e seguro
+            </div>
+            <ol>
+                <li><strong>Commits atômicos:</strong> Cada commit deve representar uma única alteração lógica</li>
+                <li><strong>Mensagens claras:</strong> Escreva mensagens de commit descritivas no imperativo
+                    <ul>
+                        <li>Ruim: "mudanças" ou "fix"</li>
+                        <li>Bom: "Adiciona funcionalidade de login" ou "Corrige cálculo de impostos"</li>
+                    </ul>
+                </li>
+                <li><strong>Commit cedo e frequentemente:</strong> Faça commits pequenos e regulares</li>
+                <li><strong>Use branches para features:</strong> Isole novas funcionalidades em branches separadas</li>
+                <li><strong>Antes de fazer push:</strong> Sempre execute testes e verifique se tudo funciona</li>
+                <li><strong>Mantenha seu repositório atualizado:</strong> Use <code>git fetch</code> regularmente para acompanhar alterações remotas</li>
+                <li><strong>Use .gitignore:</strong> Ignore arquivos desnecessários (logs, dependências, arquivos de ambiente)</li>
+                <li><strong>Documente:</strong> Mantenha um README atualizado com informações do projeto</li>
+            </ol>
+
+        </div>
+
+        <div class="section">
+            <div class="section-title">
+                <h2>CONCEITOS IMPORTANTES</h2>
+            </div>
+            <div class="concept-grid">
+                <div class="concept-item">
+                    <h4>Repositório</h4>
+                    <p>Local onde o Git armazena todos os arquivos e histórico do projeto</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Commit</h4>
+                    <p>Snapshot (foto) do seu projeto em um determinado momento</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Branch</h4>
+                    <p>Ramificação independente do projeto para desenvolver features</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Merge</h4>
+                    <p>Ação de unir o conteúdo de duas branches</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Pull Request</h4>
+                    <p>Solicitação para incorporar alterações de uma branch em outra (GitHub)</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Staging Area</h4>
+                    <p>Área intermediária onde preparamos arquivos para commit</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Working Directory</h4>
+                    <p>Área de trabalho onde você modifica os arquivos do projeto</p>
+                </div>
+                <div class="concept-item">
+                    <h4>HEAD</h4>
+                    <p>Ponteiro que referencia o commit atual em que você está trabalhando</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Remote</h4>
+                    <p>Repositório remoto (como GitHub/GitLab) onde o código é hospedado</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Clone</h4>
+                    <p>Cópia local de um repositório remoto com todo seu histórico</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Fork</h4>
+                    <p>Cópia pessoal de um repositório de outro usuário no GitHub</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Conflict</h4>
+                    <p>Conflito que ocorre quando o Git não pode mesclar alterações automaticamente</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Stash</h4>
+                    <p>Local temporário para armazenar alterações não commitadas</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Tag</h4>
+                    <p>Marcador estático que aponta para um commit específico (usado para versões)</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Rebase</h4>
+                    <p>Alternativa ao merge para integrar changes de uma branch em outra</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Origin</h4>
+                    <p>Nome padrão dado ao repositório remoto principal quando você clona</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Upstream</h4>
+                    <p>Referência ao repositório original de onde seu fork foi criado</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Hook</h4>
+                    <p>Scripts personalizados que são executados em eventos específicos do Git</p>
+                </div>
+                <div class="concept-item">
+                    <h4>.gitignore</h4>
+                    <p>Arquivo que especifica quais arquivos/diretórios o Git deve ignorar</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="dica">
+            <strong>Dica:</strong> Sempre use <span class="comando">git status</span> para verificar o estado do seu
+            repositório antes e depois de executar comandos.
+        </div>
+
+        <div class="aviso">
+            <strong>Aviso:</strong> Comandos com <span class="comando">--hard</span>, <span class="comando">-D</span> ou
+            <span class="comando">-f</span> podem causar perda de dados. Use com cuidado!
+        </div>
+
+        <div class="perigo">
+            <strong>Perigo:</strong> <span class="comando">git rebase</span> e <span class="comando">git push --force</span> alteram o histórico
+            do Git. Nunca use em branches compartilhadas com outras pessoas!
+        </div>
+
+        <div class="footer">
+            <p>Guia de Referência Git - Comandos Essenciais | Atualizado em 2023</p>
+        </div>
+    </div>
+</body>
+
+</html>

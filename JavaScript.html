@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Referência JavaScript - DOM e Manipulação</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            width: 100%;
+        }
+
+        body {
+            width: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #222;
+            background-color: #f9f9f9;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 10px 0 10px 0;
+            padding-bottom: 5px;
+            border-bottom: 3px solid #2c3e50;
+            color: #2c3e50;
+        }
+
+        h2 {
+            font-size: 0.8rem;
+            padding: 5px;
+            background-color: #e8f4f8;
+            border-left: 5px solid #3498db;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            color: #3498db;
+        }
+
+        p {
+            line-height: 1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+            border: 1px solid #2c3e50;
+            padding: 5px;
+            text-align: left;
+            font-size: 0.8rem;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 5px;
+            font-size: 0.8rem;
+            color: #444;
+        }
+
+        tr {
+            display: flex;
+            flex-direction: column;
+        }
+
+        tr:nth-child(1) {
+            display: flex;
+            flex-direction: row;
+        }
+
+        tr:nth-child(even) {
+            background-color: #E6F7FF;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #E8FFE8;
+        }
+
+        tr:hover {
+            background-color: #fff0f0;
+        }
+
+        .comando {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .col-metodo {
+            width: 25%;
+        }
+
+        .col-descricao {
+            width: 45%;
+        }
+
+        .col-exemplo {
+            width: 30%;
+        }
+
+        .section {
+            margin-bottom: 10px;
+        }
+
+        .container {
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+            padding: 10px;
+
+            border-radius: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 5px;
+            padding-top: 5px;
+            border-top: 1px solid #ddd;
+            color: #7f8c8d;
+            font-size: 0.8rem;
+        }
+	      .badge {
+      display: inline-block;
+      padding: 5px 8px;
+      border-radius: 12px;
+	  margin-bottom: 10px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      background-color: #3498db;
+      color: white;
+    }
+
+    .js-badge {
+      background-color: #f7df1e;
+      color: #000;
+    }
+
+        @media (orientation: landscape) {
+            tr {
+                flex-direction: row;
+            }
+
+            td:nth-child(1) {
+                flex: 1 0 25%;
+            }
+
+            td:nth-child(2) {
+                flex: 1 0 45%;
+            }
+
+            td:nth-child(3) {
+                flex: 1 0 30%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+      <h1>GUIA DE REFERÊNCIA RÁPIDA</h1>
+	  <p class="badge js-badge">JavaScript</p>
+      <p>Manipulação DOM - Eventos - Seletores</p>
+        </div>
+        
+        <div class="section">
+            <h2>SELEÇÃO BÁSICA DE ELEMENTOS</h2>
+            <table>
+                <tr>
+                    <th class="col-metodo">Método</th>
+                    <th class="col-descricao">Descrição</th>
+                    <th class="col-exemplo">Exemplo</th>
+                </tr>
+                <tr>
+                    <td><span class="comando">getElementById()</span></td>
+                    <td>Seleciona elemento pelo ID</td>
+                    <td><span class="comando">document.getElementById('header')</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">getElementsByClassName()</span></td>
+                    <td>Seleciona elementos pela classe</td>
+                    <td><span class="comando">document.getElementsByClassName('btn')</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">getElementsByTagName()</span></td>
+                    <td>Seleciona elementos pela tag</td>
+                    <td><span class="comando">document.getElementsByTagName('div')</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">getElementsByName()</span></td>
+                    <td>Seleciona elementos pelo atributo name</td>
+                    <td><span class="comando">document.getElementsByName('email')</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">querySelector()</span></td>
+                    <td>Seleciona o primeiro elemento que corresponde ao seletor CSS</td>
+                    <td><span class="comando">document.querySelector('.menu li')</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">querySelectorAll()</span></td>
+                    <td>Seleciona todos os elementos que correspondem ao seletor CSS</td>
+                    <td><span class="comando">document.querySelectorAll('div.box')</span></td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>PROPRIEDADES DE DIMENSÃO E POSIÇÃO</h2>
+            <table>
+                <tr>
+                    <th class="col-metodo">Propriedade</th>
+                    <th class="col-descricao">Descrição</th>
+                    <th class="col-exemplo">Exemplo</th>
+                </tr>
+                <tr>
+                    <td><span class="comando">offsetWidth</span></td>
+                    <td>Largura total (conteúdo + padding + borda)</td>
+                    <td><span class="comando">elemento.offsetWidth</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">offsetHeight</span></td>
+                    <td>Altura total (conteúdo + padding + borda)</td>
+                    <td><span class="comando">elemento.offsetHeight</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">clientWidth</span></td>
+                    <td>Largura visível (conteúdo + padding)</td>
+                    <td><span class="comando">elemento.clientWidth</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">clientHeight</span></td>
+                    <td>Altura visível (conteúdo + padding)</td>
+                    <td><span class="comando">elemento.clientHeight</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">scrollWidth</span></td>
+                    <td>Largura total do conteúdo (incluindo área não visível)</td>
+                    <td><span class="comando">elemento.scrollWidth</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">scrollHeight</span></td>
+                    <td>Altura total do conteúdo (incluindo área não visível)</td>
+                    <td><span class="comando">elemento.scrollHeight</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">offsetTop</span></td>
+                    <td>Distância entre o elemento e o topo do offsetParent</td>
+                    <td><span class="comando">elemento.offsetTop</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">offsetLeft</span></td>
+                    <td>Distância entre o elemento e a esquerda do offsetParent</td>
+                    <td><span class="comando">elemento.offsetLeft</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">getBoundingClientRect()</span></td>
+                    <td>Retorna tamanho e posição relativa ao viewport</td>
+                    <td><span class="comando">elemento.getBoundingClientRect()</span></td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>NAVEGAÇÃO ENTRE ELEMENTOS</h2>
+            <table>
+                <tr>
+                    <th class="col-metodo">Propriedade</th>
+                    <th class="col-descricao">Descrição</th>
+                    <th class="col-exemplo">Exemplo</th>
+                </tr>
+                <tr>
+                    <td><span class="comando">parentElement</span></td>
+                    <td>Elemento pai direto</td>
+                    <td><span class="comando">elemento.parentElement</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">children</span></td>
+                    <td>Elementos filhos (apenas elementos)</td>
+                    <td><span class="comando">elemento.children</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">firstElementChild</span></td>
+                    <td>Primeiro elemento filho</td>
+                    <td><span class="comando">elemento.firstElementChild</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">lastElementChild</span></td>
+                    <td>Último elemento filho</td>
+                    <td><span class="comando">elemento.lastElementChild</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">nextElementSibling</span></td>
+                    <td>Próximo elemento irmão</td>
+                    <td><span class="comando">elemento.nextElementSibling</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">previousElementSibling</span></td>
+                    <td>Elemento irmão anterior</td>
+                    <td><span class="comando">elemento.previousElementSibling</span></td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>MANIPULAÇÃO DE CONTEÚDO</h2>
+            <table>
+                <tr>
+                    <th class="col-metodo">Método/Propriedade</th>
+                    <th class="col-descricao">Descrição</th>
+                    <th class="col-exemplo">Exemplo</th>
+                </tr>
+                <tr>
+                    <td><span class="comando">textContent</span></td>
+                    <td>Texto dentro do elemento (sem formatação)</td>
+                    <td><span class="comando">elemento.textContent = 'Texto'</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">innerHTML</span></td>
+                    <td>HTML dentro do elemento (com formatação)</td>
+                    <td><span class="comando">elemento.innerHTML = '&lt;b&gt;Texto&lt;/b&gt;'</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">value</span></td>
+                    <td>Valor de inputs, selects e textareas</td>
+                    <td><span class="comando">input.value = 'Valor'</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">setAttribute()</span></td>
+                    <td>Define um atributo</td>
+                    <td><span class="comando">elemento.setAttribute('id', 'novoId')</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">getAttribute()</span></td>
+                    <td>Obtém o valor de um atributo</td>
+                    <td><span class="comando">elemento.getAttribute('class')</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">classList.add()</span></td>
+                    <td>Adiciona uma classe</td>
+                    <td><span class="comando">elemento.classList.add('ativo')</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">classList.remove()</span></td>
+                    <td>Remove uma classe</td>
+                    <td><span class="comando">elemento.classList.remove('inativo')</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">classList.toggle()</span></td>
+                    <td>Alterna uma classe</td>
+                    <td><span class="comando">elemento.classList.toggle('visivel')</span></td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>CRIAÇÃO E MANIPULAÇÃO DE ELEMENTOS</h2>
+            <table>
+                <tr>
+                    <th class="col-metodo">Método</th>
+                    <th class="col-descricao">Descrição</th>
+                    <th class="col-exemplo">Exemplo</th>
+                </tr>
+                <tr>
+                    <td><span class="comando">createElement()</span></td>
+                    <td>Cria um novo elemento</td>
+                    <td><span class="comando">document.createElement('div')</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">appendChild()</span></td>
+                    <td>Adiciona um elemento filho</td>
+                    <td><span class="comando">pai.appendChild(filho)</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">removeChild()</span></td>
+                    <td>Remove um elemento filho</td>
+                    <td><span class="comando">pai.removeChild(filho)</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">replaceChild()</span></td>
+                    <td>Substitui um elemento filho</td>
+                    <td><span class="comando">pai.replaceChild(novo, antigo)</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">cloneNode()</span></td>
+                    <td>Clona um elemento</td>
+                    <td><span class="comando">elemento.cloneNode(true)</span></td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>MANIPULAÇÃO DE ESTILOS</h2>
+            <table>
+                <tr>
+                    <th class="col-metodo">Método/Propriedade</th>
+                    <th class="col-descricao">Descrição</th>
+                    <th class="col-exemplo">Exemplo</th>
+                </tr>
+                <tr>
+                    <td><span class="comando">style</span></td>
+                    <td>Acessa/modifica estilos inline</td>
+                    <td><span class="comando">elemento.style.color = 'red'</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">getComputedStyle()</span></td>
+                    <td>Obtém estilos computados (incluindo CSS)</td>
+                    <td><span class="comando">getComputedStyle(elemento).fontSize</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">className</span></td>
+                    <td>Obtém/define a classe do elemento</td>
+                    <td><span class="comando">elemento.className = 'classe'</span></td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>EVENTOS COMUNS</h2>
+            <table>
+                <tr>
+                    <th class="col-metodo">Evento</th>
+                    <th class="col-descricao">Descrição</th>
+                    <th class="col-exemplo">Exemplo</th>
+                </tr>
+                <tr>
+                    <td><span class="comando">click</span></td>
+                    <td>Clique do mouse</td>
+                    <td><span class="comando">elemento.addEventListener('click', funcao)</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">mouseover</span></td>
+                    <td>Mouse sobre o elemento</td>
+                    <td><span class="comando">elemento.onmouseover = funcao</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">mouseout</span></td>
+                    <td>Mouse sai do elemento</td>
+                    <td><span class="comando">elemento.onmouseout = funcao</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">keydown</span></td>
+                    <td>Tecla pressionada</td>
+                    <td><span class="comando">elemento.onkeydown = funcao</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">submit</span></td>
+                    <td>Formulário enviado</td>
+                    <td><span class="comando">form.onsubmit = funcao</span></td>
+                </tr>
+                <tr>
+                    <td><span class="comando">change</span></td>
+                    <td>Valor alterado (input, select)</td>
+                    <td><span class="comando">input.onchange = funcao</span></td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="footer">
+            <p>Guia de Referência JavaScript - Manipulação DOM e Eventos</p>
+        </div>
+    </div>
+</body>
+</html>
