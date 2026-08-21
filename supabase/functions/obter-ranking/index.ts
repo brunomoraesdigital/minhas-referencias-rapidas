@@ -1,5 +1,4 @@
-cat > supabase/functions/obter-ranking/index.ts <<'EOF'
-import { serve } from 'https://deno.land/std@0.177.0/http/server.ts'
+﻿import { serve } from 'https://deno.land/std@0.177.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const corsHeaders = {
@@ -8,19 +7,24 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 }
 
-const supabaseUrl = Deno.env.get('SUPABASE_URL')!
-const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-
-const supabase = createClient(supabaseUrl, supabaseServiceKey)
-
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
-    return new Response('ok', {
+    return new Response(null, {
+      status: 204,
       headers: corsHeaders,
     })
   }
 
   try {
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+
+    if (!supabaseUrl || !supabaseServiceKey) {
+      throw new Error('Variáveis do Supabase não configuradas')
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseServiceKey)
+
     const { data, error } = await supabase
       .from('jogadores')
       .select('id, nome, recorde, melhor_eficiencia, melhor_nivel, total_partidas')
@@ -36,6 +40,7 @@ serve(async (req) => {
     }))
 
     return new Response(JSON.stringify(ranking), {
+      status: 200,
       headers: {
         ...corsHeaders,
         'Content-Type': 'application/json',
@@ -43,7 +48,9 @@ serve(async (req) => {
     })
   } catch (error) {
     return new Response(
-      JSON.stringify({ erro: error instanceof Error ? error.message : String(error) }),
+      JSON.stringify({
+        erro: error instanceof Error ? error.message : String(error)
+      }),
       {
         status: 400,
         headers: {
@@ -54,4 +61,3 @@ serve(async (req) => {
     )
   }
 })
-EOF
